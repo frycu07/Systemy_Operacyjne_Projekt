@@ -2,7 +2,6 @@
 #define REJESTRACJA_H
 
 
-
 void rejestracja();
 void zakoncz_wizyte(int id);
 int aktualna_godzina();

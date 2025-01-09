@@ -3,6 +3,8 @@
 #include <sys/sem.h>
 #include "rejestracja.h"
 #include "czas.h"
+#include "semaphore.h"
+#include "pacjent.h"
 
 void pacjent(int id) {
     int kolejka_zewnetrzna = msgget(KOLEJKA_ZEWNETRZNA, IPC_CREAT | 0666);
@@ -45,4 +47,16 @@ void pacjent(int id) {
     }
 
     exit(0);
+}
+void wejdz_do_przychodni() {
+    zablokuj_semafor();  // Zablokowanie semafora przed modyfikacją liczba_osob
+
+    if (liczba_osob < MAX_OSOB_W_PRZYCHODNI) {
+        liczba_osob++;
+        printf("Liczba osób w przychodni: %d\n", liczba_osob);  // Logowanie
+    } else {
+        printf("Przychodnia pełna. Pacjent musi czekać.\n");
+    }
+
+    odblokuj_semafor();  // Odblokowanie semafora po zakończeniu operacji
 }

@@ -35,12 +35,17 @@ int main() {
 
     // Inicjalizacja semafora
     inicjalizuj_semafor();
+    inicjalizuj_semafor_liczba_osob();
 
     // Tworzenie procesów
     if (fork() == 0) zarzadz_kolejka_zewnetrzna(); // Zarządca kolejki zewnętrznej
     if (fork() == 0) rejestracja(); // Proces rejestracji
-    if (fork() == 0) lekarz(0);     // Lekarz POZ
-    if (fork() == 0) lekarz(1);     // Lekarz specjalista
+    if (fork() == 0) lekarz_poz(1, X1); // Lekarz POZ 1
+    if (fork() == 0) lekarz_poz(2, X1); // Lekarz POZ 2
+    if (fork() == 0) lekarz_specjalista(KOLEJKA_KARDIOLOG, X2); // Kardiolog
+    if (fork() == 0) lekarz_specjalista(KOLEJKA_OKULISTA, X3); // Okulista
+    if (fork() == 0) lekarz_specjalista(KOLEJKA_PEDIATRA, X4); // Pediatra
+    if (fork() == 0) lekarz_specjalista(KOLEJKA_MEDYCYNA_PRACY, X5); // Medycyna pracy
 
     // Tworzenie procesów pacjentów
     for (int i = 0; i < 10; i++) {
@@ -56,6 +61,7 @@ int main() {
 
     // Usunięcie semafora
     usun_semafor();
+    usun_semafor_liczba_osob();
 
     return 0;
 }

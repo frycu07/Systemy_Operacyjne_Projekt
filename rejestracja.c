@@ -3,44 +3,60 @@
 #include <time.h>
 #include "rejestracja.h"
 #include "czas.h"
+#include "pacjent.h"
 
 void rejestracja() {
     int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
     int kolejka_poz = msgget(KOLEJKA_POZ, IPC_CREAT | 0666);
-    int kolejka_specjalista = msgget(KOLEJKA_SPECJALISTA, IPC_CREAT | 0666);
+    int kolejka_kardiolog = msgget(KOLEJKA_KARDIOLOG, IPC_CREAT | 0666);
+    int kolejka_okulista = msgget(KOLEJKA_OKULISTA, IPC_CREAT | 0666);
+    int kolejka_pediatra = msgget(KOLEJKA_PEDIATRA, IPC_CREAT | 0666);
+    int kolejka_medycyna_pracy = msgget(KOLEJKA_MEDYCYNA_PRACY, IPC_CREAT | 0666);
 
-    if (kolejka_rejestracja == -1 || kolejka_poz == -1 || kolejka_specjalista == -1) {
+    if (kolejka_rejestracja == -1 || kolejka_poz == -1 || kolejka_kardiolog == -1 ||
+        kolejka_okulista == -1 || kolejka_pediatra == -1 || kolejka_medycyna_pracy == -1) {
         perror("Błąd tworzenia kolejek");
         exit(1);
     }
 
     while (1) {
         Komunikat komunikat;
-        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) == -1) {
-            perror("Błąd odbioru komunikatu w rejestracji");
-            continue;
+        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
+            printf("Rejestracja: Odebrano pacjenta ID: %d\n", komunikat.pacjent.id);
+
+            switch (komunikat.pacjent.lekarz) {
+                case 0: // POZ
+                    msgsnd(kolejka_poz, &komunikat, sizeof(Pacjent), 0);
+                    printf("Rejestracja: Pacjent ID: %d skierowany do kolejki POZ.\n", komunikat.pacjent.id);
+                    break;
+                case 1: // Kardiolog
+                    msgsnd(kolejka_kardiolog, &komunikat, sizeof(Pacjent), 0);
+                    printf("Rejestracja: Pacjent ID: %d skierowany do kardiologa.\n", komunikat.pacjent.id);
+                    break;
+                case 2: // Okulista
+                    msgsnd(kolejka_okulista, &komunikat, sizeof(Pacjent), 0);
+                    printf("Rejestracja: Pacjent ID: %d skierowany do okulisty.\n", komunikat.pacjent.id);
+                    break;
+                case 3: // Pediatra
+                    msgsnd(kolejka_pediatra, &komunikat, sizeof(Pacjent), 0);
+                    printf("Rejestracja: Pacjent ID: %d skierowany do pediatry.\n", komunikat.pacjent.id);
+                    break;
+                case 4: // Medycyna pracy
+                    msgsnd(kolejka_medycyna_pracy, &komunikat, sizeof(Pacjent), 0);
+                    printf("Rejestracja: Pacjent ID: %d skierowany do lekarza medycyny pracy.\n", komunikat.pacjent.id);
+                    break;
+            }
         }
-
-        printf("Rejestracja: Odebrano pacjenta ID: %d\n", komunikat.pacjent.id);
-
-        // Kierowanie do odpowiedniej kolejki
-        if (komunikat.pacjent.lekarz == 0) {
-            komunikat.typ = 1; // Typ dla lekarza POZ
-            msgsnd(kolejka_poz, &komunikat, sizeof(Pacjent), 0);
-        } else {
-            komunikat.typ = 2; // Typ dla specjalisty
-            msgsnd(kolejka_specjalista, &komunikat, sizeof(Pacjent), 0);
-        }
-
     }
 }
 
 void zakoncz_wizyte(int id) {
-    semafor_op(-1); // Wejście do sekcji krytycznej
-    (*liczba_osob)--; // Zmniejszenie liczby osób w przychodni
-    wyswietl_liczbe_osob(); // Wyświetl aktualną liczbę osób
-    semafor_op(1); // Wyjście z sekcji krytycznej
-    printf("Pacjent ID: %d opuścił przychodnię.\n", id);
+    zablokuj_semafor();  // Zablokowanie semafora przed modyfikacją liczba_osob
+
+    (*liczba_osob)--;
+    printf("Pacjent ID: %d opuścił przychodnię. Liczba osób w przychodni: %d\n", id, (*liczba_osob));  // Logowanie
+
+    odblokuj_semafor();  // Odblokowanie semafora po zakończeniu operacji
 }
 
 int aktualna_godzina() {
