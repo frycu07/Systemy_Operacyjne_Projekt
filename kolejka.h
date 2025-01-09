@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define KOLEJKA_ZEWNETRZNA 1237
+
 // Maksymalna liczba osób w przychodni
 #define MAX_OSOB_W_PRZYCHODNI 5
 
@@ -27,6 +29,7 @@ typedef struct {
     long typ;        // Typ komunikatu (1 - rejestracja, 2 - lekarz POZ, itd.)
     Pacjent pacjent; // Dane pacjenta
 } Komunikat;
+
 
 // Klucze do kolejek
 #define KOLEJKA_REJESTRACJA 1234

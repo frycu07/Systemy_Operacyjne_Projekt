@@ -6,6 +6,7 @@
 #include <sys/sem.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+#include "czas.h"
 
 // Klucz dla pamięci współdzielonej
 #define PAMIEC_WSPOLDZIELONA_KLUCZ 6789
@@ -14,6 +15,7 @@
 int *liczba_osob;
 
 int main() {
+
     // Utworzenie segmentu pamięci współdzielonej
     int shm_id = shmget(PAMIEC_WSPOLDZIELONA_KLUCZ, sizeof(int), IPC_CREAT | 0666);
     if (shm_id == -1) {
@@ -35,6 +37,7 @@ int main() {
     inicjalizuj_semafor();
 
     // Tworzenie procesów
+    if (fork() == 0) zarzadz_kolejka_zewnetrzna(); // Zarządca kolejki zewnętrznej
     if (fork() == 0) rejestracja(); // Proces rejestracji
     if (fork() == 0) lekarz(0);     // Lekarz POZ
     if (fork() == 0) lekarz(1);     // Lekarz specjalista

@@ -79,6 +79,12 @@ build CMakeFiles/Projekt_SO.dir/semafor.c.o: C_COMPILER__Projekt_SO_unscanned_De
   OBJECT_DIR = CMakeFiles/Projekt_SO.dir
   OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
 
+build CMakeFiles/Projekt_SO.dir/czas.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/czas.c || cmake_object_order_depends_target_Projekt_SO
+  DEP_FILE = CMakeFiles/Projekt_SO.dir/czas.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
+  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Projekt_SO
@@ -87,7 +93,7 @@ build CMakeFiles/Projekt_SO.dir/semafor.c.o: C_COMPILER__Projekt_SO_unscanned_De
 #############################################
 # Link the executable Projekt_SO
 
-build Projekt_SO: C_EXECUTABLE_LINKER__Projekt_SO_Debug CMakeFiles/Projekt_SO.dir/main.c.o CMakeFiles/Projekt_SO.dir/pacjent.c.o CMakeFiles/Projekt_SO.dir/rejestracja.c.o CMakeFiles/Projekt_SO.dir/lekarz.c.o CMakeFiles/Projekt_SO.dir/semafor.c.o
+build Projekt_SO: C_EXECUTABLE_LINKER__Projekt_SO_Debug CMakeFiles/Projekt_SO.dir/main.c.o CMakeFiles/Projekt_SO.dir/pacjent.c.o CMakeFiles/Projekt_SO.dir/rejestracja.c.o CMakeFiles/Projekt_SO.dir/lekarz.c.o CMakeFiles/Projekt_SO.dir/semafor.c.o CMakeFiles/Projekt_SO.dir/czas.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = -lpthread
   OBJECT_DIR = CMakeFiles/Projekt_SO.dir
