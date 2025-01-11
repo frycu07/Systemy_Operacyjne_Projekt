@@ -49,9 +49,9 @@ void sprawdz_wartosc_semafora() {
     int val = semctl(semafor_id, 0, GETVAL);
     if (val == -1) {
         perror("Błąd odczytu wartości semafora");
-    } else {
-        printf("Aktualna wartość semafora: %d\n", val);
+        return;
     }
+    printf("Aktualna wartość semafora: %d\n", val);
 }
 
 void wyswietl_liczbe_osob() {
@@ -99,7 +99,7 @@ void odblokuj_semafor() {
 void loguj_liczba_osob(const char* akcja) {
     FILE* log = fopen("liczba_osob.log", "a");
     if (log != NULL) {
-        fprintf(log, "[%s] Liczba osób w przychodni: %d\n", akcja, liczba_osob);
+        fprintf(log, "[%s] Liczba osób w przychodni: %d\n", akcja, *liczba_osob);
         fclose(log);
     } else {
         perror("Błąd otwierania pliku logów");

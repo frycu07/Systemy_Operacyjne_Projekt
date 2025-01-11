@@ -4,8 +4,11 @@
 #include "rejestracja.h"
 #include "czas.h"
 #include "pacjent.h"
+#include "procesy.h"
 
 void rejestracja() {
+    log_process("START", "Rejestracja", 0);  // Logowanie rozpoczęcia rejestracji
+
     int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
     int kolejka_poz = msgget(KOLEJKA_POZ, IPC_CREAT | 0666);
     int kolejka_kardiolog = msgget(KOLEJKA_KARDIOLOG, IPC_CREAT | 0666);
@@ -24,30 +27,41 @@ void rejestracja() {
         if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
             printf("Rejestracja: Odebrano pacjenta ID: %d\n", komunikat.pacjent.id);
 
+            // Logowanie odbioru pacjenta w rejestracji
+            log_process("ODEBRANO", "Rejestracja", komunikat.pacjent.id);
+
+            // Skierowanie pacjenta do odpowiedniej kolejki
             switch (komunikat.pacjent.lekarz) {
                 case 0: // POZ
                     msgsnd(kolejka_poz, &komunikat, sizeof(Pacjent), 0);
                     printf("Rejestracja: Pacjent ID: %d skierowany do kolejki POZ.\n", komunikat.pacjent.id);
+                    log_process("SKIEROWANO", "POZ", komunikat.pacjent.id);
                     break;
                 case 1: // Kardiolog
                     msgsnd(kolejka_kardiolog, &komunikat, sizeof(Pacjent), 0);
                     printf("Rejestracja: Pacjent ID: %d skierowany do kardiologa.\n", komunikat.pacjent.id);
+                    log_process("SKIEROWANO", "Kardiolog", komunikat.pacjent.id);
                     break;
                 case 2: // Okulista
                     msgsnd(kolejka_okulista, &komunikat, sizeof(Pacjent), 0);
                     printf("Rejestracja: Pacjent ID: %d skierowany do okulisty.\n", komunikat.pacjent.id);
+                    log_process("SKIEROWANO", "Okulista", komunikat.pacjent.id);
                     break;
                 case 3: // Pediatra
                     msgsnd(kolejka_pediatra, &komunikat, sizeof(Pacjent), 0);
                     printf("Rejestracja: Pacjent ID: %d skierowany do pediatry.\n", komunikat.pacjent.id);
+                    log_process("SKIEROWANO", "Pediatra", komunikat.pacjent.id);
                     break;
                 case 4: // Medycyna pracy
                     msgsnd(kolejka_medycyna_pracy, &komunikat, sizeof(Pacjent), 0);
                     printf("Rejestracja: Pacjent ID: %d skierowany do lekarza medycyny pracy.\n", komunikat.pacjent.id);
+                    log_process("SKIEROWANO", "Medycyna_pracy", komunikat.pacjent.id);
                     break;
             }
         }
     }
+
+
 }
 
 void zakoncz_wizyte(int id) {

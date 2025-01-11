@@ -222,6 +222,12 @@ Projekt_SO_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Projekt_SO_SOURCE_DIR:STATIC=/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO
 
+//No help, variable specified on the command line.
+Python3_EXECUTABLE:UNINITIALIZED=/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/.venv/bin/python
+
+//No help, variable specified on the command line.
+Python_EXECUTABLE:UNINITIALIZED=/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/.venv/bin/python
+
 
 ########################
 # INTERNAL cache entries
