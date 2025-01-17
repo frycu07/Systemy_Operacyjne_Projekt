@@ -6,8 +6,11 @@
 #include "semaphore.h"
 #include "pacjent.h"
 #include "procesy.h"
+#include <time.h>
+
 
 int losuj_lekarza() {
+
     int los = rand() % 10;
     if (los < 6) return 0;  // 60% szans na 0
     return los - 5;         // 10% szans na 1, 2, 3, 4
@@ -22,26 +25,37 @@ void pacjent(int id) {
         exit(1);
     }
 
-    // Dodanie pacjenta do kolejki zewnętrznej
-    Pacjent pacjent = {id, rand() % 50 + 10, 0, losuj_lekarza()};
+    // Tworzenie danych pacjenta
+    srand(time(NULL)); // Ustawienie ziarna raz na początku programu
+
+    int wiek = rand() % 50 + 10; // Losowy wiek między 10 a 59
+    int priorytet = (rand() % 10 < 2) ? 1 : 0; // 20% szans na VIP
+    int rodzic_obecny = wiek < 18 ? 1 : 0;
+
+    Pacjent pacjent = {id, wiek, priorytet, rodzic_obecny, losuj_lekarza()};
     Komunikat komunikat = {1, pacjent};
 
     msgsnd(kolejka_zewnetrzna, &komunikat, sizeof(Pacjent), 0);
-    printf("Pacjent ID: %d dołączył do kolejki zewnętrznej.\n", id);
-    log_process("PRZYJSCIE", "Pacjent", id );  // Log staniecia w kolejce
-    // Pacjent czeka na pozwolenie na wejście
+    printf("Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
+           id,
+           priorytet ? " (VIP)" : "",
+           rodzic_obecny ? " (z rodzicem)" : "",
+           wiek);
+    log_process("PRZYJSCIE", "Pacjent", id);
+
+    // Czekanie na wejście do rejestracji
     while (1) {
         Czas teraz = aktualny_czas();
 
         if (porownaj_czas(teraz, czas_otwarcia) < 0 || porownaj_czas(teraz, czas_zamkniecia) >= 0) {
             printf("Pacjent ID: %d nie może wejść - przychodnia zamknięta (czas: %02d:%02d).\n",
                    id, teraz.godzina, teraz.minuta);
-            log_process("CZEKANIE", "Pacjent", id );  // Log staniecia w kolejce
+            log_process("CZEKANIE", "Pacjent", id);
             sleep(2); // Oczekiwanie przed ponowną próbą
             continue;
         }
 
-        // Próba wejścia do kolejki rejestracyjnej
+        // Próba wejścia do rejestracji
         int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
         if (kolejka_rejestracja == -1) {
             perror("Błąd otwierania kolejki rejestracyjnej");
@@ -49,25 +63,32 @@ void pacjent(int id) {
         }
 
         if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), id + 1, IPC_NOWAIT) != -1) {
-            printf("Pacjent ID: %d wszedł do przychodni i został zarejestrowany.\n", id);
+            // Aktualizacja liczby osób w przychodni
+            if (rodzic_obecny) {
+                zmien_liczba_osob(2); // Jeśli pacjent z rodzicem, zwiększ o 2
+            } else {
+                zmien_liczba_osob(1); // Jeśli pacjent sam, zwiększ o 1
+            }
+
+            printf("Pacjent ID: %d%s%s wszedł do przychodni i został zarejestrowany.\n",
+                   id,
+                   priorytet ? " (VIP)" : "",
+                   rodzic_obecny ? " (z rodzicem)" : "");
+
             break;
         } else {
-            sleep(1); // Czekanie na pozwolenie
+            sleep(1);
         }
     }
-    log_process("END", "Pacjent", id);  // Logowanie zakończenia procesu pacjenta
 
+    log_process("END", "Pacjent", id);
     exit(0);
 }
-void wejdz_do_przychodni() {
-    zablokuj_semafor();  // Zablokowanie semafora przed modyfikacją liczba_osob
 
-    if (*liczba_osob < MAX_OSOB_W_PRZYCHODNI) {
-        (*liczba_osob)++;
-        printf("Liczba osób w przychodni: %d\n", *liczba_osob);  // Logowanie
-    } else {
-        printf("Przychodnia pełna. Pacjent musi czekać.\n");
-    }
-
-    odblokuj_semafor();  // Odblokowanie semafora po zakończeniu operacji
+void zmien_liczba_osob(int zmiana) {
+    zablokuj_semafor();
+    *liczba_osob += zmiana;
+    printf("[DEBUG] Liczba osób w przychodni: %d\n", *liczba_osob);
+    log_process("ZMIANA LICZBY OSOB", "Zmien liczbe", *liczba_osob);
+    odblokuj_semafor();
 }

@@ -23,29 +23,24 @@
 #define KOLEJKA_PEDIATRA 1238      // Kolejka dla pediatry
 #define KOLEJKA_MEDYCYNA_PRACY 1239 // Kolejka dla lekarza medycyny pracy
 
+void wyczysc_kolejki();
+
 // Maksymalna liczba osób w przychodni
 #define MAX_OSOB_W_PRZYCHODNI 5
 
 // Globalna zmienna liczby osób
 extern int *liczba_osob;
 
-
 // Klucze do kolejek
 #define KOLEJKA_REJESTRACJA 1240
 
 // Funkcje związane z semaforami
-void inicjalizuj_semafor();
-void usun_semafor();
-void semafor_op(int delta);
 void sprawdz_wartosc_semafora();
-void wyswietl_liczbe_osob();
-void inicjalizuj_semafor_liczba_osob();
+void stworz_semafor_liczba_osob(key_t klucz);
+void usun_semafor_liczba_osob() ;
+void zablokuj_semafor() ;
+void odblokuj_semafor() ;
 
-void zablokuj_semafor();
-void odblokuj_semafor();
 
-void loguj_liczba_osob(const char* akcja);
-
-void usun_semafor_liczba_osob();
 
 #endif

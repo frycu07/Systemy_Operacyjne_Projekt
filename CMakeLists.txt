@@ -11,5 +11,6 @@ add_executable(Projekt_SO
         semafor.c
         czas.c
         procesy.c
+        kolejka.c
 )
 target_link_libraries(Projekt_SO pthread)
