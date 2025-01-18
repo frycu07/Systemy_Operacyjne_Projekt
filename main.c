@@ -18,11 +18,12 @@
 // Wskaźnik do pamięci współdzielonej
 int shm_id;
 int *liczba_osob;
+int semafor_rejestracja;
 
 // Cleanup i signal handler
 void cleanup_on_exit() {
     shmctl(shm_id, IPC_RMID, NULL); // Usuwanie pamięci współdzielonej
-    usun_semafor_liczba_osob();
+    semctl(semafor_rejestracja, 0, IPC_RMID);
     wyczysc_kolejki(); // Usuwanie kolejek
     printf("Wszystkie zasoby zostały wyczyszczone.\n");
     exit(0);
@@ -56,7 +57,7 @@ void* process_cleaner(void* arg) {
 // Funkcja monitorująca kolejkę rejestracji
 void* monitoruj_kolejke_thread(void* arg) {
     int kolejka_rejestracja = *((int*)arg);
-    monitoruj_kolejke_rejestracja(MAX_OSOB_W_PRZYCHODNI, kolejka_rejestracja);
+    monitoruj_kolejke_rejestracja(MAX_OSOB_W_PRZYCHODNI, kolejka_rejestracja, semafor_rejestracja);
     return NULL;
 }
 
@@ -67,6 +68,14 @@ int main() {
     signal(SIGTERM, signal_handler);
 
     srand(time(NULL));  // Inicjalizacja generatora liczb losowych
+
+
+    // Inicjalizacja semaforów rejestracja
+    key_t klucz_semafora_rejestracja = 1235; // Unikalny klucz
+    semafor_rejestracja = stworz_semafor(klucz_semafora_rejestracja);
+
+    // Inicjalizacja semafora rejestracji na wartość 1 (odblokowany)
+    ustaw_wartosc_semafora(semafor_rejestracja, 1);
 
 
     // Utworzenie segmentu pamięci współdzielonej
@@ -86,7 +95,7 @@ int main() {
     // Inicjalizacja liczby osób
     *liczba_osob = 0;
 
-    // Inicjalizacja semaforów
+    // Inicjalizacja semaforów liczba osob
     key_t klucz_semafora = 1234; // Klucz semafora (dowolny unikalny numer)
     stworz_semafor_liczba_osob(klucz_semafora);
 
@@ -114,7 +123,7 @@ int main() {
     }
 
     if (fork() == 0) {
-        rejestracja(0);
+        rejestracja(0, semafor_rejestracja);
         log_process("END", "Rejestracja", 0);
         exit(0);
     }
@@ -155,7 +164,7 @@ int main() {
     }
 
     // Tworzenie procesów pacjentów
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 50; i++) {
         if (fork() == 0) {
             printf("KROK 1 Przyszedł pacjent ID: %d\n", i);
             pacjent(i);
