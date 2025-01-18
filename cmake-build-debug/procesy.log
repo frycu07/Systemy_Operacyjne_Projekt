@@ -835,3 +835,684 @@
 [START] Type:Pacjent ID:14 Time:2025-01-17 23:36:22 Called from PID:5771
 [PRZYJSCIE] Type:Pacjent ID:14 Time:2025-01-17 23:36:22 Called from PID:5771
 [CZEKANIE] Type:Pacjent ID:14 Time:2025-01-17 23:36:22 Called from PID:5771
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:41:19 Called from PID:4673
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:41:19 Called from PID:4675
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:41:19 Called from PID:4674
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:41:19 Called from PID:4676
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:41:19 Called from PID:4677
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:41:19 Called from PID:4678
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:41:19 Called from PID:4679
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:41:19 Called from PID:4680
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:41:19 Called from PID:4681
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:41:19 Called from PID:4681
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 11:41:19 Called from PID:4673
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:41:19 Called from PID:4681
+[END] Type:Pacjent ID:0 Time:2025-01-18 11:41:19 Called from PID:4681
+[START] Type:Pacjent ID:1 Time:2025-01-18 11:41:20 Called from PID:4685
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 11:41:20 Called from PID:4685
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:41:20 Called from PID:4673
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:41:20 Called from PID:4685
+[END] Type:Pacjent ID:1 Time:2025-01-18 11:41:20 Called from PID:4685
+[START] Type:Pacjent ID:2 Time:2025-01-18 11:41:21 Called from PID:4686
+[PRZYJSCIE] Type:Pacjent ID:2 Time:2025-01-18 11:41:21 Called from PID:4686
+[START] Type:Pacjent ID:3 Time:2025-01-18 11:41:22 Called from PID:4687
+[PRZYJSCIE] Type:Pacjent ID:3 Time:2025-01-18 11:41:22 Called from PID:4687
+[START] Type:Pacjent ID:4 Time:2025-01-18 11:41:23 Called from PID:4688
+[PRZYJSCIE] Type:Pacjent ID:4 Time:2025-01-18 11:41:23 Called from PID:4688
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:41:24 Called from PID:4673
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:6 Time:2025-01-18 11:41:24 Called from PID:4687
+[END] Type:Pacjent ID:3 Time:2025-01-18 11:41:24 Called from PID:4687
+[START] Type:Pacjent ID:5 Time:2025-01-18 11:41:24 Called from PID:4689
+[PRZYJSCIE] Type:Pacjent ID:5 Time:2025-01-18 11:41:24 Called from PID:4689
+[START] Type:Pacjent ID:6 Time:2025-01-18 11:41:25 Called from PID:4690
+[PRZYJSCIE] Type:Pacjent ID:6 Time:2025-01-18 11:41:25 Called from PID:4690
+[START] Type:Pacjent ID:7 Time:2025-01-18 11:41:26 Called from PID:4691
+[PRZYJSCIE] Type:Pacjent ID:7 Time:2025-01-18 11:41:26 Called from PID:4691
+[START] Type:Pacjent ID:8 Time:2025-01-18 11:41:27 Called from PID:4692
+[PRZYJSCIE] Type:Pacjent ID:8 Time:2025-01-18 11:41:27 Called from PID:4692
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:42:37 Called from PID:4717
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:42:37 Called from PID:4719
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:42:37 Called from PID:4720
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:42:37 Called from PID:4718
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:42:37 Called from PID:4721
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:42:37 Called from PID:4716
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:42:37 Called from PID:4722
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:42:37 Called from PID:4723
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:42:37 Called from PID:4724
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:42:37 Called from PID:4724
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:42:37 Called from PID:4716
+[START] Type:Rodzic ID:2 Time:2025-01-18 11:42:37 Called from PID:4725
+[ODEBRANO] Type:Rejestracja ID:2 Time:2025-01-18 11:42:38 Called from PID:4717
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:42:38 Called from PID:4716
+[SKIEROWANO] Type:Okulista ID:2 Time:2025-01-18 11:42:38 Called from PID:4717
+[ODEBRANO] Type:Rejestracja ID:6 Time:2025-01-18 11:42:38 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:6 Time:2025-01-18 11:42:38 Called from PID:4717
+[START] Type:Pacjent ID:1 Time:2025-01-18 11:42:38 Called from PID:4728
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 11:42:38 Called from PID:4728
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:39 Called from PID:4716
+[OBSŁUGA] Type:Lekarz_POZ ID:6 Time:2025-01-18 11:42:39 Called from PID:4719
+[OBSŁUGA] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 11:42:39 Called from PID:4721
+[ODEBRANO] Type:Rejestracja ID:4 Time:2025-01-18 11:42:39 Called from PID:4717
+[SKIEROWANO] Type:Medycyna_pracy ID:4 Time:2025-01-18 11:42:39 Called from PID:4717
+[START] Type:Pacjent ID:2 Time:2025-01-18 11:42:39 Called from PID:4730
+[PRZYJSCIE] Type:Pacjent ID:2 Time:2025-01-18 11:42:39 Called from PID:4730
+[OBSŁUGA] Type:Lekarz_Specjalista ID:4 Time:2025-01-18 11:42:40 Called from PID:4723
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:40 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:7 Time:2025-01-18 11:42:40 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:7 Time:2025-01-18 11:42:40 Called from PID:4717
+[START] Type:Pacjent ID:3 Time:2025-01-18 11:42:40 Called from PID:4731
+[PRZYJSCIE] Type:Pacjent ID:3 Time:2025-01-18 11:42:40 Called from PID:4731
+[OBSŁUGA] Type:Lekarz_POZ ID:7 Time:2025-01-18 11:42:41 Called from PID:4718
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:6 Time:2025-01-18 11:42:41 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:41 Called from PID:4719
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:42:41 Called from PID:4719
+[START] Type:Pacjent ID:4 Time:2025-01-18 11:42:41 Called from PID:4732
+[PRZYJSCIE] Type:Pacjent ID:4 Time:2025-01-18 11:42:41 Called from PID:4732
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:42 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:8 Time:2025-01-18 11:42:42 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:8 Time:2025-01-18 11:42:42 Called from PID:4717
+[START] Type:Pacjent ID:5 Time:2025-01-18 11:42:42 Called from PID:4733
+[PRZYJSCIE] Type:Pacjent ID:5 Time:2025-01-18 11:42:42 Called from PID:4733
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:7 Time:2025-01-18 11:42:43 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:43 Called from PID:4718
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:42:43 Called from PID:4718
+[OBSŁUGA] Type:Lekarz_POZ ID:8 Time:2025-01-18 11:42:43 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:43 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 11:42:43 Called from PID:4717
+[SKIEROWANO] Type:Medycyna_pracy ID:0 Time:2025-01-18 11:42:43 Called from PID:4717
+[START] Type:Pacjent ID:6 Time:2025-01-18 11:42:43 Called from PID:4734
+[PRZYJSCIE] Type:Pacjent ID:6 Time:2025-01-18 11:42:43 Called from PID:4734
+[START] Type:Pacjent ID:7 Time:2025-01-18 11:42:44 Called from PID:4735
+[PRZYJSCIE] Type:Pacjent ID:7 Time:2025-01-18 11:42:44 Called from PID:4735
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:8 Time:2025-01-18 11:42:45 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:45 Called from PID:4718
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:42:45 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:45 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:2 Time:2025-01-18 11:42:45 Called from PID:4717
+[SKIEROWANO] Type:Pediatra ID:2 Time:2025-01-18 11:42:45 Called from PID:4717
+[START] Type:Pacjent ID:8 Time:2025-01-18 11:42:45 Called from PID:4736
+[PRZYJSCIE] Type:Pacjent ID:8 Time:2025-01-18 11:42:45 Called from PID:4736
+[OBSŁUGA] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 11:42:46 Called from PID:4722
+[START] Type:Pacjent ID:9 Time:2025-01-18 11:42:46 Called from PID:4737
+[PRZYJSCIE] Type:Pacjent ID:9 Time:2025-01-18 11:42:46 Called from PID:4737
+[START] Type:Pacjent ID:10 Time:2025-01-18 11:42:47 Called from PID:4738
+[PRZYJSCIE] Type:Pacjent ID:10 Time:2025-01-18 11:42:47 Called from PID:4738
+[START] Type:Pacjent ID:11 Time:2025-01-18 11:42:48 Called from PID:4739
+[PRZYJSCIE] Type:Pacjent ID:11 Time:2025-01-18 11:42:48 Called from PID:4739
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 11:42:49 Called from PID:4721
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:42:49 Called from PID:4721
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:3 Time:2025-01-18 11:42:49 Called from PID:4721
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:49 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:5 Time:2025-01-18 11:42:49 Called from PID:4717
+[SKIEROWANO] Type:Kardiolog ID:5 Time:2025-01-18 11:42:49 Called from PID:4717
+[START] Type:Pacjent ID:12 Time:2025-01-18 11:42:49 Called from PID:4740
+[PRZYJSCIE] Type:Pacjent ID:12 Time:2025-01-18 11:42:49 Called from PID:4740
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:4 Time:2025-01-18 11:42:50 Called from PID:4723
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:42:50 Called from PID:4723
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 11:42:50 Called from PID:4723
+[OBSŁUGA] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 11:42:50 Called from PID:4723
+[OBSŁUGA] Type:Lekarz_Specjalista ID:5 Time:2025-01-18 11:42:50 Called from PID:4720
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:50 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:6 Time:2025-01-18 11:42:50 Called from PID:4717
+[SKIEROWANO] Type:Medycyna_pracy ID:6 Time:2025-01-18 11:42:50 Called from PID:4717
+[START] Type:Pacjent ID:13 Time:2025-01-18 11:42:50 Called from PID:4741
+[PRZYJSCIE] Type:Pacjent ID:13 Time:2025-01-18 11:42:50 Called from PID:4741
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:51 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:1 Time:2025-01-18 11:42:51 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:1 Time:2025-01-18 11:42:51 Called from PID:4717
+[START] Type:Pacjent ID:14 Time:2025-01-18 11:42:51 Called from PID:4742
+[PRZYJSCIE] Type:Pacjent ID:14 Time:2025-01-18 11:42:51 Called from PID:4742
+[OBSŁUGA] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:42:52 Called from PID:4718
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:42:54 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:54 Called from PID:4718
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:42:54 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:55 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:9 Time:2025-01-18 11:42:55 Called from PID:4717
+[SKIEROWANO] Type:Okulista ID:9 Time:2025-01-18 11:42:55 Called from PID:4717
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 11:42:56 Called from PID:4722
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:56 Called from PID:4722
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:42:56 Called from PID:4722
+[OBSŁUGA] Type:Lekarz_Specjalista ID:9 Time:2025-01-18 11:42:56 Called from PID:4721
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:56 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:5 Time:2025-01-18 11:42:56 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:5 Time:2025-01-18 11:42:56 Called from PID:4717
+[OBSŁUGA] Type:Lekarz_POZ ID:5 Time:2025-01-18 11:42:57 Called from PID:4719
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:5 Time:2025-01-18 11:42:59 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:42:59 Called from PID:4719
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:42:59 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:42:59 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:11 Time:2025-01-18 11:42:59 Called from PID:4717
+[SKIEROWANO] Type:Kardiolog ID:11 Time:2025-01-18 11:42:59 Called from PID:4717
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 11:43:00 Called from PID:4723
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:00 Called from PID:4723
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:43:00 Called from PID:4723
+[OBSŁUGA] Type:Lekarz_Specjalista ID:6 Time:2025-01-18 11:43:00 Called from PID:4723
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:5 Time:2025-01-18 11:43:00 Called from PID:4720
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:43:00 Called from PID:4720
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 11:43:00 Called from PID:4720
+[OBSŁUGA] Type:Lekarz_Specjalista ID:11 Time:2025-01-18 11:43:00 Called from PID:4720
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:00 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:12 Time:2025-01-18 11:43:00 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:12 Time:2025-01-18 11:43:00 Called from PID:4717
+[OBSŁUGA] Type:Lekarz_POZ ID:12 Time:2025-01-18 11:43:01 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:43:01 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:13 Time:2025-01-18 11:43:01 Called from PID:4717
+[SKIEROWANO] Type:Pediatra ID:13 Time:2025-01-18 11:43:01 Called from PID:4717
+[OBSŁUGA] Type:Lekarz_Specjalista ID:13 Time:2025-01-18 11:43:02 Called from PID:4722
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:12 Time:2025-01-18 11:43:03 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:03 Called from PID:4718
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:43:03 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:43:03 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:7 Time:2025-01-18 11:43:03 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:7 Time:2025-01-18 11:43:03 Called from PID:4717
+[OBSŁUGA] Type:Lekarz_POZ ID:7 Time:2025-01-18 11:43:04 Called from PID:4719
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:9 Time:2025-01-18 11:43:06 Called from PID:4721
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:06 Called from PID:4721
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:43:06 Called from PID:4721
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:7 Time:2025-01-18 11:43:06 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:43:06 Called from PID:4719
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 11:43:06 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:43:06 Called from PID:4716
+[START] Type:Rodzic ID:10 Time:2025-01-18 11:43:06 Called from PID:4743
+[ODEBRANO] Type:Rejestracja ID:10 Time:2025-01-18 11:43:06 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:10 Time:2025-01-18 11:43:06 Called from PID:4717
+[OBSŁUGA] Type:Lekarz_POZ ID:10 Time:2025-01-18 11:43:07 Called from PID:4718
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:10 Time:2025-01-18 11:43:09 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:43:09 Called from PID:4718
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:3 Time:2025-01-18 11:43:09 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:09 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:8 Time:2025-01-18 11:43:09 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:8 Time:2025-01-18 11:43:09 Called from PID:4717
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:6 Time:2025-01-18 11:43:10 Called from PID:4723
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:43:10 Called from PID:4723
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 11:43:10 Called from PID:4723
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:11 Time:2025-01-18 11:43:10 Called from PID:4720
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:43:10 Called from PID:4720
+[WYJSCIE] Type:PACJENT ID:2 Time:2025-01-18 11:43:10 Called from PID:4720
+[OBSŁUGA] Type:Lekarz_POZ ID:8 Time:2025-01-18 11:43:10 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:10 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:3 Time:2025-01-18 11:43:10 Called from PID:4717
+[START] Type:Rodzic ID:3 Time:2025-01-18 11:43:10 Called from PID:4744
+[SKIEROWANO] Type:POZ ID:3 Time:2025-01-18 11:43:10 Called from PID:4717
+[OBSŁUGA] Type:Lekarz_POZ ID:3 Time:2025-01-18 11:43:11 Called from PID:4718
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 11:43:11 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:4 Time:2025-01-18 11:43:11 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:4 Time:2025-01-18 11:43:11 Called from PID:4717
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:13 Time:2025-01-18 11:43:12 Called from PID:4722
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:12 Called from PID:4722
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 11:43:12 Called from PID:4722
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:8 Time:2025-01-18 11:43:12 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 11:43:12 Called from PID:4719
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 11:43:12 Called from PID:4719
+[OBSŁUGA] Type:Lekarz_POZ ID:4 Time:2025-01-18 11:43:12 Called from PID:4719
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 11:43:12 Called from PID:4716
+[ODEBRANO] Type:Rejestracja ID:14 Time:2025-01-18 11:43:12 Called from PID:4717
+[SKIEROWANO] Type:POZ ID:14 Time:2025-01-18 11:43:12 Called from PID:4717
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:48:42 Called from PID:4850
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:48:42 Called from PID:4852
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:48:42 Called from PID:4854
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:48:42 Called from PID:4853
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:48:42 Called from PID:4851
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:48:42 Called from PID:4855
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:48:42 Called from PID:4856
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:48:42 Called from PID:4857
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:48:42 Called from PID:4858
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:48:42 Called from PID:4858
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 11:48:42 Called from PID:4850
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:48:42 Called from PID:4858
+[END] Type:Pacjent ID:0 Time:2025-01-18 11:48:42 Called from PID:4858
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:50:54 Called from PID:4899
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:50:54 Called from PID:4900
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:50:54 Called from PID:4902
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:50:54 Called from PID:4901
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:50:54 Called from PID:4903
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:50:54 Called from PID:4905
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:50:54 Called from PID:4906
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:50:54 Called from PID:4904
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:50:54 Called from PID:4907
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:50:54 Called from PID:4907
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 11:50:54 Called from PID:4899
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:50:54 Called from PID:4907
+[END] Type:Pacjent ID:0 Time:2025-01-18 11:50:54 Called from PID:4907
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:51:03 Called from PID:4922
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:51:03 Called from PID:4923
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:51:03 Called from PID:4926
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:51:03 Called from PID:4925
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:51:03 Called from PID:4924
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:51:03 Called from PID:4927
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:51:03 Called from PID:4928
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:51:03 Called from PID:4929
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:51:03 Called from PID:4930
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:51:03 Called from PID:4930
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 11:51:03 Called from PID:4922
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:51:03 Called from PID:4930
+[END] Type:Pacjent ID:0 Time:2025-01-18 11:51:03 Called from PID:4930
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:52:41 Called from PID:4966
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:52:41 Called from PID:4968
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:52:41 Called from PID:4963
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:52:41 Called from PID:4969
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:52:41 Called from PID:4965
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:52:41 Called from PID:4970
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:52:41 Called from PID:4964
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:52:41 Called from PID:4971
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:52:41 Called from PID:4967
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:52:41 Called from PID:4971
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 11:52:41 Called from PID:4963
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 11:52:42 Called from PID:4964
+[SKIEROWANO] Type:Medycyna_pracy ID:0 Time:2025-01-18 11:52:42 Called from PID:4964
+[OBSŁUGA] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 11:52:43 Called from PID:4970
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:53:01 Called from PID:4993
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:53:01 Called from PID:4992
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:53:01 Called from PID:4994
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:53:01 Called from PID:4996
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:53:01 Called from PID:4995
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:53:01 Called from PID:4997
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:53:01 Called from PID:4998
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:53:01 Called from PID:4999
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:53:01 Called from PID:5000
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:53:01 Called from PID:5000
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 11:53:01 Called from PID:4992
+[START] Type:Rodzic ID:0 Time:2025-01-18 11:53:01 Called from PID:5001
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 11:53:02 Called from PID:4993
+[SKIEROWANO] Type:POZ ID:0 Time:2025-01-18 11:53:02 Called from PID:4993
+[OBSŁUGA] Type:Lekarz_POZ ID:0 Time:2025-01-18 11:53:03 Called from PID:4994
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:0 Time:2025-01-18 11:53:05 Called from PID:4994
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:0 Time:2025-01-18 11:53:05 Called from PID:4994
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:0 Time:2025-01-18 11:53:05 Called from PID:4994
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 11:53:27 Called from PID:5015
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 11:53:27 Called from PID:5013
+[START] Type:Rejestracja ID:0 Time:2025-01-18 11:53:27 Called from PID:5014
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 11:53:27 Called from PID:5016
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 11:53:27 Called from PID:5018
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 11:53:27 Called from PID:5019
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 11:53:27 Called from PID:5020
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 11:53:27 Called from PID:5017
+[START] Type:Pacjent ID:0 Time:2025-01-18 11:53:27 Called from PID:5021
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 11:53:27 Called from PID:5021
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 11:53:27 Called from PID:5013
+[END] Type:Pacjent ID:0 Time:2025-01-18 11:53:27 Called from PID:5021
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:04:58 Called from PID:5117
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:04:58 Called from PID:5118
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:04:58 Called from PID:5119
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:04:58 Called from PID:5121
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:04:58 Called from PID:5122
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:04:58 Called from PID:5120
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:04:58 Called from PID:5123
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:04:58 Called from PID:5124
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:04:58 Called from PID:5125
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:04:58 Called from PID:5125
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:04:58 Called from PID:5117
+[END] Type:Pacjent ID:0 Time:2025-01-18 12:04:58 Called from PID:5125
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:10:14 Called from PID:5170
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:10:14 Called from PID:5172
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:10:14 Called from PID:5171
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:10:14 Called from PID:5173
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:10:14 Called from PID:5174
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:10:14 Called from PID:5175
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:10:14 Called from PID:5176
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:10:14 Called from PID:5177
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:10:14 Called from PID:5178
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:10:14 Called from PID:5178
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:10:14 Called from PID:5170
+[END] Type:Pacjent ID:0 Time:2025-01-18 12:10:14 Called from PID:5178
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:15:35 Called from PID:5233
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:15:35 Called from PID:5232
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:15:35 Called from PID:5234
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:15:35 Called from PID:5236
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:15:35 Called from PID:5235
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:15:35 Called from PID:5237
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:15:35 Called from PID:5240
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:15:35 Called from PID:5239
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:15:35 Called from PID:5240
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:15:35 Called from PID:5238
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:15:35 Called from PID:5232
+[END] Type:Pacjent ID:0 Time:2025-01-18 12:15:35 Called from PID:5240
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:20:43 Called from PID:5267
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:20:43 Called from PID:5266
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:20:43 Called from PID:5268
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:20:43 Called from PID:5270
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:20:43 Called from PID:5269
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:20:43 Called from PID:5272
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:20:43 Called from PID:5273
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:20:43 Called from PID:5271
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:20:43 Called from PID:5274
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:20:43 Called from PID:5274
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:20:43 Called from PID:5266
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 12:20:44 Called from PID:5267
+[SKIEROWANO] Type:Pediatra ID:0 Time:2025-01-18 12:20:44 Called from PID:5267
+[OBSŁUGA] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 12:20:45 Called from PID:5272
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 12:20:55 Called from PID:5272
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:0 Time:2025-01-18 12:20:55 Called from PID:5272
+[WYJSCIE] Type:PACJENT ID:0 Time:2025-01-18 12:20:55 Called from PID:5272
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:21:14 Called from PID:5311
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:21:14 Called from PID:5313
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:21:14 Called from PID:5312
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:21:14 Called from PID:5315
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:21:14 Called from PID:5316
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:21:14 Called from PID:5317
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:21:14 Called from PID:5314
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:21:14 Called from PID:5318
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:21:14 Called from PID:5319
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:21:14 Called from PID:5319
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:21:14 Called from PID:5311
+[START] Type:Rodzic ID:0 Time:2025-01-18 12:21:14 Called from PID:5320
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 12:21:15 Called from PID:5312
+[SKIEROWANO] Type:POZ ID:0 Time:2025-01-18 12:21:15 Called from PID:5312
+[START] Type:Pacjent ID:1 Time:2025-01-18 12:21:15 Called from PID:5323
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 12:21:15 Called from PID:5323
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:21:15 Called from PID:5311
+[OBSŁUGA] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:21:16 Called from PID:5313
+[ODEBRANO] Type:Rejestracja ID:1 Time:2025-01-18 12:21:16 Called from PID:5312
+[SKIEROWANO] Type:Kardiolog ID:1 Time:2025-01-18 12:21:16 Called from PID:5312
+[OBSŁUGA] Type:Lekarz_Specjalista ID:1 Time:2025-01-18 12:21:17 Called from PID:5315
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:21:18 Called from PID:5313
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:21:18 Called from PID:5313
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:1 Time:2025-01-18 12:21:18 Called from PID:5313
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:1 Time:2025-01-18 12:21:27 Called from PID:5315
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:0 Time:2025-01-18 12:21:27 Called from PID:5315
+[WYJSCIE] Type:PACJENT ID:0 Time:2025-01-18 12:21:27 Called from PID:5315
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:21:45 Called from PID:5341
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:21:45 Called from PID:5342
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:21:45 Called from PID:5340
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:21:45 Called from PID:5344
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:21:45 Called from PID:5345
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:21:45 Called from PID:5346
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:21:45 Called from PID:5343
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:21:45 Called from PID:5347
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:21:45 Called from PID:5348
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:21:45 Called from PID:5348
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:21:45 Called from PID:5340
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 12:21:46 Called from PID:5341
+[SKIEROWANO] Type:POZ ID:0 Time:2025-01-18 12:21:46 Called from PID:5341
+[OBSŁUGA] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:21:46 Called from PID:5343
+[START] Type:Pacjent ID:1 Time:2025-01-18 12:21:46 Called from PID:5349
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 12:21:46 Called from PID:5349
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:21:46 Called from PID:5340
+[ODEBRANO] Type:Rejestracja ID:1 Time:2025-01-18 12:21:47 Called from PID:5341
+[SKIEROWANO] Type:POZ ID:1 Time:2025-01-18 12:21:47 Called from PID:5341
+[START] Type:Pacjent ID:2 Time:2025-01-18 12:21:47 Called from PID:5350
+[PRZYJSCIE] Type:Pacjent ID:2 Time:2025-01-18 12:21:47 Called from PID:5350
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:21:47 Called from PID:5340
+[OBSŁUGA] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:21:48 Called from PID:5342
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:21:48 Called from PID:5343
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:21:48 Called from PID:5343
+[WYJSCIE] Type:PACJENT ID:2 Time:2025-01-18 12:21:48 Called from PID:5343
+[ODEBRANO] Type:Rejestracja ID:2 Time:2025-01-18 12:21:48 Called from PID:5341
+[SKIEROWANO] Type:Okulista ID:2 Time:2025-01-18 12:21:48 Called from PID:5341
+[START] Type:Pacjent ID:3 Time:2025-01-18 12:21:48 Called from PID:5351
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:21:48 Called from PID:5340
+[PRZYJSCIE] Type:Pacjent ID:3 Time:2025-01-18 12:21:48 Called from PID:5351
+[OBSŁUGA] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 12:21:49 Called from PID:5345
+[ODEBRANO] Type:Rejestracja ID:3 Time:2025-01-18 12:21:49 Called from PID:5341
+[SKIEROWANO] Type:POZ ID:3 Time:2025-01-18 12:21:49 Called from PID:5341
+[START] Type:Pacjent ID:4 Time:2025-01-18 12:21:49 Called from PID:5352
+[PRZYJSCIE] Type:Pacjent ID:4 Time:2025-01-18 12:21:49 Called from PID:5352
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:21:49 Called from PID:5340
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:21:50 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:21:50 Called from PID:5342
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 12:21:50 Called from PID:5342
+[OBSŁUGA] Type:Lekarz_POZ ID:3 Time:2025-01-18 12:21:50 Called from PID:5342
+[ODEBRANO] Type:Rejestracja ID:4 Time:2025-01-18 12:21:50 Called from PID:5341
+[SKIEROWANO] Type:Kardiolog ID:4 Time:2025-01-18 12:21:50 Called from PID:5341
+[START] Type:Pacjent ID:5 Time:2025-01-18 12:21:50 Called from PID:5353
+[PRZYJSCIE] Type:Pacjent ID:5 Time:2025-01-18 12:21:50 Called from PID:5353
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:21:50 Called from PID:5340
+[START] Type:Rodzic ID:5 Time:2025-01-18 12:21:50 Called from PID:5354
+[OBSŁUGA] Type:Lekarz_Specjalista ID:4 Time:2025-01-18 12:21:51 Called from PID:5344
+[ODEBRANO] Type:Rejestracja ID:5 Time:2025-01-18 12:21:51 Called from PID:5341
+[SKIEROWANO] Type:POZ ID:5 Time:2025-01-18 12:21:51 Called from PID:5341
+[START] Type:Pacjent ID:6 Time:2025-01-18 12:21:51 Called from PID:5355
+[PRZYJSCIE] Type:Pacjent ID:6 Time:2025-01-18 12:21:51 Called from PID:5355
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:3 Time:2025-01-18 12:21:52 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:21:52 Called from PID:5342
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:21:52 Called from PID:5342
+[OBSŁUGA] Type:Lekarz_POZ ID:5 Time:2025-01-18 12:21:52 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:21:52 Called from PID:5340
+[START] Type:Pacjent ID:7 Time:2025-01-18 12:21:52 Called from PID:5356
+[PRZYJSCIE] Type:Pacjent ID:7 Time:2025-01-18 12:21:52 Called from PID:5356
+[ODEBRANO] Type:Rejestracja ID:6 Time:2025-01-18 12:21:53 Called from PID:5341
+[SKIEROWANO] Type:Pediatra ID:6 Time:2025-01-18 12:21:53 Called from PID:5341
+[START] Type:Pacjent ID:8 Time:2025-01-18 12:21:53 Called from PID:5357
+[PRZYJSCIE] Type:Pacjent ID:8 Time:2025-01-18 12:21:53 Called from PID:5357
+[OBSŁUGA] Type:Lekarz_Specjalista ID:6 Time:2025-01-18 12:21:54 Called from PID:5346
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:5 Time:2025-01-18 12:21:54 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:21:54 Called from PID:5342
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:3 Time:2025-01-18 12:21:54 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:21:54 Called from PID:5340
+[START] Type:Pacjent ID:9 Time:2025-01-18 12:21:54 Called from PID:5358
+[PRZYJSCIE] Type:Pacjent ID:9 Time:2025-01-18 12:21:54 Called from PID:5358
+[ODEBRANO] Type:Rejestracja ID:7 Time:2025-01-18 12:21:55 Called from PID:5341
+[SKIEROWANO] Type:POZ ID:7 Time:2025-01-18 12:21:55 Called from PID:5341
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:21:55 Called from PID:5340
+[OBSŁUGA] Type:Lekarz_POZ ID:7 Time:2025-01-18 12:21:56 Called from PID:5342
+[ODEBRANO] Type:Rejestracja ID:8 Time:2025-01-18 12:21:56 Called from PID:5341
+[SKIEROWANO] Type:Okulista ID:8 Time:2025-01-18 12:21:56 Called from PID:5341
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:7 Time:2025-01-18 12:21:58 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:21:58 Called from PID:5342
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:21:58 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:21:58 Called from PID:5340
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 12:21:59 Called from PID:5345
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:21:59 Called from PID:5345
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:21:59 Called from PID:5345
+[OBSŁUGA] Type:Lekarz_Specjalista ID:8 Time:2025-01-18 12:21:59 Called from PID:5345
+[ODEBRANO] Type:Rejestracja ID:9 Time:2025-01-18 12:21:59 Called from PID:5341
+[SKIEROWANO] Type:POZ ID:9 Time:2025-01-18 12:21:59 Called from PID:5341
+[OBSŁUGA] Type:Lekarz_POZ ID:9 Time:2025-01-18 12:22:00 Called from PID:5342
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:4 Time:2025-01-18 12:22:01 Called from PID:5344
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:22:01 Called from PID:5344
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 12:22:01 Called from PID:5344
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:9 Time:2025-01-18 12:22:02 Called from PID:5342
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:22:02 Called from PID:5342
+[WYJSCIE] Type:PACJENT ID:2 Time:2025-01-18 12:22:02 Called from PID:5342
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:6 Time:2025-01-18 12:22:04 Called from PID:5346
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:22:04 Called from PID:5346
+[WYJSCIE] Type:PACJENT ID:1 Time:2025-01-18 12:22:04 Called from PID:5346
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:8 Time:2025-01-18 12:22:09 Called from PID:5345
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:0 Time:2025-01-18 12:22:09 Called from PID:5345
+[WYJSCIE] Type:PACJENT ID:0 Time:2025-01-18 12:22:09 Called from PID:5345
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:28:27 Called from PID:5424
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:28:27 Called from PID:5423
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:28:27 Called from PID:5425
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:28:27 Called from PID:5426
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:28:27 Called from PID:5429
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:28:27 Called from PID:5427
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:28:27 Called from PID:5428
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:28:27 Called from PID:5430
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:28:27 Called from PID:5431
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:28:27 Called from PID:5431
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:28:27 Called from PID:5423
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 12:28:28 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:0 Time:2025-01-18 12:28:28 Called from PID:5424
+[START] Type:Pacjent ID:1 Time:2025-01-18 12:28:28 Called from PID:5434
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 12:28:28 Called from PID:5434
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:28:28 Called from PID:5423
+[OBSŁUGA] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:28:29 Called from PID:5426
+[ODEBRANO] Type:Rejestracja ID:1 Time:2025-01-18 12:28:29 Called from PID:5424
+[SKIEROWANO] Type:Medycyna_pracy ID:1 Time:2025-01-18 12:28:29 Called from PID:5424
+[OBSŁUGA] Type:Lekarz_Specjalista ID:1 Time:2025-01-18 12:28:29 Called from PID:5430
+[START] Type:Pacjent ID:2 Time:2025-01-18 12:28:29 Called from PID:5435
+[PRZYJSCIE] Type:Pacjent ID:2 Time:2025-01-18 12:28:29 Called from PID:5435
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:28:29 Called from PID:5423
+[ODEBRANO] Type:Rejestracja ID:2 Time:2025-01-18 12:28:30 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:2 Time:2025-01-18 12:28:30 Called from PID:5424
+[START] Type:Pacjent ID:3 Time:2025-01-18 12:28:30 Called from PID:5436
+[PRZYJSCIE] Type:Pacjent ID:3 Time:2025-01-18 12:28:30 Called from PID:5436
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:28:30 Called from PID:5423
+[START] Type:Rodzic ID:3 Time:2025-01-18 12:28:30 Called from PID:5437
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:28:31 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:31 Called from PID:5426
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:28:31 Called from PID:5426
+[OBSŁUGA] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:28:31 Called from PID:5426
+[ODEBRANO] Type:Rejestracja ID:3 Time:2025-01-18 12:28:31 Called from PID:5424
+[SKIEROWANO] Type:Pediatra ID:3 Time:2025-01-18 12:28:31 Called from PID:5424
+[START] Type:Pacjent ID:4 Time:2025-01-18 12:28:31 Called from PID:5438
+[PRZYJSCIE] Type:Pacjent ID:4 Time:2025-01-18 12:28:31 Called from PID:5438
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:28:31 Called from PID:5423
+[OBSŁUGA] Type:Lekarz_Specjalista ID:3 Time:2025-01-18 12:28:32 Called from PID:5429
+[ODEBRANO] Type:Rejestracja ID:4 Time:2025-01-18 12:28:32 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:4 Time:2025-01-18 12:28:32 Called from PID:5424
+[START] Type:Pacjent ID:5 Time:2025-01-18 12:28:32 Called from PID:5439
+[PRZYJSCIE] Type:Pacjent ID:5 Time:2025-01-18 12:28:32 Called from PID:5439
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:28:33 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:33 Called from PID:5426
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:28:33 Called from PID:5426
+[OBSŁUGA] Type:Lekarz_POZ ID:4 Time:2025-01-18 12:28:33 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:28:33 Called from PID:5423
+[START] Type:Pacjent ID:6 Time:2025-01-18 12:28:33 Called from PID:5440
+[PRZYJSCIE] Type:Pacjent ID:6 Time:2025-01-18 12:28:33 Called from PID:5440
+[ODEBRANO] Type:Rejestracja ID:5 Time:2025-01-18 12:28:34 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:5 Time:2025-01-18 12:28:34 Called from PID:5424
+[START] Type:Pacjent ID:7 Time:2025-01-18 12:28:34 Called from PID:5441
+[PRZYJSCIE] Type:Pacjent ID:7 Time:2025-01-18 12:28:34 Called from PID:5441
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:4 Time:2025-01-18 12:28:35 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:35 Called from PID:5426
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:28:35 Called from PID:5426
+[OBSŁUGA] Type:Lekarz_POZ ID:5 Time:2025-01-18 12:28:35 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:28:35 Called from PID:5423
+[START] Type:Pacjent ID:8 Time:2025-01-18 12:28:35 Called from PID:5442
+[PRZYJSCIE] Type:Pacjent ID:8 Time:2025-01-18 12:28:35 Called from PID:5442
+[ODEBRANO] Type:Rejestracja ID:6 Time:2025-01-18 12:28:36 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:6 Time:2025-01-18 12:28:36 Called from PID:5424
+[START] Type:Pacjent ID:9 Time:2025-01-18 12:28:36 Called from PID:5443
+[PRZYJSCIE] Type:Pacjent ID:9 Time:2025-01-18 12:28:36 Called from PID:5443
+[OBSŁUGA] Type:Lekarz_POZ ID:6 Time:2025-01-18 12:28:37 Called from PID:5425
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:5 Time:2025-01-18 12:28:37 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:37 Called from PID:5426
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:28:37 Called from PID:5426
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:28:37 Called from PID:5423
+[ODEBRANO] Type:Rejestracja ID:8 Time:2025-01-18 12:28:38 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:8 Time:2025-01-18 12:28:38 Called from PID:5424
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:1 Time:2025-01-18 12:28:39 Called from PID:5430
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:39 Called from PID:5430
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:28:39 Called from PID:5430
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:6 Time:2025-01-18 12:28:39 Called from PID:5425
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:28:39 Called from PID:5425
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 12:28:39 Called from PID:5425
+[OBSŁUGA] Type:Lekarz_POZ ID:8 Time:2025-01-18 12:28:39 Called from PID:5425
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:39 Called from PID:5423
+[ODEBRANO] Type:Rejestracja ID:9 Time:2025-01-18 12:28:40 Called from PID:5424
+[SKIEROWANO] Type:POZ ID:9 Time:2025-01-18 12:28:40 Called from PID:5424
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:28:40 Called from PID:5423
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:8 Time:2025-01-18 12:28:41 Called from PID:5425
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:28:41 Called from PID:5425
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:28:41 Called from PID:5425
+[OBSŁUGA] Type:Lekarz_POZ ID:9 Time:2025-01-18 12:28:41 Called from PID:5425
+[ODEBRANO] Type:Rejestracja ID:7 Time:2025-01-18 12:28:41 Called from PID:5424
+[SKIEROWANO] Type:Medycyna_pracy ID:7 Time:2025-01-18 12:28:41 Called from PID:5424
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:3 Time:2025-01-18 12:28:42 Called from PID:5429
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:28:42 Called from PID:5429
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:2 Time:2025-01-18 12:28:42 Called from PID:5429
+[OBSŁUGA] Type:Lekarz_Specjalista ID:7 Time:2025-01-18 12:28:42 Called from PID:5430
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:9 Time:2025-01-18 12:28:43 Called from PID:5425
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:28:43 Called from PID:5425
+[WYJSCIE] Type:PACJENT ID:1 Time:2025-01-18 12:28:43 Called from PID:5425
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:7 Time:2025-01-18 12:28:52 Called from PID:5430
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:0 Time:2025-01-18 12:28:52 Called from PID:5430
+[WYJSCIE] Type:PACJENT ID:0 Time:2025-01-18 12:28:52 Called from PID:5430
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:31:16 Called from PID:5484
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:31:16 Called from PID:5485
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:31:16 Called from PID:5486
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:31:16 Called from PID:5490
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:31:16 Called from PID:5488
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:31:16 Called from PID:5489
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:31:16 Called from PID:5491
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:31:16 Called from PID:5487
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:31:16 Called from PID:5492
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:31:16 Called from PID:5492
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:1 Time:2025-01-18 12:31:16 Called from PID:5484
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 12:31:17 Called from PID:5485
+[SKIEROWANO] Type:POZ ID:0 Time:2025-01-18 12:31:17 Called from PID:5485
+[START] Type:Pacjent ID:1 Time:2025-01-18 12:31:17 Called from PID:5496
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 12:31:17 Called from PID:5496
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:31:17 Called from PID:5484
+[OBSŁUGA] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:31:18 Called from PID:5486
+[ODEBRANO] Type:Rejestracja ID:1 Time:2025-01-18 12:31:18 Called from PID:5485
+[SKIEROWANO] Type:Okulista ID:1 Time:2025-01-18 12:31:18 Called from PID:5485
+[START] Type:Pacjent ID:2 Time:2025-01-18 12:31:18 Called from PID:5499
+[PRZYJSCIE] Type:Pacjent ID:2 Time:2025-01-18 12:31:18 Called from PID:5499
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:31:18 Called from PID:5484
+[OBSŁUGA] Type:Lekarz_Specjalista ID:1 Time:2025-01-18 12:31:19 Called from PID:5489
+[ODEBRANO] Type:Rejestracja ID:2 Time:2025-01-18 12:31:19 Called from PID:5485
+[SKIEROWANO] Type:POZ ID:2 Time:2025-01-18 12:31:19 Called from PID:5485
+[START] Type:Pacjent ID:3 Time:2025-01-18 12:31:19 Called from PID:5500
+[PRZYJSCIE] Type:Pacjent ID:3 Time:2025-01-18 12:31:19 Called from PID:5500
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:31:19 Called from PID:5484
+[OBSŁUGA] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:31:20 Called from PID:5487
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:0 Time:2025-01-18 12:31:20 Called from PID:5486
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:31:20 Called from PID:5486
+[WYJSCIE] Type:PACJENT ID:3 Time:2025-01-18 12:31:20 Called from PID:5486
+[ODEBRANO] Type:Rejestracja ID:3 Time:2025-01-18 12:31:20 Called from PID:5485
+[SKIEROWANO] Type:Medycyna_pracy ID:3 Time:2025-01-18 12:31:20 Called from PID:5485
+[START] Type:Pacjent ID:4 Time:2025-01-18 12:31:20 Called from PID:5501
+[PRZYJSCIE] Type:Pacjent ID:4 Time:2025-01-18 12:31:20 Called from PID:5501
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:31:20 Called from PID:5484
+[OBSŁUGA] Type:Lekarz_Specjalista ID:3 Time:2025-01-18 12:31:21 Called from PID:5491
+[ODEBRANO] Type:Rejestracja ID:4 Time:2025-01-18 12:31:21 Called from PID:5485
+[SKIEROWANO] Type:POZ ID:4 Time:2025-01-18 12:31:21 Called from PID:5485
+[START] Type:Pacjent ID:5 Time:2025-01-18 12:31:21 Called from PID:5502
+[PRZYJSCIE] Type:Pacjent ID:5 Time:2025-01-18 12:31:21 Called from PID:5502
+[START] Type:Lekarz_Specjalista ID:1237 Time:2025-01-18 12:32:48 Called from PID:5539
+[START] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:32:48 Called from PID:5536
+[START] Type:Lekarz_Specjalista ID:1236 Time:2025-01-18 12:32:48 Called from PID:5538
+[START] Type:Zarzadca_Kolejka_Zewnetrzna ID:0 Time:2025-01-18 12:32:48 Called from PID:5534
+[START] Type:Pacjent ID:0 Time:2025-01-18 12:32:48 Called from PID:5542
+[START] Type:Rejestracja ID:0 Time:2025-01-18 12:32:48 Called from PID:5535
+[START] Type:Lekarz_POZ ID:2 Time:2025-01-18 12:32:48 Called from PID:5537
+[START] Type:Lekarz_Specjalista ID:1238 Time:2025-01-18 12:32:48 Called from PID:5540
+[PRZYJSCIE] Type:Pacjent ID:0 Time:2025-01-18 12:32:48 Called from PID:5542
+[START] Type:Lekarz_Specjalista ID:1239 Time:2025-01-18 12:32:48 Called from PID:5541
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:32:48 Called from PID:5534
+[START] Type:Rodzic ID:5 Time:2025-01-18 12:32:48 Called from PID:5543
+[ODEBRANO] Type:Rejestracja ID:5 Time:2025-01-18 12:32:49 Called from PID:5535
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:32:49 Called from PID:5534
+[SKIEROWANO] Type:Pediatra ID:5 Time:2025-01-18 12:32:49 Called from PID:5535
+[ODEBRANO] Type:Rejestracja ID:0 Time:2025-01-18 12:32:49 Called from PID:5535
+[SKIEROWANO] Type:Okulista ID:0 Time:2025-01-18 12:32:49 Called from PID:5535
+[START] Type:Pacjent ID:1 Time:2025-01-18 12:32:49 Called from PID:5552
+[PRZYJSCIE] Type:Pacjent ID:1 Time:2025-01-18 12:32:49 Called from PID:5552
+[OBSŁUGA] Type:Lekarz_Specjalista ID:5 Time:2025-01-18 12:32:50 Called from PID:5540
+[OBSŁUGA] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 12:32:50 Called from PID:5539
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:32:50 Called from PID:5534
+[START] Type:Pacjent ID:2 Time:2025-01-18 12:32:50 Called from PID:5553
+[PRZYJSCIE] Type:Pacjent ID:2 Time:2025-01-18 12:32:50 Called from PID:5553
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:32:51 Called from PID:5534
+[ODEBRANO] Type:Rejestracja ID:1 Time:2025-01-18 12:32:51 Called from PID:5535
+[SKIEROWANO] Type:POZ ID:1 Time:2025-01-18 12:32:51 Called from PID:5535
+[ODEBRANO] Type:Rejestracja ID:2 Time:2025-01-18 12:32:51 Called from PID:5535
+[SKIEROWANO] Type:Medycyna_pracy ID:2 Time:2025-01-18 12:32:51 Called from PID:5535
+[START] Type:Pacjent ID:3 Time:2025-01-18 12:32:51 Called from PID:5554
+[PRZYJSCIE] Type:Pacjent ID:3 Time:2025-01-18 12:32:51 Called from PID:5554
+[OBSŁUGA] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:32:52 Called from PID:5536
+[OBSŁUGA] Type:Lekarz_Specjalista ID:2 Time:2025-01-18 12:32:52 Called from PID:5541
+[START] Type:Pacjent ID:4 Time:2025-01-18 12:32:52 Called from PID:5555
+[PRZYJSCIE] Type:Pacjent ID:4 Time:2025-01-18 12:32:52 Called from PID:5555
+[START] Type:Pacjent ID:5 Time:2025-01-18 12:32:53 Called from PID:5556
+[PRZYJSCIE] Type:Pacjent ID:5 Time:2025-01-18 12:32:53 Called from PID:5556
+[ZAKOŃCZONO] Type:Lekarz_POZ ID:1 Time:2025-01-18 12:32:54 Called from PID:5536
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:32:54 Called from PID:5536
+[WYJSCIE] Type:PACJENT ID:4 Time:2025-01-18 12:32:54 Called from PID:5536
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:5 Time:2025-01-18 12:32:54 Called from PID:5534
+[ODEBRANO] Type:Rejestracja ID:4 Time:2025-01-18 12:32:54 Called from PID:5535
+[SKIEROWANO] Type:Pediatra ID:4 Time:2025-01-18 12:32:54 Called from PID:5535
+[START] Type:Pacjent ID:6 Time:2025-01-18 12:32:54 Called from PID:5557
+[PRZYJSCIE] Type:Pacjent ID:6 Time:2025-01-18 12:32:54 Called from PID:5557
+[START] Type:Pacjent ID:7 Time:2025-01-18 12:32:55 Called from PID:5558
+[PRZYJSCIE] Type:Pacjent ID:7 Time:2025-01-18 12:32:55 Called from PID:5558
+[START] Type:Pacjent ID:8 Time:2025-01-18 12:32:56 Called from PID:5559
+[PRZYJSCIE] Type:Pacjent ID:8 Time:2025-01-18 12:32:56 Called from PID:5559
+[START] Type:Pacjent ID:9 Time:2025-01-18 12:32:57 Called from PID:5562
+[PRZYJSCIE] Type:Pacjent ID:9 Time:2025-01-18 12:32:57 Called from PID:5562
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:5 Time:2025-01-18 12:33:00 Called from PID:5540
+[ZAKOŃCZONO] Type:Lekarz_Specjalista ID:0 Time:2025-01-18 12:33:00 Called from PID:5539
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:33:00 Called from PID:5540
+[WYJSCIE] Type:PACJENT Z RODZICEM ID:3 Time:2025-01-18 12:33:00 Called from PID:5540
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:2 Time:2025-01-18 12:33:00 Called from PID:5539
+[OBSŁUGA] Type:Lekarz_Specjalista ID:4 Time:2025-01-18 12:33:00 Called from PID:5540
+[WYJSCIE] Type:PACJENT ID:2 Time:2025-01-18 12:33:00 Called from PID:5539
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:3 Time:2025-01-18 12:33:00 Called from PID:5534
+[ODEBRANO] Type:Rejestracja ID:5 Time:2025-01-18 12:33:00 Called from PID:5535
+[SKIEROWANO] Type:POZ ID:5 Time:2025-01-18 12:33:00 Called from PID:5535
+[ZMIANA LICZBY OSOB] Type:Zmien liczbe ID:4 Time:2025-01-18 12:33:01 Called from PID:5534
+[OBSŁUGA] Type:Lekarz_POZ ID:5 Time:2025-01-18 12:33:01 Called from PID:5536
+[ODEBRANO] Type:Rejestracja ID:8 Time:2025-01-18 12:33:01 Called from PID:5535
+[SKIEROWANO] Type:Medycyna_pracy ID:8 Time:2025-01-18 12:33:01 Called from PID:5535

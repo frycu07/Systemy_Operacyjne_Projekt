@@ -23,6 +23,7 @@ int *liczba_osob;
 void cleanup_on_exit() {
     shmctl(shm_id, IPC_RMID, NULL); // Usuwanie pamięci współdzielonej
     usun_semafor_liczba_osob();
+    wyczysc_kolejki(); // Usuwanie kolejek
     printf("Wszystkie zasoby zostały wyczyszczone.\n");
     exit(0);
 }
@@ -62,7 +63,9 @@ void* monitoruj_kolejke_thread(void* arg) {
 int main() {
     pthread_t cleaner_thread, monitor_thread;
     zakonczenie_poprzednich_procesow();
-    wyczysc_kolejki(); // Usuwanie kolejek
+    signal(SIGINT, signal_handler);
+    signal(SIGTERM, signal_handler);
+
     srand(time(NULL));  // Inicjalizacja generatora liczb losowych
 
 
@@ -152,9 +155,9 @@ int main() {
     }
 
     // Tworzenie procesów pacjentów
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 10; i++) {
         if (fork() == 0) {
-            printf("Przyszedł pacjent ID: %d\n", i);
+            printf("KROK 1 Przyszedł pacjent ID: %d\n", i);
             pacjent(i);
             log_process("END", "Pacjent", i);
             exit(0);
@@ -169,12 +172,7 @@ int main() {
     // Oczekiwanie na zakończenie procesów
     while (wait(NULL) > 0);
 
-    // Usunięcie pamięci współdzielonej
-    shmctl(shm_id, IPC_RMID, NULL);
-
-    //usuniecie semafora
-
-    usun_semafor_liczba_osob();
+    cleanup_on_exit();
 
     return 0;
 }

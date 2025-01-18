@@ -36,7 +36,7 @@ void pacjent(int id) {
     Komunikat komunikat = {1, pacjent};
 
     msgsnd(kolejka_zewnetrzna, &komunikat, sizeof(Pacjent), 0);
-    printf("Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
+    printf("KROK 2 Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
            id,
            priorytet ? " (VIP)" : "",
            rodzic_obecny ? " (z rodzicem)" : "",
@@ -61,28 +61,7 @@ void pacjent(int id) {
             perror("Błąd otwierania kolejki rejestracyjnej");
             exit(1);
         }
-
-        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), id + 1, IPC_NOWAIT) != -1) {
-            // Aktualizacja liczby osób w przychodni
-            if (rodzic_obecny) {
-                zmien_liczba_osob(2); // Jeśli pacjent z rodzicem, zwiększ o 2
-            } else {
-                zmien_liczba_osob(1); // Jeśli pacjent sam, zwiększ o 1
-            }
-
-            printf("Pacjent ID: %d%s%s wszedł do przychodni i został zarejestrowany.\n",
-                   id,
-                   priorytet ? " (VIP)" : "",
-                   rodzic_obecny ? " (z rodzicem)" : "");
-
-            break;
-        } else {
-            sleep(1);
-        }
     }
-
-    log_process("END", "Pacjent", id);
-    exit(0);
 }
 
 void zmien_liczba_osob(int zmiana) {

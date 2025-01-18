@@ -32,11 +32,11 @@ void rejestracja(int id) {
 
         // Odbiór pacjenta z kolejki rejestracji
         if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, IPC_NOWAIT) != -1) {
-            printf("Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat.pacjent.id);
+            printf("KROK 4 Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat.pacjent.id);
 
             // Logowanie odbioru pacjenta
             log_process("ODEBRANO", "Rejestracja", komunikat.pacjent.id);
-
+            printf("KROK 5");
             // Skierowanie pacjenta do odpowiedniej kolejki
             switch (komunikat.pacjent.lekarz) {
                 case 0: // POZ
@@ -124,9 +124,9 @@ void zarzadz_kolejka_zewnetrzna() {
                 }
 
                 // Wysyłanie pacjenta do kolejki rejestracyjnej
-                komunikat.typ = komunikat.pacjent.id + 1;
+                komunikat.typ = 1;
                 msgsnd(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0);
-                printf("Pacjent ID: %d%s%s został wpuszczony do przychodni z kolejki zewnętrznej.\n",
+                printf("KROK 3 Pacjent ID: %d%s%s został wpuszczony do przychodni z kolejki zewnętrznej.\n",
                        komunikat.pacjent.id,
                        komunikat.pacjent.priorytet ? " (VIP)" : "",
                        komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
