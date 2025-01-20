@@ -7,11 +7,19 @@ struct ZarzadzanieArgumenty {
     int kolejka_rejestracja;
 };
 
-void rejestracja(int id);
+typedef struct {
+    int id;               // ID pacjenta
+    char skierowanie_do[50]; // Gdzie skierowano pacjenta (np. "Kardiolog")
+    char wystawil[50];    // Kto wystawił skierowanie (np. "Rejestracja")
+} RaportPacjenta;
+
+
+void rejestracja(int id, int semafor_rejestracja);
 void zakoncz_wizyte(Pacjent pacjent);
 int aktualna_godzina();
 void zarzadz_kolejka_zewnetrzna();
-void zarzadz_okienkami(void *argumenty);
-void monitoruj_kolejke_rejestracja(int N, int kolejka_rejestracja);
+void zarzadz_i_monitoruj_rejestracje(void *argumenty);
+void zapisz_do_raportu(RaportPacjenta pacjent);
+
 
 #endif

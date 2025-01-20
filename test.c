@@ -1,28 +1,10 @@
-#include "kolejka.h"
-#include <unistd.h>
-#include "pacjent.h"
-#include "rejestracja.h"
-#include "lekarz.h"
-#include <sys/sem.h>
-#include <sys/ipc.h>
-#include <sys/shm.h>
-#include "czas.h"
-#include "procesy.h"
-#include <signal.h>
-#include <pthread.h>
-#include <errno.h>
+#include "main.c"
+#include "pacjent.c"
 
-int test_porownaj_czas(){
-    Czas czas3 = {22, 15};
-    Czas czas4 = {22, 30};
-    int wynik = porownaj_czas(czas3, czas4);
-    if(wynik != -1){
-        return 1;
-    }
-    return 0;
-  }
-
-
-  int main(){
-    printf("Test porownaj_czas: %s\n", test_porownaj_czas() ? "FAILED" : "PASSED");
-    }
+int main() {
+    shmctl(shm_id, IPC_RMID, NULL); // Usuwanie pamięci współdzielonej
+    semctl(semafor_rejestracja, 0, IPC_RMID); // Usuwanie semafora rejestracji
+    wyczysc_kolejki(); // Usuwanie kolejek
+    printf("Wszystkie zasoby zostały wyczyszczone.\n");
+    exit(0);
+}

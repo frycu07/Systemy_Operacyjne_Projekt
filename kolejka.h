@@ -11,7 +11,7 @@
 #define KOLEJKA_ZEWNETRZNA 1230 // Kolejka zewnętrzna
 
 // Limity pacjentów dla lekarzy
-#define X1 10 // Limit dla każdego lekarza POZ
+#define X1 20 // Limit dla każdego lekarza POZ
 #define X2 5  // Limit dla kardiologa
 #define X3 5  // Limit dla okulisty
 #define X4 5  // Limit dla pediatry
@@ -26,7 +26,7 @@
 void wyczysc_kolejki();
 
 // Maksymalna liczba osób w przychodni
-#define MAX_OSOB_W_PRZYCHODNI 5
+#define MAX_OSOB_W_PRZYCHODNI 30
 
 // Globalna zmienna liczby osób
 extern int *liczba_osob;
@@ -35,12 +35,19 @@ extern int *liczba_osob;
 #define KOLEJKA_REJESTRACJA 1240
 
 // Funkcje związane z semaforami
+
 void sprawdz_wartosc_semafora();
 void stworz_semafor_liczba_osob(key_t klucz);
 void usun_semafor_liczba_osob() ;
 void zablokuj_semafor() ;
 void odblokuj_semafor() ;
 
+int stworz_semafor(key_t klucz);
+void ustaw_wartosc_semafora(int semafor, int wartosc);
+int pobierz_wartosc_semafora(int semafor);
+void zwieksz_semafor(int semafor);
+void zmniejsz_semafor(int semafor);
+void usun_semafor(int semafor);
 
 
 #endif

@@ -3,6 +3,10 @@
 #include <time.h>
 #include <unistd.h>
 #include "procesy.h"
+#include <stdbool.h>
+#include <sys/sem.h>
+
+#include "kolejka.h"
 
 // Funkcja do uzyskania aktualnego czasu w formacie tekstowym
 const char* current_time_string() {
@@ -32,8 +36,10 @@ void log_process(const char* status, const char* type, int id) {
     }
 }
 
+
 void zakonczenie_poprzednich_procesow() {
     char command[100];
     sprintf(command, "pkill -f %s", "Projekt_SO"); // Zamienia "Projekt_SO" na nazwę programu
     system(command); // Wymusza zakończenie procesów
 }
+
