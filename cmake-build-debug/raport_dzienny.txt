@@ -1,0 +1,8 @@
+ID Pacjenta: 0
+Skierowanie do: KARDIOLOG
+Wystawił: REJESTRACJA
+------------------------
+ID Pacjenta: 0
+Skierowanie do: KARDIOLOG
+Wystawił: REJESTRACJA
+------------------------
