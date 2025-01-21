@@ -1,16 +1,28 @@
 cmake_minimum_required(VERSION 3.30)
+
 project(Projekt_SO)
 
+#set(CMAKE_C_STANDARD 99)
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Projekt_SO
+# Plik wykonywalny dla "main"
+add_executable(main
         main.c
-        pacjent.c
+        kolejka.c
+
+)
+
+# Plik wykonywalny dla "rejestracja"
+add_executable(rejestracja
         rejestracja.c
-        lekarz.c
-        semafor.c
-        czas.c
-        procesy.c
         kolejka.c
 )
-target_link_libraries(Projekt_SO pthread)
+
+add_executable(pacjent
+        pacjent.c
+        kolejka.c
+)
+# Dodanie biblioteki pthread do plików
+target_link_libraries(main pthread)
+target_link_libraries(rejestracja pthread)
+target_link_libraries(pacjent pthread)

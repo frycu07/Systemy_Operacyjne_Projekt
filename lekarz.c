@@ -55,7 +55,7 @@ void lekarz_poz(int id, int limit_pacjentow) {
                    pacjenci_obsluzeni, limit_pacjentow);
 
             log_process("ZAKOŃCZONO", "Lekarz_POZ", komunikat.pacjent.id); // Log zakończenia obsługi
-            zakoncz_wizyte(komunikat.pacjent); // Zakończenie wizyty dla pacjenta (uwzględnia rodzica)
+           // zakoncz_wizyte(komunikat.pacjent); // Zakończenie wizyty dla pacjenta (uwzględnia rodzica)
         } else {
             sleep(1); // Czekanie na pacjentów
         }
@@ -103,7 +103,7 @@ void lekarz_specjalista(int typ_kolejki, int limit_pacjentow) {
                    limit_pacjentow);
 
             log_process("ZAKOŃCZONO", "Lekarz_Specjalista", komunikat.pacjent.id);
-            zakoncz_wizyte(komunikat.pacjent);
+            //zakoncz_wizyte(komunikat.pacjent);
         } else {
             sleep(1);
         }

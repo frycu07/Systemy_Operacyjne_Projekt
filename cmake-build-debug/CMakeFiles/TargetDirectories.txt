@@ -1,3 +1,5 @@
-/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/CMakeFiles/Projekt_SO.dir
+/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/CMakeFiles/main.dir
+/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/CMakeFiles/rejestracja.dir
+/Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/CMakeFiles/pacjent.dir
 /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/CMakeFiles/edit_cache.dir
 /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/CMakeFiles/rebuild_cache.dir

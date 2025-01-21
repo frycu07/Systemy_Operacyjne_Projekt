@@ -1,6 +1,4 @@
 #include <sys/sem.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "kolejka.h"
 
 int semafor_liczba_osob;

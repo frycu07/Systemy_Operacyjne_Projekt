@@ -41,78 +41,118 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target Projekt_SO
+# Object build statements for EXECUTABLE target main
 
 
 #############################################
-# Order-only phony target for Projekt_SO
+# Order-only phony target for main
 
-build cmake_object_order_depends_target_Projekt_SO: phony || .
+build cmake_object_order_depends_target_main: phony || .
 
-build CMakeFiles/Projekt_SO.dir/main.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/main.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/main.c.o.d
+build CMakeFiles/main.dir/main.c.o: C_COMPILER__main_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/main.c || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/main.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir
 
-build CMakeFiles/Projekt_SO.dir/pacjent.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/pacjent.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/pacjent.c.o.d
+build CMakeFiles/main.dir/kolejka.c.o: C_COMPILER__main_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_main
+  DEP_FILE = CMakeFiles/main.dir/kolejka.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
-
-build CMakeFiles/Projekt_SO.dir/rejestracja.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/rejestracja.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/rejestracja.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
-
-build CMakeFiles/Projekt_SO.dir/lekarz.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/lekarz.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/lekarz.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
-
-build CMakeFiles/Projekt_SO.dir/semafor.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/semafor.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/semafor.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
-
-build CMakeFiles/Projekt_SO.dir/czas.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/czas.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/czas.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
-
-build CMakeFiles/Projekt_SO.dir/procesy.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/procesy.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/procesy.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
-
-build CMakeFiles/Projekt_SO.dir/kolejka.c.o: C_COMPILER__Projekt_SO_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_Projekt_SO
-  DEP_FILE = CMakeFiles/Projekt_SO.dir/kolejka.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
-  OBJECT_FILE_DIR = CMakeFiles/Projekt_SO.dir
+  OBJECT_DIR = CMakeFiles/main.dir
+  OBJECT_FILE_DIR = CMakeFiles/main.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target Projekt_SO
+# Link build statements for EXECUTABLE target main
 
 
 #############################################
-# Link the executable Projekt_SO
+# Link the executable main
 
-build Projekt_SO: C_EXECUTABLE_LINKER__Projekt_SO_Debug CMakeFiles/Projekt_SO.dir/main.c.o CMakeFiles/Projekt_SO.dir/pacjent.c.o CMakeFiles/Projekt_SO.dir/rejestracja.c.o CMakeFiles/Projekt_SO.dir/lekarz.c.o CMakeFiles/Projekt_SO.dir/semafor.c.o CMakeFiles/Projekt_SO.dir/czas.c.o CMakeFiles/Projekt_SO.dir/procesy.c.o CMakeFiles/Projekt_SO.dir/kolejka.c.o
+build main: C_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/main.c.o CMakeFiles/main.dir/kolejka.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = -lpthread
-  OBJECT_DIR = CMakeFiles/Projekt_SO.dir
+  OBJECT_DIR = CMakeFiles/main.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = Projekt_SO
-  TARGET_PDB = Projekt_SO.dbg
+  TARGET_FILE = main
+  TARGET_PDB = main.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target rejestracja
+
+
+#############################################
+# Order-only phony target for rejestracja
+
+build cmake_object_order_depends_target_rejestracja: phony || .
+
+build CMakeFiles/rejestracja.dir/rejestracja.c.o: C_COMPILER__rejestracja_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/rejestracja.c || cmake_object_order_depends_target_rejestracja
+  DEP_FILE = CMakeFiles/rejestracja.dir/rejestracja.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/rejestracja.dir
+  OBJECT_FILE_DIR = CMakeFiles/rejestracja.dir
+
+build CMakeFiles/rejestracja.dir/kolejka.c.o: C_COMPILER__rejestracja_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_rejestracja
+  DEP_FILE = CMakeFiles/rejestracja.dir/kolejka.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/rejestracja.dir
+  OBJECT_FILE_DIR = CMakeFiles/rejestracja.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target rejestracja
+
+
+#############################################
+# Link the executable rejestracja
+
+build rejestracja: C_EXECUTABLE_LINKER__rejestracja_Debug CMakeFiles/rejestracja.dir/rejestracja.c.o CMakeFiles/rejestracja.dir/kolejka.c.o
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
+  LINK_LIBRARIES = -lpthread
+  OBJECT_DIR = CMakeFiles/rejestracja.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = rejestracja
+  TARGET_PDB = rejestracja.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target pacjent
+
+
+#############################################
+# Order-only phony target for pacjent
+
+build cmake_object_order_depends_target_pacjent: phony || .
+
+build CMakeFiles/pacjent.dir/pacjent.c.o: C_COMPILER__pacjent_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/pacjent.c || cmake_object_order_depends_target_pacjent
+  DEP_FILE = CMakeFiles/pacjent.dir/pacjent.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/pacjent.dir
+  OBJECT_FILE_DIR = CMakeFiles/pacjent.dir
+
+build CMakeFiles/pacjent.dir/kolejka.c.o: C_COMPILER__pacjent_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_pacjent
+  DEP_FILE = CMakeFiles/pacjent.dir/kolejka.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/pacjent.dir
+  OBJECT_FILE_DIR = CMakeFiles/pacjent.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target pacjent
+
+
+#############################################
+# Link the executable pacjent
+
+build pacjent: C_EXECUTABLE_LINKER__pacjent_Debug CMakeFiles/pacjent.dir/pacjent.c.o CMakeFiles/pacjent.dir/kolejka.c.o
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
+  LINK_LIBRARIES = -lpthread
+  OBJECT_DIR = CMakeFiles/pacjent.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = pacjent
+  TARGET_PDB = pacjent.dbg
 
 
 #############################################
@@ -148,7 +188,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug
 
-build all: phony Projekt_SO
+build all: phony main rejestracja pacjent
 
 # =============================================================================
 # Built-in targets
