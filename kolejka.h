@@ -23,6 +23,14 @@
 #define KOLEJKA_PEDIATRA 1238      // Kolejka dla pediatry
 #define KOLEJKA_MEDYCYNA_PRACY 1239 // Kolejka dla lekarza medycyny pracy
 
+#define KOLEJKA_BADAŃ_BASE 2000 // Podstawowy numer dla kolejek badań ambulatoryjnych
+
+#define KOLEJKA_BADAŃ_KARDIOLOG (KOLEJKA_KARDIOLOG + KOLEJKA_BADAŃ_BASE) // Kolejka badań dla kardiologa
+#define KOLEJKA_BADAŃ_OKULISTA (KOLEJKA_OKULISTA + KOLEJKA_BADAŃ_BASE)   // Kolejka badań dla okulisty
+#define KOLEJKA_BADAŃ_PEDIATRA (KOLEJKA_PEDIATRA + KOLEJKA_BADAŃ_BASE)   // Kolejka badań dla pediatry
+#define KOLEJKA_BADAŃ_MEDYCYNA_PRACY (KOLEJKA_MEDYCYNA_PRACY + KOLEJKA_BADAŃ_BASE) // Kolejka dla medycyny pracy
+
+
 void wyczysc_kolejki();
 
 // Maksymalna liczba osób w przychodni

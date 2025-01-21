@@ -11,6 +11,7 @@
 #include <signal.h>
 #include <pthread.h>
 #include <errno.h>
+#include "dyrektor.h"
 
 // Klucz dla pamięci współdzielonej
 #define PAMIEC_WSPOLDZIELONA_KLUCZ 6789
@@ -24,7 +25,7 @@ bool zasoby_wyczyszczone = false;
 
 // Cleanup i signal handler
 void cleanup_on_exit() {
-    int a = 0; //DEBUG
+    int a = 1; //DEBUG
     if (a) printf("[CLEANUP_ON_EXIT] zasoby_wyczyszczone = %d\n", zasoby_wyczyszczone);
     if (zasoby_wyczyszczone) {
         printf("[CLEANUP_ON_EXIT][DEBUG] Zasoby już zostały wyczyszczone. Pomijam.\n");
@@ -128,84 +129,94 @@ int main() {
     key_t klucz_semafora_rejestracja = 1233; // Unikalny klucz semafora
     semafor_rejestracja = stworz_semafor(klucz_semafora_rejestracja);
 
-    if (semafor_rejestracja == -1) {
-        perror("[ERROR] Nie udało się utworzyć semafora dla rejestracji");
-        exit(1);
-    }
-    zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
-    if (a) printf("[MAIN][DEBUG] Semafor rejestracji został utworzony (warrosc = %d)\n", semafor_rejestracja);
+     if (semafor_rejestracja == -1) {
+         perror("[ERROR] Nie udało się utworzyć semafora dla rejestracji");
+         exit(1);
+     }
+     zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
+     if (a) printf("[MAIN][DEBUG] Semafor rejestracji został utworzony (warrosc = %d)\n", semafor_rejestracja);
+    pid_t pid;
 
-    if (fork() == 0) {
-        int a = 0; //DEBUG
-        if (a)printf("[MAIN][DEBUG] Uruchamiam proces rejestracji (ID: 0)\n");
-        rejestracja(0, semafor_rejestracja);
-        if (a)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = Rejestracja 0\n", getpid());
-        log_process("END", "Rejestracja", 0);
-        exit(0);
-    }
-    if (fork() == 0) {
-        zarzadz_kolejka_zewnetrzna();
-        printf("[DEBUG] Uruchomiono proces: PID = %d, typ = Zarzadzanie kolejka zew\n", getpid());
-        exit(0);
-    }
+    pid = fork(); // Create a new process
 
-    // Tworzenie kolejki rejestracji
-    int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
-    if (kolejka_rejestracja == -1) {
-        perror("Błąd tworzenia kolejki rejestracji");
-        exit(1);
-    }
+//     if (fork() == 0) {
+//         int a = 0; //DEBUG
+//         if (a)printf("[MAIN][DEBUG] Uruchamiam proces rejestracji (ID: 0)\n");
+//         rejestracja(0, semafor_rejestracja); // dodac funkcje execl(), dodac main, kompilkowac niezaleznie.
+//         if (a)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = Rejestracja 0\n", getpid());
+//         log_process("END", "Rejestracja", 0);
+//         exit(0);
+//     }
+//     if (fork() == 0) {
+//         zarzadz_kolejka_zewnetrzna();
+//         printf("[DEBUG] Uruchomiono proces: PID = %d, typ = Zarzadzanie kolejka zew\n", getpid());
+//         exit(0);
+//     }
+//
+//     // Tworzenie kolejki rejestracji
+//     int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
+//     if (kolejka_rejestracja == -1) {
+//         perror("Błąd tworzenia kolejki rejestracji");
+//         exit(1);
+//     }
+//
+//     ArgumentyRejestracja args = {kolejka_rejestracja, semafor_rejestracja, MAX_OSOB_W_PRZYCHODNI};
+//     if (pthread_create(&monitor_thread, NULL, (void *)zarzadz_i_monitoruj_rejestracje, (void *)&args) != 0) {
+//         perror("Błąd tworzenia wątku monitorującego");
+//         exit(1);
+//     }
+//
+//     int b = 1; // TWORZENIE LEKARZY
+//     pid_t pid_poz1, pid_poz2, pid_spec[4];
+//     if ((pid_poz1 = fork() == 0)) {
+//         lekarz_poz(1, X1);
+//         if (b)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ1\n", getpid());
+//         log_process("END", "Lekarz_POZ", 1);
+//         exit(0);
+//     }
+//
+//     if ((pid_poz2 = fork() == 0)) {
+//         sleep(1);
+//         lekarz_poz(2, X1);
+//         if (b)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ2\n", getpid());
+//         log_process("END", "Lekarz_POZ", 2);
+//         exit(0);
+//     }
+//
+//     int kolejki_specjalistow[] = {KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
+//     int limity_specjalistow[] = {X2, X3, X4, X5};
+//
+//     for (int i = 0; i < 4; i++) {
+//         if ((pid_spec[i] = fork()) == 0) {
+//             sleep(1);
+//             lekarz_specjalista(kolejki_specjalistow[i], limity_specjalistow[i]);
+//             if (b)printf("[DEBUG] Uruchomiono proces: PID = %d, typ = %x \n", getpid(), kolejki_specjalistow[i]);
+//             log_process("END", "Lekarz_Specjalista", kolejki_specjalistow[i]);
+//             exit(0);
+//         }
+//     }
+//     // Inicjalizacja procesu dyrektora
+//     // if (fork() == 0) {
+//     //     dyrektor();
+//     //     exit(0);
+//     // }
+//     // zarejestruj_pid_lekarzy(pid_poz1, pid_poz2, pid_spec);
+//     // Tworzenie wątku do oczyszczania zakończonych procesów
+     if (pthread_create(&cleaner_thread, NULL, process_cleaner, NULL) != 0) {
+         perror("Błąd tworzenia wątku czyszczącego");
+         exit(1);
+     }
 
-    ArgumentyRejestracja args = {kolejka_rejestracja, semafor_rejestracja, MAX_OSOB_W_PRZYCHODNI};
-    if (pthread_create(&monitor_thread, NULL, (void *)zarzadz_i_monitoruj_rejestracje, (void *)&args) != 0) {
-        perror("Błąd tworzenia wątku monitorującego");
-        exit(1);
-    }
-
-    int b = 1; // TWORZENIE LEKARZY
-
-    if (fork() == 0) {
-        lekarz_poz(1, X1);
-        if (b)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ1\n", getpid());
-        log_process("END", "Lekarz_POZ", 1);
-        exit(0);
-    }
-
-    if (fork() == 0) {
-        lekarz_poz(2, X1);
-        if (b)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ2\n", getpid());
-        log_process("END", "Lekarz_POZ", 2);
-        exit(0);
-    }
-
-    int kolejki_specjalistow[] = {KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
-    int limity_specjalistow[] = {X2, X3, X4, X5};
-
-    for (int i = 0; i < 4; i++) {
-        if (fork() == 0) {
-            lekarz_specjalista(kolejki_specjalistow[i], limity_specjalistow[i]);
-            if (b)printf("[DEBUG] Uruchomiono proces: PID = %d, typ = %x\n", getpid(), kolejki_specjalistow[i]);
-            log_process("END", "Lekarz_Specjalista", kolejki_specjalistow[i]);
-            exit(0);
-        }
-    }
-
-    // Tworzenie wątku do oczyszczania zakończonych procesów
-    if (pthread_create(&cleaner_thread, NULL, process_cleaner, NULL) != 0) {
-        perror("Błąd tworzenia wątku czyszczącego");
-        exit(1);
-    }
-
-    // Tworzenie procesów pacjentów
-    for (int i = 0; i < 100; i++) {
-        if (fork() == 0) {
-            printf("KROK 1 Przyszedł pacjent ID: %d\n", i);
-            pacjent(i);
-            log_process("END", "Pacjent", i);
-            exit(0);
-        }
-        sleep(1); // Symulacja przybywania pacjentów
-    }
+//     // Tworzenie procesów pacjentów
+//     for (int i = 0; i < 100; i++) {
+//         if (fork() == 0) {
+//             printf("KROK 1 Przyszedł pacjent ID: %d\n", i);
+//             pacjent(i);
+//             log_process("END", "Pacjent", i);
+//             exit(0);
+//         }
+//         sleep(1); // Symulacja przybywania pacjentów
+//     }
 //sleep(10);
     // Oczekiwanie na zakończenie wątków
     pthread_join(monitor_thread, NULL);
@@ -213,6 +224,6 @@ int main() {
 
     // Oczekiwanie na zakończenie procesów
     while (wait(NULL) > 0);
-
+    cleanup_on_exit();
     return 0;
 }

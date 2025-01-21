@@ -21,7 +21,7 @@ void signal_handler_lekarz(int sig) {
 void lekarz_poz(int id, int limit_pacjentow) {
     signal(SIGTERM, signal_handler_lekarz);
     log_process("START", "Lekarz_POZ", id); // Logowanie rozpoczęcia pracy lekarza POZ
-    printf("Lekarz POZ %d: Rozpoczęto pracę. Limit pacjentów: %d\n, PID: %d\n", id, limit_pacjentow, getpid());
+    printf("Lekarz POZ %d: Rozpoczęto pracę. Limit pacjentów: %d, PID: %d\n", id, limit_pacjentow, getpid());
 
 
     int kolejka = msgget(KOLEJKA_POZ, IPC_CREAT | 0666);
@@ -39,7 +39,7 @@ void lekarz_poz(int id, int limit_pacjentow) {
             printf("Lekarz POZ %d: Limit pacjentów osiągnięty. Kończę pracę.\n", id);
             break;
         }
-        if (msgrcv(kolejka, &komunikat, sizeof(Pacjent), 0, IPC_NOWAIT) != -1) {
+        if (msgrcv(kolejka, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
             printf("KROK 6 Lekarz POZ %d: Obsługuję pacjenta ID: %d%s\n",
                    id, komunikat.pacjent.id,
                    komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
@@ -70,7 +70,7 @@ void lekarz_poz(int id, int limit_pacjentow) {
 
 void lekarz_specjalista(int typ_kolejki, int limit_pacjentow) {
     log_process("START", "Lekarz_Specjalista", typ_kolejki);
-    printf("Lekarz Specjalista  %d: Rozpoczęto pracę. Limit pacjentów: %d\n, PID: %d\n", typ_kolejki, limit_pacjentow, getpid());
+    printf("Lekarz Specjalista  %d: Rozpoczęto pracę. Limit pacjentów: %d, PID: %d\n", typ_kolejki, limit_pacjentow, getpid());
     int kolejka = msgget(typ_kolejki, IPC_CREAT | 0666);
     if (kolejka == -1) {
         perror("Błąd otwierania kolejki specjalisty");
@@ -82,7 +82,7 @@ void lekarz_specjalista(int typ_kolejki, int limit_pacjentow) {
     while (pacjenci_obsluzeni < limit_pacjentow) {
         Komunikat komunikat;
 
-        if (msgrcv(kolejka, &komunikat, sizeof(Pacjent), 0, IPC_NOWAIT) != -1) {
+        if (msgrcv(kolejka, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
             printf("KROK 6 Lekarz specjalista (typ kolejki: %d): Obsługuję pacjenta ID: %d%s%s\n",
                    typ_kolejki,
                    komunikat.pacjent.id,

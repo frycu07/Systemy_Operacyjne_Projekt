@@ -37,7 +37,7 @@ void rejestracja(int id, int semafor_rejestracja) {
         Komunikat komunikat;
 
         // Odbiór pacjenta z kolejki rejestracji
-        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, IPC_NOWAIT) != -1) {
+        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
             printf("KROK 4 Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat.pacjent.id);
             zmniejsz_semafor(semafor_rejestracja);
             if (!czy_przychodnia_otwarta() && sprawdz_kolejke(kolejka_rejestracja) == 0) {
@@ -253,10 +253,10 @@ void zarzadz_i_monitoruj_rejestracje(void *argumenty) {
 
 
             // Liczba pacjentów w kolejce
-            int liczba_pacjentow = statystyki.msg_qnum;
+            long liczba_pacjentow = statystyki.msg_qnum;
 
             // Debug: Wyświetl aktualną liczbę pacjentów
-            printf("[Monitorowanie] Liczba pacjentów w kolejce do rejestracji: %d\n", liczba_pacjentow);
+            printf("[Monitorowanie] Liczba pacjentów w kolejce do rejestracji: %ld\n", liczba_pacjentow);
 
             // Jeżeli liczba pacjentów przekracza MAX_OSOB_W_PRZYCHODNI / 2, otwórz drugie okienko
             if (liczba_pacjentow > max_osob_w_przychodni / 2 && !drugie_okienko_aktywne) {
