@@ -258,7 +258,7 @@ void zarzadz_kolejka_zewnetrzna() {
     uzyskaj_dostep_do_semafora(klucz_liczba_osob);
     uzyskaj_pamiec_wspoldzielona();
 
-    while (1) {
+    while (czy_dziala) {
         komunikat.typ = 1;
 
 
@@ -333,77 +333,77 @@ void zarzadz_i_monitoruj_rejestracje() {
     } else{
         printf ("rodzic\n");
     }
-    //     struct msqid_ds statystyki;
-        //
-        // // Flaga określająca, czy drugie okienko jest aktywne
-        // bool drugie_okienko_aktywne = false;
-        //
-        // // Zmienna przechowująca PID drugiego okienka
-        // pid_t drugie_okienko_pid = -1;
-        // int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
-        // int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
-        //
-        // if (kolejka_rejestracja == -1) {
-        //     perror("[Monitorowanie] Błąd dostępu do kolejki rejestracji");
-        //     exit(1);
-        // }
-        // while (1) {
-        //     // Pobierz aktualne statystyki kolejki rejestracji
-        //     if (msgctl(kolejka_rejestracja, IPC_STAT, &statystyki) == -1) {
-        //         perror("[Monitorowanie] Błąd pobierania statystyk kolejki");
-        //         continue; // Pomijaj iterację, jeśli nie można pobrać statystyk
-        //     }
-        //     // Liczba pacjentów w kolejce
-        //     long liczba_pacjentow = statystyki.msg_qnum;
-        //
-        //     // Debug: Wyświetl aktualną liczbę pacjentów
-        //     printf("[Monitorowanie] Liczba pacjentów w kolejce do rejestracji: %ld\n", liczba_pacjentow);
-        //
-        //     // Jeżeli liczba pacjentów przekracza MAX_OSOB_W_PRZYCHODNI / 2, otwórz drugie okienko
-        //     if (liczba_pacjentow > MAX_OSOB_W_PRZYCHODNI / 2 && !drugie_okienko_aktywne) {
-        //
-        //         drugie_okienko_pid = fork();
-        //         if (drugie_okienko_pid == 0) {
-        //             // Proces dziecka uruchamia drugie okienko rejestracji
-        //             //log_process("START", "Rejestracja", 1);
-        //             rejestracja(1); // Funkcja obsługi rejestracji
-        //             //log_process("END", "Rejestracja", 1);
-        //             exit(0);
-        //         } else if (drugie_okienko_pid > 0) {
-        //             // Proces rodzica ustawia flagę
-        //             drugie_okienko_aktywne = true;
-        //             printf("Otwarto drugie okienko rejestracji. PID: %d\n", drugie_okienko_pid);
-        //         } else {
-        //             perror("Błąd podczas tworzenia procesu dla drugiego okienka");
-        //         }
-        //     }
-        //
-        //     // Jeżeli liczba pacjentów spadnie poniżej MAX_OSOB_W_PRZYCHODNI / 3, zamknij drugie okienko
-        //     if (liczba_pacjentow < MAX_OSOB_W_PRZYCHODNI / 3 && drugie_okienko_aktywne) {
-        //         zmniejsz_semafor(semafor_rejestracja); // Blokowanie dostępu
-        //
-        //         if (drugie_okienko_pid > 0) {
-        //             // Wysyłamy sygnał SIGTERM do procesu drugiego okienka
-        //             if (kill(drugie_okienko_pid, SIGTERM) == -1) {
-        //                 perror("Błąd wysyłania sygnału SIGTERM do procesu drugiego okienka");
-        //             } else {
-        //
-        //                 // Oczekiwanie na zakończenie procesu
-        //                 if (waitpid(drugie_okienko_pid, NULL, 0) == -1) {
-        //                     perror("Błąd oczekiwania na zakończenie procesu drugiego okienka");
-        //                 } else {
-        //                     printf("Drugie okienko rejestracji (PID: %d) zostało zamknięte.\n", drugie_okienko_pid);
-        //                     drugie_okienko_aktywne = false;
-        //                     zwieksz_semafor(semafor_rejestracja);
-        //                 }
-        //             }
-        //         } else {
-        //             printf("Nie znaleziono aktywnego procesu dla drugiego okienka rejestracji.\n");
-        //         }
-        //     }
-        //
-        //     sleep(1); // Odczekaj przed kolejną kontrolą
-        // }
+        struct msqid_ds statystyki;
+
+        // Flaga określająca, czy drugie okienko jest aktywne
+        bool drugie_okienko_aktywne = false;
+
+        // Zmienna przechowująca PID drugiego okienka
+        pid_t drugie_okienko_pid = -1;
+        int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
+        int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
+
+        if (kolejka_rejestracja == -1) {
+            perror("[Monitorowanie] Błąd dostępu do kolejki rejestracji");
+            exit(1);
+        }
+        while (1) {
+            // Pobierz aktualne statystyki kolejki rejestracji
+            if (msgctl(kolejka_rejestracja, IPC_STAT, &statystyki) == -1) {
+                perror("[Monitorowanie] Błąd pobierania statystyk kolejki");
+                continue; // Pomijaj iterację, jeśli nie można pobrać statystyk
+            }
+            // Liczba pacjentów w kolejce
+            long liczba_pacjentow = statystyki.msg_qnum;
+
+            // Debug: Wyświetl aktualną liczbę pacjentów
+            printf("[Monitorowanie] Liczba pacjentów w kolejce do rejestracji: %ld\n", liczba_pacjentow);
+
+            // Jeżeli liczba pacjentów przekracza MAX_OSOB_W_PRZYCHODNI / 2, otwórz drugie okienko
+            if (liczba_pacjentow > MAX_OSOB_W_PRZYCHODNI / 2 && !drugie_okienko_aktywne) {
+
+                drugie_okienko_pid = fork();
+                if (drugie_okienko_pid == 0) {
+                    // Proces dziecka uruchamia drugie okienko rejestracji
+                    //log_process("START", "Rejestracja", 1);
+                    rejestracja(1); // Funkcja obsługi rejestracji
+                    //log_process("END", "Rejestracja", 1);
+                    exit(0);
+                } else if (drugie_okienko_pid > 0) {
+                    // Proces rodzica ustawia flagę
+                    drugie_okienko_aktywne = true;
+                    printf("Otwarto drugie okienko rejestracji. PID: %d\n", drugie_okienko_pid);
+                } else {
+                    perror("Błąd podczas tworzenia procesu dla drugiego okienka");
+                }
+            }
+
+            // Jeżeli liczba pacjentów spadnie poniżej MAX_OSOB_W_PRZYCHODNI / 3, zamknij drugie okienko
+            if (liczba_pacjentow < MAX_OSOB_W_PRZYCHODNI / 3 && drugie_okienko_aktywne) {
+                zmniejsz_semafor(semafor_rejestracja); // Blokowanie dostępu
+
+                if (drugie_okienko_pid > 0) {
+                    // Wysyłamy sygnał SIGTERM do procesu drugiego okienka
+                    if (kill(drugie_okienko_pid, SIGTERM) == -1) {
+                        perror("Błąd wysyłania sygnału SIGTERM do procesu drugiego okienka");
+                    } else {
+
+                        // Oczekiwanie na zakończenie procesu
+                        if (waitpid(drugie_okienko_pid, NULL, 0) == -1) {
+                            perror("Błąd oczekiwania na zakończenie procesu drugiego okienka");
+                        } else {
+                            printf("Drugie okienko rejestracji (PID: %d) zostało zamknięte.\n", drugie_okienko_pid);
+                            drugie_okienko_aktywne = false;
+                            zwieksz_semafor(semafor_rejestracja);
+                        }
+                    }
+                } else {
+                    printf("Nie znaleziono aktywnego procesu dla drugiego okienka rejestracji.\n");
+                }
+            }
+
+            sleep(1); // Odczekaj przed kolejną kontrolą
+        }
   }
 //
 void zapisz_do_raportu(RaportPacjenta pacjent) {
@@ -432,7 +432,7 @@ int main() {
     // int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
     // int semafor_liczba_osob; uzyskaj_dostep_do_semafora(klucz_liczba_osob);
 
-    zarzadz_i_monitoruj_rejestracje();
+
 
 
     // Utworzenie wątku dla zarzadz_kolejka_zewnetrzna
@@ -442,7 +442,7 @@ int main() {
     }
 
     // Uruchomienie rejestracja() w głównym wątku
-
+    zarzadz_i_monitoruj_rejestracje();
 
 
 

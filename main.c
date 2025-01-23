@@ -57,7 +57,7 @@ void cleanup_on_exit() {
         printf("[CLEANUP_ON_EXIT][DEBUG] Zasoby już zostały wyczyszczone. Pomijam.\n");
         return;
         }
-
+    wyczysc_kolejki();
     zakonczenie_procesow();
     wyczysc_kolejki();
 
@@ -179,7 +179,7 @@ void cleanup_on_exit() {
     }
 
     //Tworzenie procesów pacjentów
-    for (int i = 0; i < 2; i++) {
+    for (int i = 0; i < 30; i++) {
         pid_t pid = fork();
         if (pid == 0) {
             // Proces potomny - pacjent
