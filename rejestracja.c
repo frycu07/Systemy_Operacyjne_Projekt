@@ -62,166 +62,166 @@ void rejestracja(int id) {
     //log_process("START", "Rejestracja", id);  // Logowanie rozpoczęcia rejestracji
     printf("Uruchomiono kolejke rejestracja %d\n", id);
 
-    // int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
-    // int kolejka_poz = msgget(KOLEJKA_POZ, IPC_CREAT | 0666);
-    // int kolejka_kardiolog = msgget(KOLEJKA_KARDIOLOG, IPC_CREAT | 0666);
-    // int kolejka_okulista = msgget(KOLEJKA_OKULISTA, IPC_CREAT | 0666);
-    // int kolejka_pediatra = msgget(KOLEJKA_PEDIATRA, IPC_CREAT | 0666);
-    // int kolejka_medycyna_pracy = msgget(KOLEJKA_MEDYCYNA_PRACY, IPC_CREAT | 0666);
+    int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
+     int kolejka_poz = msgget(KOLEJKA_POZ, IPC_CREAT | 0666);
+     int kolejka_kardiolog = msgget(KOLEJKA_KARDIOLOG, IPC_CREAT | 0666);
+     int kolejka_okulista = msgget(KOLEJKA_OKULISTA, IPC_CREAT | 0666);
+     int kolejka_pediatra = msgget(KOLEJKA_PEDIATRA, IPC_CREAT | 0666);
+     int kolejka_medycyna_pracy = msgget(KOLEJKA_MEDYCYNA_PRACY, IPC_CREAT | 0666);
 
-    // uzyskaj_pamiec_wspoldzielona();
-    //
-    // if (kolejka_rejestracja == -1 || kolejka_poz == -1 || kolejka_kardiolog == -1 ||
-    //     kolejka_okulista == -1 || kolejka_pediatra == -1 || kolejka_medycyna_pracy == -1) {
-    //     perror("Błąd tworzenia kolejek");
-    //     exit(1);
-    //     }
+     uzyskaj_pamiec_wspoldzielona();
 
-    // int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
-    // int pacjenci_w_kolejce_POZ = 0;
-    // int pacjenci_w_kolejce_KARDIOLOG = 0;
-    // int pacjenci_w_kolejce_OKULISTA = 0;
-    // int pacjenci_w_kolejce_PEDIATRA = 0;
-    // int pacjenci_w_kolejce_MEDYCYNA_PRACY = 0;
-    // printf("[DEBUG] Proces %d używa kolejki: %d, semafora: %d\n", getpid(), kolejka_rejestracja, semafor_rejestracja);
-    // while (1) {
-    //     Komunikat komunikat;
-    //     zmniejsz_semafor(semafor_rejestracja);
-    //     // Odbiór pacjenta z kolejki rejestracji
-    //     if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
-    //         printf("KROK 4 Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat.pacjent.id);
-    //     }
-    //     else {
-    //         perror("Błąd odbierania pacjenta z kolejki rejestracji");
-    //         continue;
-    //     }
-    //
-    //     zwieksz_semafor(semafor_rejestracja);
-    //
-    //     if (!czy_przychodnia_otwarta() && sprawdz_kolejke(kolejka_rejestracja)  == 0) {
-    //         int lek_num = komunikat.pacjent.lekarz;
-    //         char lek_nazw[20];
-    //         switch (komunikat.pacjent.lekarz) {
-    //             case 0: // POZ
-    //                 strcpy(lek_nazw, "POZ");
-    //             break;
-    //             case 1: // Kardiolog
-    //                 strcpy(lek_nazw, "KARDIOLOG");
-    //             break;
-    //             case 2: // Okulista
-    //                 strcpy(lek_nazw, "OKULISTA");
-    //             break;
-    //             case 3: // Pediatra
-    //                 strcpy(lek_nazw, "PEDIATRA");
-    //             break;
-    //             case 4: // Medycyna pracy
-    //                 strcpy(lek_nazw, "MEDYCYNA PRACY");
-    //             break;
-    //             default:
-    //                 strcpy(lek_nazw, "NIEZNANY");
-    //             break;
-    //         }
-    //             RaportPacjenta raport = {komunikat.pacjent.id, lek_nazw, "REJESTRACJA"};
-    //             zapisz_do_raportu(raport);
-    //             zakoncz_wizyte(komunikat.pacjent);
-    //             break;
-    //         }
-    //         sleep(2);
-    //         // Logowanie odbioru pacjenta
-    //         //log_process("ODEBRANO", "Rejestracja", komunikat.pacjent.id);
-    //         printf("KROK 5 ");
-    //         // Skierowanie pacjenta do odpowiedniej kolejki
-    //         switch (komunikat.pacjent.lekarz) {
-    //             case 0: // POZ
-    //             {
-    //                 if (pacjenci_w_kolejce_POZ < X1) {
-    //                     pacjenci_w_kolejce_POZ++;
-    //                     msgsnd(kolejka_poz, &komunikat, sizeof(Pacjent), 0);
-    //                     printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki POZ.\n", id, komunikat.pacjent.id);
-    //                     printf("pacjenci_w_kolejce_POZ: %d\n", pacjenci_w_kolejce_POZ);
-    //                     //log_process("SKIEROWANO", "POZ", komunikat.pacjent.id);
-    //
-    //                 } else {
-    //                     printf("Rejestracja %d: Limit pacjentów POZ osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-    //                     //log_process("ODMOWA", "POZ", komunikat.pacjent.id);
-    //                     RaportPacjenta raport = {komunikat.pacjent.id, "POZ", "REJESTRACJA"};
-    //                     zapisz_do_raportu(raport);
-    //                     zakoncz_wizyte(komunikat.pacjent);
-    //                 }
-    //                 break;
-    //             }
-    //             case 1: // Kardiolog
-    //             {
-    //                 if (pacjenci_w_kolejce_KARDIOLOG < X2) {
-    //                     pacjenci_w_kolejce_KARDIOLOG++;
-    //                     printf("pacjenci_w_kolejce_KARDIOLOG: %d\n", pacjenci_w_kolejce_KARDIOLOG);
-    //                     msgsnd(kolejka_kardiolog, &komunikat, sizeof(Pacjent), 0);
-    //                     printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki KARDIOLOG.\n", id, komunikat.pacjent.id);
-    //                  //   log_process("SKIEROWANO", "Kardiolog", komunikat.pacjent.id);
-    //
-    //
-    //                 } else {
-    //                     printf("Rejestracja %d: Limit pacjentów KARDIOLOG osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-    //                    // log_process("ODMOWA", "Kardiolog", komunikat.pacjent.id);
-    //                     RaportPacjenta raport = {komunikat.pacjent.id, "KARDIOLOG", "REJESTRACJA"};
-    //                     zapisz_do_raportu(raport);
-    //                     zakoncz_wizyte(komunikat.pacjent);
-    //                 }
-    //                 break;
-    //             }
-    //             case 2: // Okulista
-    //             {
-    //                 if (pacjenci_w_kolejce_OKULISTA < X3) {
-    //                     pacjenci_w_kolejce_OKULISTA++;
-    //                     printf("pacjenci_w_kolejce_OKULISTA: %d\n", pacjenci_w_kolejce_OKULISTA);
-    //                     msgsnd(kolejka_okulista, &komunikat, sizeof(Pacjent), 0);
-    //                     printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki OKULISTA.\n", id, komunikat.pacjent.id);
-    //                    // log_process("SKIEROWANO", "Okulista", komunikat.pacjent.id);
-    //                 } else {
-    //                     printf("Rejestracja %d: Limit pacjentów OKULISTA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-    //                     //log_process("ODMOWA", "Okulista", komunikat.pacjent.id);
-    //                     RaportPacjenta raport = {komunikat.pacjent.id, "OKULISTA", "REJESTRACJA"};
-    //                     zapisz_do_raportu(raport);
-    //                     zakoncz_wizyte(komunikat.pacjent);
-    //                 }
-    //                 break;
-    //             }
-    //             case 3: // Pediatra
-    //             {
-    //                 if (pacjenci_w_kolejce_PEDIATRA < X4) {
-    //                     pacjenci_w_kolejce_PEDIATRA++;
-    //                     printf("pacjenci_w_kolejce_PEDIATRA: %d\n", pacjenci_w_kolejce_PEDIATRA);
-    //                     msgsnd(kolejka_pediatra, &komunikat, sizeof(Pacjent), 0);
-    //                     printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki PEDIATRA.\n", id, komunikat.pacjent.id);
-    //                    // log_process("SKIEROWANO", "Pediatra", komunikat.pacjent.id);
-    //                 } else {
-    //                     printf("Rejestracja %d: Limit pacjentów PEDIATRA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-    //                    // log_process("ODMOWA", "Pediatra", komunikat.pacjent.id);
-    //                     RaportPacjenta raport = {komunikat.pacjent.id, "PEDIATRA", "REJESTRACJA"};
-    //                     zapisz_do_raportu(raport);
-    //                     zakoncz_wizyte(komunikat.pacjent);
-    //                 }
-    //                 break;
-    //             }
-    //             case 4: // Medycyna pracy
-    //             {
-    //                 if (pacjenci_w_kolejce_MEDYCYNA_PRACY < X5) {
-    //                     pacjenci_w_kolejce_MEDYCYNA_PRACY++;
-    //                     printf("pacjenci_w_kolejce_MEDYCYNA_PRACY: %d\n", pacjenci_w_kolejce_MEDYCYNA_PRACY);
-    //                     msgsnd(kolejka_medycyna_pracy, &komunikat, sizeof(Pacjent), 0);
-    //                     printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki MEDYCYNA PRACY.\n", id, komunikat.pacjent.id);
-    //                    // log_process("SKIEROWANO", "Medycyna_Pracy", komunikat.pacjent.id);
-    //                 } else {
-    //                     printf("Rejestracja %d: Limit pacjentów MEDYCYNA PRACY osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-    //                     //log_process("ODMOWA", "Medycyna_Pracy", komunikat.pacjent.id);
-    //                     RaportPacjenta raport = {komunikat.pacjent.id, "MEDYCYNA PRACY", "REJESTRACJA"};
-    //                     zapisz_do_raportu(raport);
-    //                     zakoncz_wizyte(komunikat.pacjent);
-    //                 }
-    //                 break;
-    //             }
-    //         }
-    // }
+     if (kolejka_rejestracja == -1 || kolejka_poz == -1 || kolejka_kardiolog == -1 ||
+         kolejka_okulista == -1 || kolejka_pediatra == -1 || kolejka_medycyna_pracy == -1) {
+         perror("Błąd tworzenia kolejek");
+         exit(1);
+         }
+
+    int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
+     int pacjenci_w_kolejce_POZ = 0;
+     int pacjenci_w_kolejce_KARDIOLOG = 0;
+     int pacjenci_w_kolejce_OKULISTA = 0;
+     int pacjenci_w_kolejce_PEDIATRA = 0;
+     int pacjenci_w_kolejce_MEDYCYNA_PRACY = 0;
+    printf("[DEBUG] Proces %d używa kolejki: %d, semafora: %d\n", getpid(), kolejka_rejestracja, semafor_rejestracja);
+    while (1) {
+        Komunikat komunikat;
+        zmniejsz_semafor(semafor_rejestracja);
+        // Odbiór pacjenta z kolejki rejestracji
+        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
+            printf("KROK 4 Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat.pacjent.id);
+        }
+        else {
+            perror("Błąd odbierania pacjenta z kolejki rejestracji");
+            continue;
+        }
+
+        zwieksz_semafor(semafor_rejestracja);
+
+        if (!czy_przychodnia_otwarta() && sprawdz_kolejke(kolejka_rejestracja)  == 0) {
+            int lek_num = komunikat.pacjent.lekarz;
+            char lek_nazw[20];
+            switch (komunikat.pacjent.lekarz) {
+                case 0: // POZ
+                    strcpy(lek_nazw, "POZ");
+                break;
+                case 1: // Kardiolog
+                    strcpy(lek_nazw, "KARDIOLOG");
+                break;
+                case 2: // Okulista
+                    strcpy(lek_nazw, "OKULISTA");
+                break;
+                case 3: // Pediatra
+                    strcpy(lek_nazw, "PEDIATRA");
+                break;
+                case 4: // Medycyna pracy
+                    strcpy(lek_nazw, "MEDYCYNA PRACY");
+                break;
+                default:
+                    strcpy(lek_nazw, "NIEZNANY");
+                break;
+            }
+                RaportPacjenta raport = {komunikat.pacjent.id, lek_nazw, "REJESTRACJA"};
+                zapisz_do_raportu(raport);
+                zakoncz_wizyte(komunikat.pacjent);
+                break;
+            }
+            sleep(2);
+            // Logowanie odbioru pacjenta
+            //log_process("ODEBRANO", "Rejestracja", komunikat.pacjent.id);
+            printf("KROK 5 ");
+            // Skierowanie pacjenta do odpowiedniej kolejki
+            switch (komunikat.pacjent.lekarz) {
+                case 0: // POZ
+                {
+                    if (pacjenci_w_kolejce_POZ < X1) {
+                        pacjenci_w_kolejce_POZ++;
+                        msgsnd(kolejka_poz, &komunikat, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki POZ.\n", id, komunikat.pacjent.id);
+                        printf("pacjenci_w_kolejce_POZ: %d\n", pacjenci_w_kolejce_POZ);
+                        //log_process("SKIEROWANO", "POZ", komunikat.pacjent.id);
+
+                    } else {
+                        printf("Rejestracja %d: Limit pacjentów POZ osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
+                        //log_process("ODMOWA", "POZ", komunikat.pacjent.id);
+                        RaportPacjenta raport = {komunikat.pacjent.id, "POZ", "REJESTRACJA"};
+                        zapisz_do_raportu(raport);
+                        zakoncz_wizyte(komunikat.pacjent);
+                    }
+                    break;
+                }
+                case 1: // Kardiolog
+                {
+                    if (pacjenci_w_kolejce_KARDIOLOG < X2) {
+                        pacjenci_w_kolejce_KARDIOLOG++;
+                        printf("pacjenci_w_kolejce_KARDIOLOG: %d\n", pacjenci_w_kolejce_KARDIOLOG);
+                        msgsnd(kolejka_kardiolog, &komunikat, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki KARDIOLOG.\n", id, komunikat.pacjent.id);
+                     //   log_process("SKIEROWANO", "Kardiolog", komunikat.pacjent.id);
+
+
+                    } else {
+                        printf("Rejestracja %d: Limit pacjentów KARDIOLOG osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
+                       // log_process("ODMOWA", "Kardiolog", komunikat.pacjent.id);
+                        RaportPacjenta raport = {komunikat.pacjent.id, "KARDIOLOG", "REJESTRACJA"};
+                        zapisz_do_raportu(raport);
+                        zakoncz_wizyte(komunikat.pacjent);
+                    }
+                    break;
+                }
+                case 2: // Okulista
+                {
+                    if (pacjenci_w_kolejce_OKULISTA < X3) {
+                        pacjenci_w_kolejce_OKULISTA++;
+                        printf("pacjenci_w_kolejce_OKULISTA: %d\n", pacjenci_w_kolejce_OKULISTA);
+                        msgsnd(kolejka_okulista, &komunikat, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki OKULISTA.\n", id, komunikat.pacjent.id);
+                       // log_process("SKIEROWANO", "Okulista", komunikat.pacjent.id);
+                    } else {
+                        printf("Rejestracja %d: Limit pacjentów OKULISTA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
+                        //log_process("ODMOWA", "Okulista", komunikat.pacjent.id);
+                        RaportPacjenta raport = {komunikat.pacjent.id, "OKULISTA", "REJESTRACJA"};
+                        zapisz_do_raportu(raport);
+                        zakoncz_wizyte(komunikat.pacjent);
+                    }
+                    break;
+                }
+                case 3: // Pediatra
+                {
+                    if (pacjenci_w_kolejce_PEDIATRA < X4) {
+                        pacjenci_w_kolejce_PEDIATRA++;
+                        printf("pacjenci_w_kolejce_PEDIATRA: %d\n", pacjenci_w_kolejce_PEDIATRA);
+                        msgsnd(kolejka_pediatra, &komunikat, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki PEDIATRA.\n", id, komunikat.pacjent.id);
+                       // log_process("SKIEROWANO", "Pediatra", komunikat.pacjent.id);
+                    } else {
+                        printf("Rejestracja %d: Limit pacjentów PEDIATRA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
+                       // log_process("ODMOWA", "Pediatra", komunikat.pacjent.id);
+                        RaportPacjenta raport = {komunikat.pacjent.id, "PEDIATRA", "REJESTRACJA"};
+                        zapisz_do_raportu(raport);
+                        zakoncz_wizyte(komunikat.pacjent);
+                    }
+                    break;
+                }
+                case 4: // Medycyna pracy
+                {
+                    if (pacjenci_w_kolejce_MEDYCYNA_PRACY < X5) {
+                        pacjenci_w_kolejce_MEDYCYNA_PRACY++;
+                        printf("pacjenci_w_kolejce_MEDYCYNA_PRACY: %d\n", pacjenci_w_kolejce_MEDYCYNA_PRACY);
+                        msgsnd(kolejka_medycyna_pracy, &komunikat, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki MEDYCYNA PRACY.\n", id, komunikat.pacjent.id);
+                       // log_process("SKIEROWANO", "Medycyna_Pracy", komunikat.pacjent.id);
+                    } else {
+                        printf("Rejestracja %d: Limit pacjentów MEDYCYNA PRACY osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
+                        //log_process("ODMOWA", "Medycyna_Pracy", komunikat.pacjent.id);
+                        RaportPacjenta raport = {komunikat.pacjent.id, "MEDYCYNA PRACY", "REJESTRACJA"};
+                        zapisz_do_raportu(raport);
+                        zakoncz_wizyte(komunikat.pacjent);
+                    }
+                    break;
+                }
+            }
+    }
 }
 
 void zakoncz_wizyte(Pacjent pacjent) {
@@ -257,7 +257,7 @@ void zarzadz_kolejka_zewnetrzna() {
     }
     uzyskaj_dostep_do_semafora(klucz_liczba_osob);
     uzyskaj_pamiec_wspoldzielona();
-printf("PRZED PETLA\n");
+
     while (1) {
         komunikat.typ = 1;
 
@@ -321,18 +321,18 @@ printf("PRZED PETLA\n");
         }
 
 
-// void zarzadz_i_monitoruj_rejestracje() {
-//     printf("Monitorowanie sie zaczelo\n");
-//     // Uruchomienie procesu rejestracji (okienko 0)
-//     printf("[DEBUG] Proces główny PID: %d\n", getpid());
-//
-//     pid_t pid = fork();
-//     if (pid == 0){
-//         rejestracja(0);// jesteśmy dzieckiem, robimy exec czy co tam chcesz
-//     } else{
-//         printf ("rodzic\n");
-        // jesteśmy rodzicem i pid potomka to pid
-    //}
+void zarzadz_i_monitoruj_rejestracje() {
+    printf("Monitorowanie sie zaczelo\n");
+    // Uruchomienie procesu rejestracji (okienko 0)
+    printf("[DEBUG] Proces główny PID: %d\n", getpid());
+
+    pid_t pid = fork();
+    if (pid == 0){
+        printf("DZIECKO\n");
+        rejestracja(0);
+    } else{
+        printf ("rodzic\n");
+    }
     //     struct msqid_ds statystyki;
         //
         // // Flaga określająca, czy drugie okienko jest aktywne
@@ -404,7 +404,7 @@ printf("PRZED PETLA\n");
         //
         //     sleep(1); // Odczekaj przed kolejną kontrolą
         // }
-    // }
+  }
 //
 void zapisz_do_raportu(RaportPacjenta pacjent) {
     FILE *plik = fopen("rapodrt_zienny.txt", "a"); // Otwórz plik w trybie dopisywania
@@ -429,9 +429,10 @@ int main() {
     signal(SIGTERM, zakoncz_program);
     signal(SIGINT, zakoncz_program);
 
-    int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
-    int semafor_liczba_osob; uzyskaj_dostep_do_semafora(klucz_liczba_osob);
+    // int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
+    // int semafor_liczba_osob; uzyskaj_dostep_do_semafora(klucz_liczba_osob);
 
+    zarzadz_i_monitoruj_rejestracje();
 
 
     // Utworzenie wątku dla zarzadz_kolejka_zewnetrzna
@@ -441,7 +442,6 @@ int main() {
     }
 
     // Uruchomienie rejestracja() w głównym wątku
-    //zarzadz_i_monitoruj_rejestracje();
 
 
 
