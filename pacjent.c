@@ -23,8 +23,7 @@ void pacjent_zarzadzanie(Pacjent pacjent) {
     }
 
     Komunikat komunikat = {1, pacjent};
-
-    if (msgsnd(kolejka_zewnetrzna, &komunikat, sizeof(Pacjent), 0) == -1) {
+    if (msgsnd(kolejka_zewnetrzna, &komunikat, sizeof(Komunikat) - sizeof(long), 0) == -1) {
         perror("Błąd wysyłania pacjenta do kolejki zewnętrznej");
         exit(1);
     }else {

@@ -4,7 +4,7 @@
 
 // Definicje zmiennych globalnych
 Czas czas_otwarcia = {00, 00};    // Otwarcie o 8:15
-Czas czas_zamkniecia = {22, 50}; // Zamknięcie o 23:30
+Czas czas_zamkniecia = {23, 50}; // Zamknięcie o 23:30
 
 // Funkcja zwracająca aktualny czas
 Czas aktualny_czas() {

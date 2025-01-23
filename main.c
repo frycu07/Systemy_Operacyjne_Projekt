@@ -60,6 +60,7 @@ void cleanup_on_exit() {
 
     zakonczenie_procesow();
     wyczysc_kolejki();
+
     while (wait(NULL) > 0);
     usun_semafor(semafor_liczba_osob);
     usun_semafor(semafor_rejestracja);
@@ -177,7 +178,7 @@ void cleanup_on_exit() {
         exit(1);
     }
 
-    /// Tworzenie procesów pacjentów
+    //Tworzenie procesów pacjentów
     for (int i = 0; i < 2; i++) {
         pid_t pid = fork();
         if (pid == 0) {
@@ -203,24 +204,10 @@ void cleanup_on_exit() {
         }
         // Proces rodzica - kontynuuje tworzenie kolejnych pacjentów
         printf("[MAIN][DEBUG] Utworzono proces pacjenta z PID: %d\n", pid);
-        //sleep(1); // Symulacja przybywania pacjentów
+         // Symulacja przybywania pacjentów
     }
 
-    // Tworzenie procesu rejestracji
 
-        //
-        //     // Tworzenie kolejki rejestracji
-        //     int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
-        //     if (kolejka_rejestracja == -1) {
-        //         perror("Błąd tworzenia kolejki rejestracji");
-        //         exit(1);
-        //     }
-        //
-        //     ArgumentyRejestracja args = {kolejka_rejestracja, semafor_rejestracja, MAX_OSOB_W_PRZYCHODNI};
-        //     if (pthread_create(&monitor_thread, NULL, (void *)zarzadz_i_monitoruj_rejestracje, (void *)&args) != 0) {
-        //         perror("Błąd tworzenia wątku monitorującego");
-        //         exit(1);
-        //     }
         //
         //     int b = 1; // TWORZENIE LEKARZY
         //     pid_t pid_poz1, pid_poz2, pid_spec[4];
