@@ -1,4 +1,4 @@
-#include "kolejka.h"
+#include "kolejka.c"
 #include <unistd.h>
 #include "pacjent.h"
 #include "rejestracja.h"
@@ -13,18 +13,20 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
-
+#include "kolejka.h"
 #include "dyrektor.h"
 
 // Klucz dla pamięci współdzielonej
-#define PAMIEC_WSPOLDZIELONA_KLUCZ 6789
+
 
 // Wskaźnik do pamięci współdzielonej
 int shm_id;
 int *liczba_osob;
 int semafor_rejestracja;
+int semafor_liczba_osob;
 pid_t my_pid;
 bool zasoby_wyczyszczone = false;
+static bool pamiec_usunieta = false;
 
 Pacjent losuj_pacjenta(int id) {
     Pacjent pacjent; // Tworzenie zmiennej typu Pacjent
@@ -40,6 +42,12 @@ Pacjent losuj_pacjenta(int id) {
     }
     return pacjent; // Funkcja zwraca strukturę Pacjent
 }
+void zakonczenie_procesow() {
+    pid_t pid;
+    while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) {
+        printf("Proces o PID %d został zakończony.\n", pid);
+    }
+}
 
 // Cleanup i signal handler
 void cleanup_on_exit() {
@@ -49,26 +57,27 @@ void cleanup_on_exit() {
         printf("[CLEANUP_ON_EXIT][DEBUG] Zasoby już zostały wyczyszczone. Pomijam.\n");
         return;
         }
-        // // Usuwanie semafora rejestracji
-        // if (semctl(semafor_rejestracja, 0, IPC_RMID) == -1) {
-        //     perror("[CLEANUP_ON_EXIT][ERROR] Nie udało się usunąć semafora rejestracja");
-        // } else {
-        //     if (a) printf("[CLEANUP_ON_EXIT][DEBUG] Semafor rejestracja został usunięty (ID = %d)\n", semafor_rejestracja);
-        //
-        // }
-        // usun_semafor_liczba_osob();
-        wyczysc_kolejki();
-        // // Usuwanie pamięci współdzielonej
-        // if (shmctl(shm_id, IPC_RMID, NULL) == -1) {
-        //     perror("[CLEANUP_ON_EXIT][ERROR] Nie udało się usunąć pamięci współdzielonej");
-        // } else {
-        //     if (a)printf("[CLEANUP_ON_EXIT]ID pamięci współdzielonej: %d\n", shm_id);
-        //     if (a)printf("[CLEANUP_ON_EXIT][DEBUG] Pamięć współdzielona została usunięta\n");
-        // }
+
+    zakonczenie_procesow();
+    wyczysc_kolejki();
+    while (wait(NULL) > 0);
+    usun_semafor(semafor_liczba_osob);
+    usun_semafor(semafor_rejestracja);
+
+    if (!pamiec_usunieta) {
+        if (shmctl(shm_id, IPC_RMID, NULL) == -1) {
+            perror("[CLEANUP_ON_EXIT][ERROR] Nie udało się usunąć pamięci współdzielonej");
+        } else {
+            if (a)printf("[CLEANUP_ON_EXIT]ID pamięci współdzielonej: %d\n", shm_id);
+            if (a)printf("[CLEANUP_ON_EXIT][DEBUG] Pamięć współdzielona została usunięta\n");
+            pamiec_usunieta = true;
+        }
+    }
         if (a) printf("[CLEANUP_ON_EXIT] Wszystkie zasoby zostały wyczyszczone.\n");
         zasoby_wyczyszczone = true; // Oznaczenie, że zasoby zostały wyczyszczone
         exit(0);
     }
+
 
     void signal_handler(int sig) {
         int a = 0;
@@ -103,31 +112,32 @@ void cleanup_on_exit() {
         return NULL;
     }
 
-    // void pamiec_wspoldzielona() {
-    //     int a = 0;
-    //     // Tworzenie segmentu pamięci współdzielonej
-    //     shm_id = shmget(PAMIEC_WSPOLDZIELONA_KLUCZ, sizeof(int), IPC_CREAT | 0666);
-    //     if(a) printf("[PAMIEC_WSPOLDZIELONA][DEBUG] shm_id = %d\n", shm_id);
-    //     if (shm_id == -1) {
-    //         perror("Błąd tworzenia pamięci współdzielonej");
-    //         exit(1);
-    //     }
-    //
-    //     // Dołączanie segmentu pamięci współdzielonej
-    //     liczba_osob = (int *)shmat(shm_id, NULL, 0);
-    //     if (a) printf("[PAMIEC_WSPOLDZIELONA][DEBUG] liczba_osob = %d\n", *liczba_osob);
-    //     if (liczba_osob == (void *)-1) {
-    //         perror("Błąd dołączania pamięci współdzielonej");
-    //         exit(1);
-    //     }
-    //
-    //     // Inicjalizacja wartości w pamięci współdzielonej
-    //     *liczba_osob = 0;
-    //     if(a) printf("[DEBUG] Pamięć współdzielona utworzona i zainicjalizowana. Wartość początkowa: %d\n", *liczba_osob);
-    // }
+    void pamiec_wspoldzielona() {
+        int a = 1;
+        // Tworzenie segmentu pamięci współdzielonej
+        shm_id = shmget(PAMIEC_WSPOLDZIELONA_KLUCZ, sizeof(int), IPC_CREAT | 0666);
+        if(a) printf("[PAMIEC_WSPOLDZIELONA][DEBUG] shm_id = %d\n", shm_id);
+        if (shm_id == -1) {
+            perror("Błąd tworzenia pamięci współdzielonej");
+            exit(1);
+        }
+
+        // Dołączanie segmentu pamięci współdzielonej
+        liczba_osob = (int *)shmat(shm_id, NULL, 0);
+        if (a) printf("[PAMIEC_WSPOLDZIELONA][DEBUG] liczba_osob = %d\n", *liczba_osob);
+        if (liczba_osob == (void *)-1) {
+            perror("Błąd dołączania pamięci współdzielonej");
+            exit(1);
+        }
+
+        // Inicjalizacja wartości w pamięci współdzielonej
+        *liczba_osob = 0;
+        if(a) printf("[DEBUG] Pamięć współdzielona utworzona i zainicjalizowana. Wartość początkowa: %d\n", *liczba_osob);
+    }
 
 
     int main() {
+        int a = 1;
         my_pid = getpid(); // Ustaw PID procesu głównego
         printf("[MAIN] Proces główny uruchomiony z PID: %d\n", my_pid);
         //  int a=0;
@@ -135,48 +145,69 @@ void cleanup_on_exit() {
         // zakonczenie_poprzednich_procesow();
         signal(SIGINT, signal_handler);
         signal(SIGTERM, signal_handler);
-        //
-        // srand(time(NULL));  // Inicjalizacja generatora liczb losowych
-        //
-        // // Utworzenie segmentu pamięci współdzielonej
-        // pamiec_wspoldzielona();
-        // //
-        // // key_t klucz_liczba_osob = 1234;
-        // // stworz_semafor_liczba_osob(klucz_liczba_osob);
-        //
-        // // Inicjalizacja semafora rejestracji na wartość 1 (odblokowany)
-        // key_t klucz_semafora_rejestracja = 1233; // Unikalny klucz semafora
-        // semafor_rejestracja = stworz_semafor(klucz_semafora_rejestracja);
-        //
-        //  if (semafor_rejestracja == -1) {
-        //      perror("[ERROR] Nie udało się utworzyć semafora dla rejestracji");
-        //      exit(1);
-        //  }
-        //  zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
-        //  if (a) printf("[MAIN][DEBUG] Semafor rejestracji został utworzony (warrosc = %d)\n", semafor_rejestracja);
 
+        srand(time(NULL));  // Inicjalizacja generatora liczb losowych
+
+        // Utworzenie segmentu pamięci współdzielonej
+        pamiec_wspoldzielona();
+
+        semafor_liczba_osob = stworz_semafor(klucz_liczba_osob);
+        zwieksz_semafor(semafor_liczba_osob);
+        printf("WARTOSC SEMAFORA LICZBA OSOB: %d\n", pobierz_wartosc_semafora(semafor_liczba_osob));
+        // Inicjalizacja semafora rejestracji na wartość 1 (odblokowany)
+
+        semafor_rejestracja = stworz_semafor(klucz_semafora_rejestracja);
+
+         zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
+         if (a) printf("[MAIN][DEBUG] Semafor rejestracji został utworzony (wartosc = %d)\n", semafor_rejestracja);
+
+
+    pid_t pid_rejestracja = fork();
+    if (pid_rejestracja == 0) {
+        // Proces potomny - rejestracja
+        if (execl("./rejestracja", "rejestracja", NULL) == -1) {
+            perror("[MAIN][ERROR] Nie udało się uruchomić procesu rejestracja");
+            exit(1);
+        }
+    } else if (pid_rejestracja > 0) {
+        // Proces rodzica - nie czeka na zakończenie rejestracji
+        printf("[MAIN][DEBUG] Utworzono proces rejestracji z PID: %d\n", pid_rejestracja);
+    } else {
+        perror("[MAIN][ERROR] Fork dla rejestracji nie powiódł się");
+        exit(1);
+    }
+
+    /// Tworzenie procesów pacjentów
+    for (int i = 0; i < 2; i++) {
         pid_t pid = fork();
         if (pid == 0) {
-            // Proces potomny
-            if (execl("./rejestracja", "rejestracja", NULL) == -1) {
-                perror("[MAIN][ERROR] Nie udało się uruchomić procesu rejestracja");
+            // Proces potomny - pacjent
+            Pacjent pacjent = losuj_pacjenta(i);
+
+            // Konwersja pól struktury na ciągi znaków
+            char id_str[10], wiek_str[10], priorytet_str[10], rodzic_str[10], lekarz_str[10];
+            sprintf(id_str, "%d", pacjent.id);
+            sprintf(wiek_str, "%d", pacjent.wiek);
+            sprintf(priorytet_str, "%d", pacjent.priorytet);
+            sprintf(rodzic_str, "%d", pacjent.rodzic_obecny);
+            sprintf(lekarz_str, "%d", pacjent.lekarz);
+
+            // Uruchomienie procesu pacjent
+            if (execl("./pacjent", "pacjent", id_str, wiek_str, priorytet_str, rodzic_str, lekarz_str, NULL) == -1) {
+                perror("[MAIN][ERROR] Nie udało się uruchomić procesu pacjent");
                 exit(1);
             }
-        } else if (pid > 0) {
-            // Proces rodzica
-            if (waitpid(pid, NULL, 0) == -1) {
-                perror("[MAIN][ERROR] Błąd oczekiwania na proces rejestracja");
-            } else {
-                printf("[MAIN][DEBUG] Proces rejestracja zakończył się z PID: %d\n", pid);
-            }
-        } else {
-            perror("[MAIN][ERROR] Błąd forka");
+        } else if (pid < 0) {
+            perror("[MAIN][ERROR] Fork dla pacjenta nie powiódł się");
+            exit(1);
         }
-        //     if (fork() == 0) {
-        //         zarzadz_kolejka_zewnetrzna();
-        //         printf("[DEBUG] Uruchomiono proces: PID = %d, typ = Zarzadzanie kolejka zew\n", getpid());
-        //         exit(0);
-        //     }
+        // Proces rodzica - kontynuuje tworzenie kolejnych pacjentów
+        printf("[MAIN][DEBUG] Utworzono proces pacjenta z PID: %d\n", pid);
+        //sleep(1); // Symulacja przybywania pacjentów
+    }
+
+    // Tworzenie procesu rejestracji
+
         //
         //     // Tworzenie kolejki rejestracji
         //     int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
@@ -233,45 +264,13 @@ void cleanup_on_exit() {
             exit(1);
         }
 
-        /// Tworzenie procesów pacjentów
-        for (int i = 0; i < 10; i++) {
-            if (fork() == 0) {
-                // Generowanie danych pacjenta
-                Pacjent pacjent = losuj_pacjenta(i);
 
-                // Konwersja pól struktury na ciągi znaków
-                char id_str[10], wiek_str[10], priorytet_str[10], rodzic_str[10], lekarz_str[10];
-                sprintf(id_str, "%d", pacjent.id);
-                sprintf(wiek_str, "%d", pacjent.wiek);
-                sprintf(priorytet_str, "%d", pacjent.priorytet);
-                sprintf(rodzic_str, "%d", pacjent.rodzic_obecny);
-                sprintf(lekarz_str, "%d", pacjent.lekarz);
-
-                // Uruchomienie procesu pacjent
-                if (execl("./pacjent", "pacjent", id_str, wiek_str, priorytet_str, rodzic_str, lekarz_str, NULL) == -1) {
-                    perror("[MAIN][ERROR] Nie udało się uruchomić procesu pacjent");
-                    exit(1);
-                }
-            }
-            sleep(1); // Symulacja przybywania pacjentów
-        }
-        //     for (int i = 0; i < 100; i++) {
-        //         if (fork() == 0) {
-        //             printf("KROK 1 Przyszedł pacjent ID: %d\n", i);
-        //             pacjent(i);
-        //             log_process("END", "Pacjent", i);
-        //             exit(0);
-        //         }
-        //         sleep(1); // Symulacja przybywania pacjentów
-        //     }
-        //sleep(10);
         // Oczekiwanie na zakończenie wątków
         pthread_join(monitor_thread, NULL);
         pthread_join(cleaner_thread, NULL);
 
         // Oczekiwanie na zakończenie procesów
         while (wait(NULL) > 0);
-        sleep(10);
         cleanup_on_exit();
         return 0;
     }

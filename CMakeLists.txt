@@ -9,18 +9,19 @@ set(CMAKE_CXX_STANDARD 20)
 add_executable(main
         main.c
         kolejka.c
-
 )
 
 # Plik wykonywalny dla "rejestracja"
 add_executable(rejestracja
         rejestracja.c
         kolejka.c
+        czas.c
 )
 
 add_executable(pacjent
         pacjent.c
         kolejka.c
+        czas.c
 )
 # Dodanie biblioteki pthread do plików
 target_link_libraries(main pthread)

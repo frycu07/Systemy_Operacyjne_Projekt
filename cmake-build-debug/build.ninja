@@ -99,6 +99,12 @@ build CMakeFiles/rejestracja.dir/kolejka.c.o: C_COMPILER__rejestracja_unscanned_
   OBJECT_DIR = CMakeFiles/rejestracja.dir
   OBJECT_FILE_DIR = CMakeFiles/rejestracja.dir
 
+build CMakeFiles/rejestracja.dir/czas.c.o: C_COMPILER__rejestracja_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/czas.c || cmake_object_order_depends_target_rejestracja
+  DEP_FILE = CMakeFiles/rejestracja.dir/czas.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/rejestracja.dir
+  OBJECT_FILE_DIR = CMakeFiles/rejestracja.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target rejestracja
@@ -107,7 +113,7 @@ build CMakeFiles/rejestracja.dir/kolejka.c.o: C_COMPILER__rejestracja_unscanned_
 #############################################
 # Link the executable rejestracja
 
-build rejestracja: C_EXECUTABLE_LINKER__rejestracja_Debug CMakeFiles/rejestracja.dir/rejestracja.c.o CMakeFiles/rejestracja.dir/kolejka.c.o
+build rejestracja: C_EXECUTABLE_LINKER__rejestracja_Debug CMakeFiles/rejestracja.dir/rejestracja.c.o CMakeFiles/rejestracja.dir/kolejka.c.o CMakeFiles/rejestracja.dir/czas.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = -lpthread
   OBJECT_DIR = CMakeFiles/rejestracja.dir
@@ -137,6 +143,12 @@ build CMakeFiles/pacjent.dir/kolejka.c.o: C_COMPILER__pacjent_unscanned_Debug /U
   OBJECT_DIR = CMakeFiles/pacjent.dir
   OBJECT_FILE_DIR = CMakeFiles/pacjent.dir
 
+build CMakeFiles/pacjent.dir/czas.c.o: C_COMPILER__pacjent_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/czas.c || cmake_object_order_depends_target_pacjent
+  DEP_FILE = CMakeFiles/pacjent.dir/czas.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/pacjent.dir
+  OBJECT_FILE_DIR = CMakeFiles/pacjent.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target pacjent
@@ -145,7 +157,7 @@ build CMakeFiles/pacjent.dir/kolejka.c.o: C_COMPILER__pacjent_unscanned_Debug /U
 #############################################
 # Link the executable pacjent
 
-build pacjent: C_EXECUTABLE_LINKER__pacjent_Debug CMakeFiles/pacjent.dir/pacjent.c.o CMakeFiles/pacjent.dir/kolejka.c.o
+build pacjent: C_EXECUTABLE_LINKER__pacjent_Debug CMakeFiles/pacjent.dir/pacjent.c.o CMakeFiles/pacjent.dir/kolejka.c.o CMakeFiles/pacjent.dir/czas.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   LINK_LIBRARIES = -lpthread
   OBJECT_DIR = CMakeFiles/pacjent.dir

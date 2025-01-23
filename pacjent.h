@@ -1,9 +1,6 @@
 #ifndef PACJENT_H
 #define PACJENT_H
 
-void pacjent(int id);
-void zmien_liczba_osob(int zmiana);
-
 // Struktura pacjenta
 typedef struct {
     int id;          // ID pacjenta
@@ -12,6 +9,8 @@ typedef struct {
     int rodzic_obecny; // 1 - rodzic obecny, 0 - brak rodzica
     int lekarz;      // 0 - POZ, 1 - Kardiolog, itd.
 } Pacjent;
+
+void pacjent_zarzadzanie(Pacjent pacjent);
 
 // Struktura komunikatu
 typedef struct {

@@ -9,16 +9,16 @@ struct ZarzadzanieArgumenty {
 
 typedef struct {
     int id;               // ID pacjenta
-    char skierowanie_do[50]; // Gdzie skierowano pacjenta (np. "Kardiolog")
-    char wystawil[50];    // Kto wystawił skierowanie (np. "Rejestracja")
+    char *skierowanie_do; // Gdzie skierowano pacjenta (np. "Kardiolog")
+    char *wystawil;    // Kto wystawił skierowanie (np. "Rejestracja")
 } RaportPacjenta;
 
 
-void rejestracja(int id, int semafor_rejestracja);
+void zarzadz_kolejka_zewnetrzna();
+void rejestracja(int id);
 void zakoncz_wizyte(Pacjent pacjent);
 int aktualna_godzina();
-void zarzadz_kolejka_zewnetrzna();
-void zarzadz_i_monitoruj_rejestracje(void *argumenty);
+void zarzadz_i_monitoruj_rejestracje();
 void zapisz_do_raportu(RaportPacjenta pacjent);
 
 

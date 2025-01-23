@@ -3,8 +3,8 @@
 #include <stdbool.h>
 
 // Definicje zmiennych globalnych
-Czas czas_otwarcia = {8, 15};    // Otwarcie o 8:15
-Czas czas_zamkniecia = {23, 30}; // Zamknięcie o 23:30
+Czas czas_otwarcia = {00, 00};    // Otwarcie o 8:15
+Czas czas_zamkniecia = {22, 50}; // Zamknięcie o 23:30
 
 // Funkcja zwracająca aktualny czas
 Czas aktualny_czas() {
@@ -26,5 +26,18 @@ int porownaj_czas(Czas czas1, Czas czas2) {
 // Funkcja sprawdzająca, czy przychodnia jest otwarta
 bool czy_przychodnia_otwarta() {
     Czas godzina = aktualny_czas();
-    return porownaj_czas(godzina, czas_otwarcia) >= 0 && porownaj_czas(godzina, czas_zamkniecia) < 0;
+    int porownanie_otwarcia = porownaj_czas(godzina, czas_otwarcia);
+
+    int porownanie_zamkniecia = porownaj_czas(godzina, czas_zamkniecia);
+
+    // Debug: Wyświetlanie informacji o czasie
+    // printf("[DEBUG] Aktualny czas: %02d:%02d\n", godzina.godzina, godzina.minuta);
+    // printf("[DEBUG] Porównanie z czasem otwarcia: %d\n", porownanie_otwarcia);
+    // printf("[DEBUG] Porównanie z czasem zamknięcia: %d\n", porownanie_zamkniecia);
+
+    // Sprawdzenie, czy przychodnia jest otwarta
+    bool otwarta = porownanie_otwarcia >= 0 && porownanie_zamkniecia < 0;
+    // printf("[DEBUG] Czy przychodnia otwarta? %s\n", otwarta ? "TAK" : "NIE");
+
+    return otwarta;
 }

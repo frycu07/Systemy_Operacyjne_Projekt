@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "kolejka.h"
+#include "semafor.c"
 
 void wyczysc_kolejki() {
     int a = 0;
@@ -19,4 +20,15 @@ void wyczysc_kolejki() {
             printf("[DEBUG] Klucz: 0x%x\n", kolejki[i]);
         }
     }
+
+}
+
+void zmien_liczba_osob(int zmiana) {
+    int semafor_liczba_osob = uzyskaj_dostep_do_semafora(klucz_liczba_osob);
+    //printf("[ZMIEN LICZBE OSOB]WARTOSC SEMAFORA LICZBA OSOB: %d\n", pobierz_wartosc_semafora(semafor_liczba_osob));
+    zmniejsz_semafor(semafor_liczba_osob);
+    *liczba_osob += zmiana;
+    printf("[Monitorowanie] CALKOWITA Liczba osób w przychodni: %d\n", *liczba_osob);
+    //log_process("ZMIANA LICZBY OSOB", "Zmien liczbe", *liczba_osob);
+    zwieksz_semafor(semafor_liczba_osob);
 }
