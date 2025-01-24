@@ -6,8 +6,8 @@
 #include "pacjent.h"
 #include "kolejka.h"
 #include "kolejka.c"
-#include "lekarz.c"
 #include "procesy.h"
+#include "procesy.c"
 #include "czas.h"
 #include "lekarz.h"
 
@@ -24,12 +24,18 @@ void* uruchom_zarzadzanie_kolejka(void* arg) {
     return NULL;
 }
 
-
+void zakonczenie_procesow() {
+    pid_t pid;
+    while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) {
+        printf("Proces o PID %d został zakończony.\n", pid);
+    }
+}
 void zakoncz_program(int sig) {
     printf("[REJESTRACJA][INFO] Otrzymano sygnał zakończenia (SIG: %d). Kończę proces.\n", sig);
 
     czy_dziala = false;
-
+    znajdz_i_zakoncz_procesy("rejestracja");
+    zakonczenie_procesow();
     // Poczekaj na zakończenie wątku
     pthread_join(kolejka_thread, NULL);
     //wyczysc_kolejki();
@@ -224,21 +230,7 @@ void rejestracja(int id) {
     }
 }
 
-void zakoncz_wizyte(Pacjent pacjent) {
 
-    // Zmniejsz `liczba_osob` w zależności od obecności rodzica.
-    if (pacjent.rodzic_obecny) {
-        zmien_liczba_osob(-2);
-        printf("KROK 8 Pacjent ID: %d (z rodzicem) opuścił przychodnię. Liczba osób w przychodni: %d\n",
-               pacjent.id, *liczba_osob);
-        //log_process("WYJSCIE", "PACJENT Z RODZICEM", *liczba_osob);
-    } else {
-        zmien_liczba_osob(-1);
-        printf("KROK 8 Pacjent ID: %d opuścił przychodnię. Liczba osób w przychodni: %d\n",
-               pacjent.id, *liczba_osob);
-        //log_process("WYJSCIE", "PACJENT", *liczba_osob);
-    }
-}
 //
 // int aktualna_godzina() {
 //     time_t teraz = time(NULL);
@@ -263,7 +255,7 @@ void zarzadz_kolejka_zewnetrzna() {
 
 
         if (msgrcv(kolejka_zewnetrzna, &komunikat, sizeof(Komunikat) - sizeof(long), 1, 0) != -1) {
-            printf("KROK 3 Odebrano wiadomość w kolejce zewnetrznej. Pacjent ID: %d\n", komunikat.pacjent.id);
+            //printf("KROK 3 Odebrano wiadomość w kolejce zewnetrznej. Pacjent ID: %d\n", komunikat.pacjent.id);
         } else {
             printf("[DEBUG] msgrcv zwrócił błąd\n");
             if (errno == ENOMSG) {
@@ -275,9 +267,8 @@ void zarzadz_kolejka_zewnetrzna() {
         }
 
      int wymagane_miejsce = komunikat.pacjent.rodzic_obecny ? 2 : 1;
-     printf("[DEBUG] liczba_osob:%d , wymagane_miejsce: %d, MAX_OSOB_W_PRZYCHODNI: %d\n",
-
-     *liczba_osob, wymagane_miejsce, MAX_OSOB_W_PRZYCHODNI);
+     //printf("[DEBUG] liczba_osob:%d , wymagane_miejsce: %d, MAX_OSOB_W_PRZYCHODNI: %d\n",
+     //*liczba_osob, wymagane_miejsce, MAX_OSOB_W_PRZYCHODNI);
      if (*liczba_osob + wymagane_miejsce <= MAX_OSOB_W_PRZYCHODNI) {
          // Tworzenie procesu rodzica, jeśli obecny
          if (komunikat.pacjent.rodzic_obecny) {
@@ -309,10 +300,10 @@ void zarzadz_kolejka_zewnetrzna() {
              } else {
                  // Kolejka zewnętrzna czeka, jeśli brak miejsca w przychodni
                  msgsnd(kolejka_zewnetrzna, &komunikat, sizeof(Pacjent), 0);
-                 printf("KROK 4' Pacjent ID: %d%s%s musi poczekać na wejście do przychodni.\n",
-                        komunikat.pacjent.id,
-                        komunikat.pacjent.priorytet ? " (VIP)" : "",
-                        komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
+                 // printf("KROK 4' Pacjent ID: %d%s%s musi poczekać na wejście do przychodni.\n",
+                 //        komunikat.pacjent.id,
+                 //        komunikat.pacjent.priorytet ? " (VIP)" : "",
+                 //        komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
              }
          }
 
@@ -325,6 +316,8 @@ void zarzadz_i_monitoruj_rejestracje() {
     printf("Monitorowanie sie zaczelo\n");
     // Uruchomienie procesu rejestracji (okienko 0)
     printf("[DEBUG] Proces główny PID: %d\n", getpid());
+    signal(SIGTERM, zakoncz_program);
+    signal(SIGINT, zakoncz_program);
 
     pid_t pid = fork();
     if (pid == 0){
@@ -429,11 +422,8 @@ int main() {
     signal(SIGTERM, zakoncz_program);
     signal(SIGINT, zakoncz_program);
 
-    // int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
-    // int semafor_liczba_osob; uzyskaj_dostep_do_semafora(klucz_liczba_osob);
-
-
-
+    int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
+    int semafor_liczba_osob; uzyskaj_dostep_do_semafora(klucz_liczba_osob);
 
     // Utworzenie wątku dla zarzadz_kolejka_zewnetrzna
     if (pthread_create(&kolejka_thread, NULL, uruchom_zarzadzanie_kolejka, NULL) != 0) {
@@ -443,8 +433,6 @@ int main() {
 
     // Uruchomienie rejestracja() w głównym wątku
     zarzadz_i_monitoruj_rejestracje();
-
-
 
     //Oczekiwanie na zakończenie wątku zarzadz_kolejka_zewnetrzna
     //pthread_cancel(kolejka_thread);

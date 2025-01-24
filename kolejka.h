@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "pacjent.h"
 // Maksymalna liczba osób w przychodni
 #define MAX_OSOB_W_PRZYCHODNI 30
 #define KOLEJKA_ZEWNETRZNA 1230 // Kolejka zewnętrzna
@@ -15,13 +16,16 @@
 #define KOLEJKA_REJESTRACJA 1240
 
 key_t klucz_liczba_osob = 1234;
-key_t klucz_semafora_rejestracja = 1233; // Unikalny klucz semafora
+key_t klucz_semafora_rejestracja = 1233;// Unikalny klucz semafora
+key_t klucz_semafor_poz = 1232;
+
 // // Limity pacjentów dla lekarzy
 #define X1 5  // Limit dla każdego lekarza POZ
 #define X2 5  // Limit dla kardiologa
 #define X3 5  // Limit dla okulisty
 #define X4 5  // Limit dla pediatry
 #define X5 5  // Limit dla lekarza medycyny pracy
+
 
 #define KOLEJKA_POZ 1235           // Kolejka dla lekarzy POZ
 #define KOLEJKA_KARDIOLOG 1236     // Kolejka dla kardiologa
@@ -39,13 +43,13 @@ key_t klucz_semafora_rejestracja = 1233; // Unikalny klucz semafora
 
 void wyczysc_kolejki();
 
-
+void zakoncz_wizyte(Pacjent pacjent);
 
 // // Globalna zmienna liczby osób
 extern int *liczba_osob;
 extern int semafor_rejestracja;
 extern int semafor_liczba_osob;
-
+extern int semafor_POZ;
 
 
 // // Funkcje związane z semaforami
@@ -60,5 +64,6 @@ void usun_semafor(int semafor);
 int uzyskaj_dostep_do_semafora(key_t klucz_semafora);
 
 void zmien_liczba_osob(int zmiana);
+int sprawdz_kolejke(int kolejka);
 
 #endif

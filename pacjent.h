@@ -18,5 +18,7 @@ typedef struct {
     Pacjent pacjent; // Dane pacjenta
 } Komunikat;
 
+void znajdz_i_zakoncz_procesy(const char *nazwa_procesu);
+void wyczysc_procesy();
 
 #endif

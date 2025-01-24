@@ -23,7 +23,14 @@ add_executable(pacjent
         kolejka.c
         czas.c
 )
+
+add_executable(lekarz
+        lekarz.c
+        kolejka.c
+        czas.c
+)
 # Dodanie biblioteki pthread do plików
 target_link_libraries(main pthread)
 target_link_libraries(rejestracja pthread)
 target_link_libraries(pacjent pthread)
+target_link_libraries(lekarz pthread)

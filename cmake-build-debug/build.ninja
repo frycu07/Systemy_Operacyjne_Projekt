@@ -166,6 +166,50 @@ build pacjent: C_EXECUTABLE_LINKER__pacjent_Debug CMakeFiles/pacjent.dir/pacjent
   TARGET_FILE = pacjent
   TARGET_PDB = pacjent.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target lekarz
+
+
+#############################################
+# Order-only phony target for lekarz
+
+build cmake_object_order_depends_target_lekarz: phony || .
+
+build CMakeFiles/lekarz.dir/lekarz.c.o: C_COMPILER__lekarz_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/lekarz.c || cmake_object_order_depends_target_lekarz
+  DEP_FILE = CMakeFiles/lekarz.dir/lekarz.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/lekarz.dir
+  OBJECT_FILE_DIR = CMakeFiles/lekarz.dir
+
+build CMakeFiles/lekarz.dir/kolejka.c.o: C_COMPILER__lekarz_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_lekarz
+  DEP_FILE = CMakeFiles/lekarz.dir/kolejka.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/lekarz.dir
+  OBJECT_FILE_DIR = CMakeFiles/lekarz.dir
+
+build CMakeFiles/lekarz.dir/czas.c.o: C_COMPILER__lekarz_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/czas.c || cmake_object_order_depends_target_lekarz
+  DEP_FILE = CMakeFiles/lekarz.dir/czas.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/lekarz.dir
+  OBJECT_FILE_DIR = CMakeFiles/lekarz.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target lekarz
+
+
+#############################################
+# Link the executable lekarz
+
+build lekarz: C_EXECUTABLE_LINKER__lekarz_Debug CMakeFiles/lekarz.dir/lekarz.c.o CMakeFiles/lekarz.dir/kolejka.c.o CMakeFiles/lekarz.dir/czas.c.o
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
+  LINK_LIBRARIES = -lpthread
+  OBJECT_DIR = CMakeFiles/lekarz.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = lekarz
+  TARGET_PDB = lekarz.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -200,7 +244,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug
 
-build all: phony main rejestracja pacjent
+build all: phony main rejestracja pacjent lekarz
 
 # =============================================================================
 # Built-in targets

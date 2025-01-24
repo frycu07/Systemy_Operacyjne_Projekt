@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include "kolejka.h"
 #include "dyrektor.h"
+#include "procesy.c"
 
 // Klucz dla pamięci współdzielonej
 
@@ -24,6 +25,7 @@ int shm_id;
 int *liczba_osob;
 int semafor_rejestracja;
 int semafor_liczba_osob;
+int semafor_POZ;
 pid_t my_pid;
 bool zasoby_wyczyszczone = false;
 static bool pamiec_usunieta = false;
@@ -34,7 +36,7 @@ Pacjent losuj_pacjenta(int id) {
     pacjent.wiek = rand() % 50 + 10;
     pacjent.priorytet = (rand() % 10 < 2) ? 1 : 0;
     pacjent.rodzic_obecny = (pacjent.wiek < 18) ? 1 : 0;
-    int los = rand() % 10;
+    int los = 2; //rand() % 10;
     if (los < 6) {
         pacjent.lekarz = 0;
     } else {
@@ -47,7 +49,8 @@ void zakonczenie_procesow() {
     while ((pid = waitpid(-1, NULL, WNOHANG)) > 0) {
         printf("Proces o PID %d został zakończony.\n", pid);
     }
-}
+}// Funkcja do wyszukiwania PID procesów po nazwie i ich zakończenia
+
 
 // Cleanup i signal handler
 void cleanup_on_exit() {
@@ -57,13 +60,14 @@ void cleanup_on_exit() {
         printf("[CLEANUP_ON_EXIT][DEBUG] Zasoby już zostały wyczyszczone. Pomijam.\n");
         return;
         }
-    wyczysc_kolejki();
     zakonczenie_procesow();
+    wyczysc_procesy();
     wyczysc_kolejki();
-
-    while (wait(NULL) > 0);
     usun_semafor(semafor_liczba_osob);
     usun_semafor(semafor_rejestracja);
+    usun_semafor(semafor_POZ);
+    while (wait(NULL) > 0);
+
 
     if (!pamiec_usunieta) {
         if (shmctl(shm_id, IPC_RMID, NULL) == -1) {
@@ -162,6 +166,9 @@ void cleanup_on_exit() {
          zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
          if (a) printf("[MAIN][DEBUG] Semafor rejestracji został utworzony (wartosc = %d)\n", semafor_rejestracja);
 
+        semafor_POZ = stworz_semafor(klucz_semafor_poz);
+        zwieksz_semafor(semafor_POZ);
+        printf("WARTOSC SEMAFORA POZ: %d\n", pobierz_wartosc_semafora(semafor_POZ));
 
     pid_t pid_rejestracja = fork();
     if (pid_rejestracja == 0) {
@@ -179,7 +186,7 @@ void cleanup_on_exit() {
     }
 
     //Tworzenie procesów pacjentów
-    for (int i = 0; i < 30; i++) {
+    for (int i = 0; i < 20; i++) {
         pid_t pid = fork();
         if (pid == 0) {
             // Proces potomny - pacjent
@@ -207,37 +214,44 @@ void cleanup_on_exit() {
          // Symulacja przybywania pacjentów
     }
 
+    int b = 1; // Flaga debugowania
+    pid_t pid_poz1, pid_poz2, pid_spec[4];
 
-        //
-        //     int b = 1; // TWORZENIE LEKARZY
-        //     pid_t pid_poz1, pid_poz2, pid_spec[4];
-        //     if ((pid_poz1 = fork() == 0)) {
-        //         lekarz_poz(1, X1);
-        //         if (b)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ1\n", getpid());
-        //         log_process("END", "Lekarz_POZ", 1);
-        //         exit(0);
-        //     }
-        //
-        //     if ((pid_poz2 = fork() == 0)) {
-        //         sleep(1);
-        //         lekarz_poz(2, X1);
-        //         if (b)printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ2\n", getpid());
-        //         log_process("END", "Lekarz_POZ", 2);
-        //         exit(0);
-        //     }
-        //
-        //     int kolejki_specjalistow[] = {KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
-        //     int limity_specjalistow[] = {X2, X3, X4, X5};
-        //
-        //     for (int i = 0; i < 4; i++) {
-        //         if ((pid_spec[i] = fork()) == 0) {
-        //             sleep(1);
-        //             lekarz_specjalista(kolejki_specjalistow[i], limity_specjalistow[i]);
-        //             if (b)printf("[DEBUG] Uruchomiono proces: PID = %d, typ = %x \n", getpid(), kolejki_specjalistow[i]);
-        //             log_process("END", "Lekarz_Specjalista", kolejki_specjalistow[i]);
-        //             exit(0);
-        //         }
-        //     }
+    // Tworzenie lekarzy POZ
+    if ((pid_poz1 = fork()) == 0) {
+        execl("./lekarz", "lekarz", "0", "1", NULL); // Typ 0 (POZ), ID 1
+        perror("[MAIN][ERROR] Nie udało się uruchomić lekarza POZ1");
+        exit(1);
+    }
+    if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ1\n", pid_poz1);
+
+    if ((pid_poz2 = fork()) == 0) {
+        execl("./lekarz", "lekarz", "0", "2", NULL); // Typ 0 (POZ), ID 2
+        perror("[MAIN][ERROR] Nie udało się uruchomić lekarza POZ2");
+        exit(1);
+    }
+    if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ2\n", pid_poz2);
+
+    // Tworzenie lekarzy specjalistów
+    int kolejki_specjalistow[] = {KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
+    for (int i = 0; i < 4; i++) {
+        if ((pid_spec[i] = fork()) == 0) {
+            char kolejka_str[10];
+            char typ_lekarza_str[10];
+            snprintf(kolejka_str, sizeof(kolejka_str), "%d", kolejki_specjalistow[i]);
+            snprintf(typ_lekarza_str, sizeof(typ_lekarza_str), "%d", i + 1);
+
+            // Wywołanie execl
+            execl("./lekarz", "lekarz", typ_lekarza_str, kolejka_str, NULL);
+
+            // Jeśli execl się nie uda, wypisanie błędu i zakończenie procesu
+            perror("[MAIN][ERROR] Nie udało się uruchomić lekarza specjalisty");
+            exit(1);
+            exit(1);
+        }
+        if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ SPECJALISTA (%d)\n", pid_spec[i], kolejki_specjalistow[i]);
+    }
+
         //     // Inicjalizacja procesu dyrektora
         //     // if (fork() == 0) {
         //     //     dyrektor();

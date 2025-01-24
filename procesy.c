@@ -5,6 +5,7 @@
 #include "procesy.h"
 #include <stdbool.h>
 #include <sys/sem.h>
+#include <signal.h>
 
 #include "kolejka.h"
 
@@ -43,3 +44,43 @@ void zakonczenie_poprzednich_procesow() {
     system(command); // Wymusza zakończenie procesów
 }
 
+void znajdz_i_zakoncz_procesy(const char *nazwa_procesu) {
+    char komenda[256];
+    snprintf(komenda, sizeof(komenda), "pgrep %s", nazwa_procesu);
+
+    FILE *fp = popen(komenda, "r");
+    if (fp == NULL) {
+        perror("[CZYSZCZENIE][ERROR] Nie udało się otworzyć pgrep");
+        return;
+    }
+
+    char linia[128];
+    while (fgets(linia, sizeof(linia), fp) != NULL) {
+        pid_t pid = atoi(linia); // Odczytaj PID z wyjścia pgrep
+        if (pid > 0) {
+            // Wysyłanie SIGTERM do procesu
+            if (kill(pid, SIGTERM) == 0) {
+                printf("[CZYSZCZENIE][INFO] Wysłano SIGTERM do procesu PID: %d (%s)\n", pid, nazwa_procesu);
+            } else {
+                perror("[CZYSZCZENIE][ERROR] Nie udało się zakończyć procesu");
+            }
+        }
+    }
+
+    pclose(fp);
+}
+
+// Funkcja do czyszczenia procesów przy wyjściu
+void wyczysc_procesy() {
+    const char *procesy[] = {"lekarz", "pacjent", "rejestracja"};
+    int liczba_procesow = sizeof(procesy) / sizeof(procesy[0]);
+
+    printf("[CZYSZCZENIE][INFO] Rozpoczynam czyszczenie procesów.\n");
+
+    for (int i = 0; i < liczba_procesow; i++) {
+        printf("[CZYSZCZENIE][INFO] Szukam i kończę procesy o nazwie: %s\n", procesy[i]);
+        znajdz_i_zakoncz_procesy(procesy[i]);
+    }
+
+    printf("[CZYSZCZENIE][INFO] Zakończono czyszczenie procesów.\n");
+}

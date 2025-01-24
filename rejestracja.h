@@ -16,7 +16,6 @@ typedef struct {
 
 void zarzadz_kolejka_zewnetrzna();
 void rejestracja(int id);
-void zakoncz_wizyte(Pacjent pacjent);
 int aktualna_godzina();
 void zarzadz_i_monitoruj_rejestracje();
 void zapisz_do_raportu(RaportPacjenta pacjent);

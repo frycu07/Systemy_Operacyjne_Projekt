@@ -2,6 +2,7 @@
 #include "kolejka.h"
 #include "semafor.c"
 
+
 void wyczysc_kolejki() {
     int a = 0;
     printf("wyczysc kolejki dziala");
@@ -31,4 +32,32 @@ void zmien_liczba_osob(int zmiana) {
     printf("[Monitorowanie] CALKOWITA Liczba osób w przychodni: %d\n", *liczba_osob);
     //log_process("ZMIANA LICZBY OSOB", "Zmien liczbe", *liczba_osob);
     zwieksz_semafor(semafor_liczba_osob);
+}
+int sprawdz_kolejke(int kolejka_id) {
+    struct msqid_ds statystyki;
+
+    // Pobranie informacji o kolejce
+    if (msgctl(kolejka_id, IPC_STAT, &statystyki) == -1) {
+        perror("Błąd pobierania informacji o kolejce");
+        exit(1);
+    }
+
+    // Zwrócenie liczby wiadomości w kolejce
+    return (int)statystyki.msg_qnum;
+}
+
+void zakoncz_wizyte(Pacjent pacjent) {
+
+    // Zmniejsz `liczba_osob` w zależności od obecności rodzica.
+    if (pacjent.rodzic_obecny) {
+        zmien_liczba_osob(-2);
+        printf("KROK 8 Pacjent ID: %d (z rodzicem) opuścił przychodnię. Liczba osób w przychodni: %d\n",
+               pacjent.id, *liczba_osob);
+        //log_process("WYJSCIE", "PACJENT Z RODZICEM", *liczba_osob);
+    } else {
+        zmien_liczba_osob(-1);
+        printf("KROK 8 Pacjent ID: %d opuścił przychodnię. Liczba osób w przychodni: %d\n",
+               pacjent.id, *liczba_osob);
+        //log_process("WYJSCIE", "PACJENT", *liczba_osob);
+    }
 }
