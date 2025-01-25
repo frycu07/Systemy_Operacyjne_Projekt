@@ -33,6 +33,12 @@ key_t klucz_semafor_poz = 1232;
 #define KOLEJKA_PEDIATRA 1238      // Kolejka dla pediatry
 #define KOLEJKA_MEDYCYNA_PRACY 1239 // Kolejka dla lekarza medycyny pracy
 
+#define KOLEJKA_VIP_POZ 1335
+#define KOLEJKA_VIP_KARDIOLOG 1336
+#define KOLEJKA_VIP_OKULISTA 1337
+#define KOLEJKA_VIP_PEDIATRA 1338
+#define KOLEJKA_VIP_MEDYCYNA_PRACY 1339
+
 // #define KOLEJKA_BADAŃ_BASE 2000 // Podstawowy numer dla kolejek badań ambulatoryjnych
 //
 // #define KOLEJKA_BADAŃ_KARDIOLOG (KOLEJKA_KARDIOLOG + KOLEJKA_BADAŃ_BASE) // Kolejka badań dla kardiologa

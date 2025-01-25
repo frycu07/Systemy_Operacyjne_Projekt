@@ -31,18 +31,37 @@ bool zasoby_wyczyszczone = false;
 static bool pamiec_usunieta = false;
 
 Pacjent losuj_pacjenta(int id) {
-    Pacjent pacjent; // Tworzenie zmiennej typu Pacjent
-    pacjent.id = id; // Inicjalizacja ID pacjenta
-    pacjent.wiek = rand() % 50 + 10;
-    pacjent.priorytet = (rand() % 10 < 2) ? 1 : 0;
+    Pacjent pacjent;
+
+    // Ustawienie dynamicznego ziarna dla rand() w oparciu o czas i ID pacjenta
+    srand((unsigned int)(time(NULL) + id * 1000 + rand()));
+
+    pacjent.id = id;
+
+    pacjent.wiek = rand() % 100 + 1;
+
+
+    // Losowanie priorytetu VIP w zależności od wieku
+    pacjent.priorytet = (rand() % 100 < ((pacjent.wiek > 45) ? 30 : 10)) ? 1 : 0;
+
+    // Rodzic obecny tylko dla osób poniżej 18 roku życia
     pacjent.rodzic_obecny = (pacjent.wiek < 18) ? 1 : 0;
-    int los = 2; //rand() % 10;
-    if (los < 6) {
-        pacjent.lekarz = 0;
+
+    // Losowanie lekarza z preferencjami dla popularniejszych specjalności
+    int los_lekarz = rand() % 100;
+    if (los_lekarz < 60) {
+        pacjent.lekarz = 0; // 60% szans na lekarza POZ
+    } else if (los_lekarz < 70) {
+        pacjent.lekarz = 1; // 10% szans na kardiologa
+    } else if (los_lekarz < 80) {
+        pacjent.lekarz = 2; // 10% szans na okulistę
+    } else if (los_lekarz < 90) {
+        pacjent.lekarz = 3; // 10% szans na pediatrę
     } else {
-        pacjent.lekarz = los - 5;
+        pacjent.lekarz = 4; // 10% szans na medycynę pracy
     }
-    return pacjent; // Funkcja zwraca strukturę Pacjent
+
+    return pacjent;
 }
 void zakonczenie_procesow() {
     pid_t pid;

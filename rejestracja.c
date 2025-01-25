@@ -74,6 +74,8 @@ void rejestracja(int id) {
      int kolejka_okulista = msgget(KOLEJKA_OKULISTA, IPC_CREAT | 0666);
      int kolejka_pediatra = msgget(KOLEJKA_PEDIATRA, IPC_CREAT | 0666);
      int kolejka_medycyna_pracy = msgget(KOLEJKA_MEDYCYNA_PRACY, IPC_CREAT | 0666);
+    int kolejki_lekarzy_vip[] = {KOLEJKA_VIP_POZ, KOLEJKA_VIP_KARDIOLOG, KOLEJKA_VIP_OKULISTA, KOLEJKA_VIP_PEDIATRA, KOLEJKA_VIP_MEDYCYNA_PRACY};
+    int kolejki_lekarzy[] = {KOLEJKA_POZ, KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
 
      uzyskaj_pamiec_wspoldzielona();
 
@@ -142,7 +144,8 @@ void rejestracja(int id) {
                 {
                     if (pacjenci_w_kolejce_POZ < X1) {
                         pacjenci_w_kolejce_POZ++;
-                        msgsnd(kolejka_poz, &komunikat, sizeof(Pacjent), 0);
+                        int kolejka_docelowa = komunikat.pacjent.priorytet ? KOLEJKA_VIP_POZ : KOLEJKA_POZ;
+                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
                         printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki POZ.\n", id, komunikat.pacjent.id);
                         printf("pacjenci_w_kolejce_POZ: %d\n", pacjenci_w_kolejce_POZ);
                         //log_process("SKIEROWANO", "POZ", komunikat.pacjent.id);
@@ -160,8 +163,9 @@ void rejestracja(int id) {
                 {
                     if (pacjenci_w_kolejce_KARDIOLOG < X2) {
                         pacjenci_w_kolejce_KARDIOLOG++;
+                        int kolejka_docelowa = komunikat.pacjent.priorytet ? KOLEJKA_VIP_KARDIOLOG : KOLEJKA_KARDIOLOG;
                         printf("pacjenci_w_kolejce_KARDIOLOG: %d\n", pacjenci_w_kolejce_KARDIOLOG);
-                        msgsnd(kolejka_kardiolog, &komunikat, sizeof(Pacjent), 0);
+                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
                         printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki KARDIOLOG.\n", id, komunikat.pacjent.id);
                      //   log_process("SKIEROWANO", "Kardiolog", komunikat.pacjent.id);
 
@@ -179,8 +183,9 @@ void rejestracja(int id) {
                 {
                     if (pacjenci_w_kolejce_OKULISTA < X3) {
                         pacjenci_w_kolejce_OKULISTA++;
+                        int kolejka_docelowa = komunikat.pacjent.priorytet ? KOLEJKA_VIP_OKULISTA : KOLEJKA_OKULISTA;
                         printf("pacjenci_w_kolejce_OKULISTA: %d\n", pacjenci_w_kolejce_OKULISTA);
-                        msgsnd(kolejka_okulista, &komunikat, sizeof(Pacjent), 0);
+                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
                         printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki OKULISTA.\n", id, komunikat.pacjent.id);
                        // log_process("SKIEROWANO", "Okulista", komunikat.pacjent.id);
                     } else {
@@ -196,8 +201,9 @@ void rejestracja(int id) {
                 {
                     if (pacjenci_w_kolejce_PEDIATRA < X4) {
                         pacjenci_w_kolejce_PEDIATRA++;
+                        int kolejka_docelowa = komunikat.pacjent.priorytet ? KOLEJKA_VIP_PEDIATRA : KOLEJKA_PEDIATRA;
                         printf("pacjenci_w_kolejce_PEDIATRA: %d\n", pacjenci_w_kolejce_PEDIATRA);
-                        msgsnd(kolejka_pediatra, &komunikat, sizeof(Pacjent), 0);
+                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
                         printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki PEDIATRA.\n", id, komunikat.pacjent.id);
                        // log_process("SKIEROWANO", "Pediatra", komunikat.pacjent.id);
                     } else {
@@ -213,8 +219,9 @@ void rejestracja(int id) {
                 {
                     if (pacjenci_w_kolejce_MEDYCYNA_PRACY < X5) {
                         pacjenci_w_kolejce_MEDYCYNA_PRACY++;
+                        int kolejka_docelowa = komunikat.pacjent.priorytet ? KOLEJKA_VIP_MEDYCYNA_PRACY : KOLEJKA_MEDYCYNA_PRACY;
                         printf("pacjenci_w_kolejce_MEDYCYNA_PRACY: %d\n", pacjenci_w_kolejce_MEDYCYNA_PRACY);
-                        msgsnd(kolejka_medycyna_pracy, &komunikat, sizeof(Pacjent), 0);
+                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
                         printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki MEDYCYNA PRACY.\n", id, komunikat.pacjent.id);
                        // log_process("SKIEROWANO", "Medycyna_Pracy", komunikat.pacjent.id);
                     } else {
