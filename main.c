@@ -26,6 +26,9 @@ int *liczba_osob;
 int semafor_rejestracja;
 int semafor_liczba_osob;
 int semafor_POZ;
+int semafor_POZ_VIP;
+int semafor_zamkniecie;
+
 pid_t my_pid;
 bool zasoby_wyczyszczone = false;
 static bool pamiec_usunieta = false;
@@ -45,7 +48,7 @@ Pacjent losuj_pacjenta(int id) {
     pacjent.priorytet = (rand() % 100 < ((pacjent.wiek > 45) ? 30 : 10)) ? 1 : 0;
 
     // Rodzic obecny tylko dla osób poniżej 18 roku życia
-    pacjent.rodzic_obecny = (pacjent.wiek < 18) ? 1 : 0;
+    pacjent.rodzic_obecny = 1; //(pacjent.wiek < 18) ? 1 : 0;
 
     // Losowanie lekarza z preferencjami dla popularniejszych specjalności
     int los_lekarz = rand() % 100;
@@ -61,6 +64,7 @@ Pacjent losuj_pacjenta(int id) {
         pacjent.lekarz = 4; // 10% szans na medycynę pracy
     }
 
+    pacjent.pid = getpid();
     return pacjent;
 }
 void zakonczenie_procesow() {
@@ -69,9 +73,6 @@ void zakonczenie_procesow() {
         printf("Proces o PID %d został zakończony.\n", pid);
     }
 }// Funkcja do wyszukiwania PID procesów po nazwie i ich zakończenia
-
-
-// Cleanup i signal handler
 void cleanup_on_exit() {
     int a = 1; //DEBUG
     if (a) printf("[CLEANUP_ON_EXIT] zasoby_wyczyszczone = %d\n", zasoby_wyczyszczone);
@@ -85,6 +86,8 @@ void cleanup_on_exit() {
     usun_semafor(semafor_liczba_osob);
     usun_semafor(semafor_rejestracja);
     usun_semafor(semafor_POZ);
+    usun_semafor(semafor_POZ_VIP);
+    usun_semafor(semafor_zamkniecie);
     while (wait(NULL) > 0);
 
 
@@ -101,9 +104,7 @@ void cleanup_on_exit() {
         zasoby_wyczyszczone = true; // Oznaczenie, że zasoby zostały wyczyszczone
         exit(0);
     }
-
-
-    void signal_handler(int sig) {
+void signal_handler(int sig) {
         int a = 0;
         if (getpid() == my_pid) {
             printf("[SIGNAL_HANDLER] Otrzymano sygnał: %d w procesie głównym (PID: %d)\n", sig, my_pid);
@@ -114,9 +115,7 @@ void cleanup_on_exit() {
             _exit(0); // Proces potomny kończy się bez cleanupu
         }
     }
-
-    // // Funkcja czyszcząca zakończone procesy
-    void* process_cleaner(void* arg) {
+void* process_cleaner(void* arg) {
         int status;
         pid_t pid;
 
@@ -135,8 +134,7 @@ void cleanup_on_exit() {
         }
         return NULL;
     }
-
-    void pamiec_wspoldzielona() {
+void pamiec_wspoldzielona() {
         int a = 1;
         // Tworzenie segmentu pamięci współdzielonej
         shm_id = shmget(PAMIEC_WSPOLDZIELONA_KLUCZ, sizeof(int), IPC_CREAT | 0666);
@@ -160,7 +158,7 @@ void cleanup_on_exit() {
     }
 
 
-    int main() {
+int main() {
         int a = 1;
         my_pid = getpid(); // Ustaw PID procesu głównego
         printf("[MAIN] Proces główny uruchomiony z PID: %d\n", my_pid);
@@ -181,14 +179,21 @@ void cleanup_on_exit() {
         // Inicjalizacja semafora rejestracji na wartość 1 (odblokowany)
 
         semafor_rejestracja = stworz_semafor(klucz_semafora_rejestracja);
-
-         zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
-         if (a) printf("[MAIN][DEBUG] Semafor rejestracji został utworzony (wartosc = %d)\n", semafor_rejestracja);
+        zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
+        printf("WARTOSC SEMAFORA REJESTRACJA: %d\n", pobierz_wartosc_semafora(semafor_rejestracja));
 
         semafor_POZ = stworz_semafor(klucz_semafor_poz);
         zwieksz_semafor(semafor_POZ);
         printf("WARTOSC SEMAFORA POZ: %d\n", pobierz_wartosc_semafora(semafor_POZ));
 
+        semafor_POZ_VIP = stworz_semafor(klucz_semafor_poz_vip);
+        zwieksz_semafor(semafor_POZ_VIP);
+        printf("WARTOSC SEMAFORA VIP POZ: %d\n", pobierz_wartosc_semafora(semafor_POZ_VIP));
+
+        semafor_zamkniecie = stworz_semafor(klucz_semafor_zamkniecie);
+        zwieksz_semafor(semafor_zamkniecie);
+        printf("WARTOSC SEMAFORA ZAMKNIECIE: %d\n", pobierz_wartosc_semafora(semafor_zamkniecie));
+    // Inicjalizacja semafora rejestracji na wartość 1 (odblokowany)
     pid_t pid_rejestracja = fork();
     if (pid_rejestracja == 0) {
         // Proces potomny - rejestracja
@@ -205,22 +210,23 @@ void cleanup_on_exit() {
     }
 
     //Tworzenie procesów pacjentów
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 40; i++) {
         pid_t pid = fork();
         if (pid == 0) {
             // Proces potomny - pacjent
             Pacjent pacjent = losuj_pacjenta(i);
 
             // Konwersja pól struktury na ciągi znaków
-            char id_str[10], wiek_str[10], priorytet_str[10], rodzic_str[10], lekarz_str[10];
+            char id_str[10], wiek_str[10], priorytet_str[10], rodzic_str[10], lekarz_str[10], pid_str[10];
             sprintf(id_str, "%d", pacjent.id);
             sprintf(wiek_str, "%d", pacjent.wiek);
             sprintf(priorytet_str, "%d", pacjent.priorytet);
             sprintf(rodzic_str, "%d", pacjent.rodzic_obecny);
             sprintf(lekarz_str, "%d", pacjent.lekarz);
+            sprintf(pid_str , "%d", pacjent.pid);
 
             // Uruchomienie procesu pacjent
-            if (execl("./pacjent", "pacjent", id_str, wiek_str, priorytet_str, rodzic_str, lekarz_str, NULL) == -1) {
+            if (execl("./pacjent", "pacjent", id_str, wiek_str, priorytet_str, rodzic_str, lekarz_str, pid_str, NULL) == -1) {
                 perror("[MAIN][ERROR] Nie udało się uruchomić procesu pacjent");
                 exit(1);
             }
@@ -252,32 +258,29 @@ void cleanup_on_exit() {
     if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ2\n", pid_poz2);
 
     // Tworzenie lekarzy specjalistów
-    int kolejki_specjalistow[] = {KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
-    for (int i = 0; i < 4; i++) {
-        if ((pid_spec[i] = fork()) == 0) {
-            char kolejka_str[10];
-            char typ_lekarza_str[10];
-            snprintf(kolejka_str, sizeof(kolejka_str), "%d", kolejki_specjalistow[i]);
-            snprintf(typ_lekarza_str, sizeof(typ_lekarza_str), "%d", i + 1);
+     for (int i = 0; i < 4; i++) {
+         if ((pid_spec[i] = fork()) == 0) {
+             char kolejka_str[10];
+             char typ_lekarza_str[10];
+             snprintf(typ_lekarza_str, sizeof(typ_lekarza_str), "%d", i + 1);
 
-            // Wywołanie execl
-            execl("./lekarz", "lekarz", typ_lekarza_str, kolejka_str, NULL);
+             // Wywołanie execl
+             execl("./lekarz", "lekarz", typ_lekarza_str, "0", NULL);
 
-            // Jeśli execl się nie uda, wypisanie błędu i zakończenie procesu
-            perror("[MAIN][ERROR] Nie udało się uruchomić lekarza specjalisty");
-            exit(1);
-            exit(1);
-        }
-        if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ SPECJALISTA (%d)\n", pid_spec[i], kolejki_specjalistow[i]);
+             // Jeśli execl się nie uda, wypisanie błędu i zakończenie procesu
+             perror("[MAIN][ERROR] Nie udało się uruchomić lekarza specjalisty");
+             exit(1);
+         }
+         if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ SPECJALISTA (%d)\n", pid_spec[i], i+1);
     }
 
-        //     // Inicjalizacja procesu dyrektora
-        //     // if (fork() == 0) {
-        //     //     dyrektor();
-        //     //     exit(0);
-        //     // }
-        //     // zarejestruj_pid_lekarzy(pid_poz1, pid_poz2, pid_spec);
-        //     // Tworzenie wątku do oczyszczania zakończonych procesów
+             // Inicjalizacja procesu dyrektora
+             // if (fork() == 0) {
+             //     dyrektor();
+             //     exit(0);
+             // }
+             // zarejestruj_pid_lekarzy(pid_poz1, pid_poz2, pid_spec);
+             // Tworzenie wątku do oczyszczania zakończonych procesów
 
         if (pthread_create(&cleaner_thread, NULL, process_cleaner, NULL) != 0) {
             perror("Błąd tworzenia wątku czyszczącego");

@@ -84,3 +84,17 @@ void wyczysc_procesy() {
 
     printf("[CZYSZCZENIE][INFO] Zakończono czyszczenie procesów.\n");
 }
+
+void wyczysc_proces_rejestracja() {
+    const char *procesy[] = {"lekarz", "pacjent", "rejestracja"};
+    int liczba_procesow = sizeof(procesy) / sizeof(procesy[0]);
+
+    printf("[CZYSZCZENIE][INFO] Rozpoczynam czyszczenie procesów.\n");
+
+    for (int i = 0; i < liczba_procesow; i++) {
+        printf("[CZYSZCZENIE][INFO] Szukam i kończę procesy o nazwie: %s\n", procesy[i]);
+        znajdz_i_zakoncz_procesy(procesy[i]);
+    }
+
+    printf("[CZYSZCZENIE][INFO] Zakończono czyszczenie procesów.\n");
+}

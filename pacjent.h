@@ -1,5 +1,6 @@
 #ifndef PACJENT_H
 #define PACJENT_H
+#include <sys/types.h>
 
 // Struktura pacjenta
 typedef struct {
@@ -8,6 +9,7 @@ typedef struct {
     int priorytet;   // 1 - VIP, 0 - normalny
     int rodzic_obecny; // 1 - rodzic obecny, 0 - brak rodzica
     int lekarz;      // 0 - POZ, 1 - Kardiolog, itd.
+    pid_t pid;
 } Pacjent;
 
 void pacjent_zarzadzanie(Pacjent pacjent);

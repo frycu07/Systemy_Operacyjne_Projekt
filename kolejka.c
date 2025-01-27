@@ -1,12 +1,15 @@
 #include <stdio.h>
 #include "kolejka.h"
+
+#include <signal.h>
+
 #include "semafor.c"
 
 
 void wyczysc_kolejki() {
     int a = 0;
     printf("wyczysc kolejki dziala");
-    int kolejki[] = {KOLEJKA_ZEWNETRZNA, KOLEJKA_REJESTRACJA, KOLEJKA_POZ, KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
+    int kolejki[] = {KOLEJKA_VIP_POZ, KOLEJKA_VIP_OKULISTA, KOLEJKA_VIP_PEDIATRA, KOLEJKA_VIP_KARDIOLOG, KOLEJKA_VIP_MEDYCYNA_PRACY, KOLEJKA_ZEWNETRZNA, KOLEJKA_REJESTRACJA, KOLEJKA_POZ, KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
     for (int i = 0; i < sizeof(kolejki) / sizeof(kolejki[0]); i++) {
         int msg_id = msgget(kolejki[i], IPC_CREAT | 0666);
         if (msg_id != -1) {
@@ -53,11 +56,14 @@ void zakoncz_wizyte(Pacjent pacjent) {
         zmien_liczba_osob(-2);
         printf("KROK 8 Pacjent ID: %d (z rodzicem) opuścił przychodnię. Liczba osób w przychodni: %d\n",
                pacjent.id, *liczba_osob);
-        //log_process("WYJSCIE", "PACJENT Z RODZICEM", *liczba_osob);
     } else {
         zmien_liczba_osob(-1);
         printf("KROK 8 Pacjent ID: %d opuścił przychodnię. Liczba osób w przychodni: %d\n",
                pacjent.id, *liczba_osob);
-        //log_process("WYJSCIE", "PACJENT", *liczba_osob);
+    }
+    printf("[DEBUG] Proces pacjenta ID: %d kończy się.\n", pacjent.id);
+    if (kill(pacjent.pid, SIGTERM) == -1) {
+        printf("Nie udało się zakończyć procesu pacjenta: %d\n", pacjent.pid);
+        perror("[REJESTRACJA][ERROR] Nie udało się zakończyć procesu pacjenta");
     }
 }

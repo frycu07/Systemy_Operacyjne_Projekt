@@ -27,16 +27,16 @@ void pacjent_zarzadzanie(Pacjent pacjent) {
         perror("Błąd wysyłania pacjenta do kolejki zewnętrznej");
         exit(1);
     }else {
-        printf("KROK 2 Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
-               pacjent.id,
-               pacjent.priorytet ? " (VIP)" : "",
-               pacjent.rodzic_obecny ? " (z rodzicem)" : "",
-               pacjent.wiek);
+        // printf("KROK 2 Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
+        //        pacjent.id,
+        //        pacjent.priorytet ? " (VIP)" : "",
+        //        pacjent.rodzic_obecny ? " (z rodzicem)" : "",
+        //        pacjent.wiek);
     }
 
     // Czekanie na wejście do rejestracji
     while (1) {
-
+        sleep(1);
         if (czy_przychodnia_otwarta() == false) {
             printf("[DEBUG] Wszedłem do bloku: przychodnia zamknięta.\n");
             printf("KROK 3' Pacjent ID: %d nie może wejść - przychodnia zamknięta.\n", pacjent.id);
@@ -58,8 +58,8 @@ void pacjent_zarzadzanie(Pacjent pacjent) {
 
 
 int main(int argc, char *argv[]) {
-    if (argc != 6) {
-        fprintf(stderr, "[PACJENT][ERROR] Nieprawidłowa liczba argumentów. Oczekiwano 5.\n");
+    if (argc != 7) {
+        fprintf(stderr, "[PACJENT][ERROR] Nieprawidłowa liczba argumentów. Oczekiwano 6.\n");
         return 1;
     }
 
@@ -70,6 +70,7 @@ int main(int argc, char *argv[]) {
     pacjent.priorytet = atoi(argv[3]);
     pacjent.rodzic_obecny = atoi(argv[4]);
     pacjent.lekarz = atoi(argv[5]);
+    pacjent.pid = atoi(argv[6]);
 
     // Debug: Wyświetlenie danych pacjenta
     printf("KROK 1 [PACJENT] ID: %d, Wiek: %d, Priorytet: %d, Rodzic: %d, Lekarz: %d PID: %d\n",

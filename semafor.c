@@ -16,7 +16,8 @@ int stworz_semafor(key_t klucz) {
 int uzyskaj_dostep_do_semafora(key_t klucz_semafora) {
         int semafor = semget(klucz_semafora, 1, 0);
         if (semafor == -1) {
-            perror("Błąd dostępu do semafora");
+            printf("[SEMAFOR] Błąd dostępu do semafora o kluczu %d\n", klucz_semafora);
+            perror("Błąd dostępu do semafora o kluczu");
             exit(1);
         }
         return semafor;

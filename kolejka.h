@@ -15,12 +15,14 @@
 // Klucze do kolejek
 #define KOLEJKA_REJESTRACJA 1240
 
-key_t klucz_liczba_osob = 1234;
-key_t klucz_semafora_rejestracja = 1233;// Unikalny klucz semafora
-key_t klucz_semafor_poz = 1232;
+key_t klucz_liczba_osob = 3234;
+key_t klucz_semafora_rejestracja = 3233;// Unikalny klucz semafora
+key_t klucz_semafor_poz = 3232;
+key_t klucz_semafor_poz_vip = 3231;
+key_t klucz_semafor_zamkniecie = 3230;
 
 // // Limity pacjentów dla lekarzy
-#define X1 5  // Limit dla każdego lekarza POZ
+#define X1 15  // Limit dla każdego lekarza POZ
 #define X2 5  // Limit dla kardiologa
 #define X3 5  // Limit dla okulisty
 #define X4 5  // Limit dla pediatry
@@ -56,7 +58,7 @@ extern int *liczba_osob;
 extern int semafor_rejestracja;
 extern int semafor_liczba_osob;
 extern int semafor_POZ;
-
+extern int semafor_POZ_VIP;
 
 // // Funkcje związane z semaforami
 //
