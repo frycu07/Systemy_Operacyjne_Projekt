@@ -219,12 +219,6 @@ build lekarz: C_EXECUTABLE_LINKER__lekarz_Debug CMakeFiles/lekarz.dir/lekarz.c.o
 
 build cmake_object_order_depends_target_test1: phony || .
 
-build CMakeFiles/test1.dir/test1.c.o: C_COMPILER__test1_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/test1.c || cmake_object_order_depends_target_test1
-  DEP_FILE = CMakeFiles/test1.dir/test1.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/test1.dir
-  OBJECT_FILE_DIR = CMakeFiles/test1.dir
-
 build CMakeFiles/test1.dir/kolejka.c.o: C_COMPILER__test1_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_test1
   DEP_FILE = CMakeFiles/test1.dir/kolejka.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
@@ -239,7 +233,7 @@ build CMakeFiles/test1.dir/kolejka.c.o: C_COMPILER__test1_unscanned_Debug /Users
 #############################################
 # Link the executable test1
 
-build test1: C_EXECUTABLE_LINKER__test1_Debug CMakeFiles/test1.dir/test1.c.o CMakeFiles/test1.dir/kolejka.c.o
+build test1: C_EXECUTABLE_LINKER__test1_Debug CMakeFiles/test1.dir/kolejka.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   OBJECT_DIR = CMakeFiles/test1.dir
   POST_BUILD = :
@@ -256,12 +250,6 @@ build test1: C_EXECUTABLE_LINKER__test1_Debug CMakeFiles/test1.dir/test1.c.o CMa
 
 build cmake_object_order_depends_target_tes2: phony || .
 
-build CMakeFiles/tes2.dir/test2.c.o: C_COMPILER__tes2_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/test2.c || cmake_object_order_depends_target_tes2
-  DEP_FILE = CMakeFiles/tes2.dir/test2.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/tes2.dir
-  OBJECT_FILE_DIR = CMakeFiles/tes2.dir
-
 build CMakeFiles/tes2.dir/kolejka.c.o: C_COMPILER__tes2_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_tes2
   DEP_FILE = CMakeFiles/tes2.dir/kolejka.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
@@ -276,7 +264,7 @@ build CMakeFiles/tes2.dir/kolejka.c.o: C_COMPILER__tes2_unscanned_Debug /Users/b
 #############################################
 # Link the executable tes2
 
-build tes2: C_EXECUTABLE_LINKER__tes2_Debug CMakeFiles/tes2.dir/test2.c.o CMakeFiles/tes2.dir/kolejka.c.o
+build tes2: C_EXECUTABLE_LINKER__tes2_Debug CMakeFiles/tes2.dir/kolejka.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   OBJECT_DIR = CMakeFiles/tes2.dir
   POST_BUILD = :
@@ -293,12 +281,6 @@ build tes2: C_EXECUTABLE_LINKER__tes2_Debug CMakeFiles/tes2.dir/test2.c.o CMakeF
 
 build cmake_object_order_depends_target_test3: phony || .
 
-build CMakeFiles/test3.dir/test3.c.o: C_COMPILER__test3_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/test3.c || cmake_object_order_depends_target_test3
-  DEP_FILE = CMakeFiles/test3.dir/test3.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/test3.dir
-  OBJECT_FILE_DIR = CMakeFiles/test3.dir
-
 build CMakeFiles/test3.dir/kolejka.c.o: C_COMPILER__test3_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_test3
   DEP_FILE = CMakeFiles/test3.dir/kolejka.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
@@ -313,7 +295,7 @@ build CMakeFiles/test3.dir/kolejka.c.o: C_COMPILER__test3_unscanned_Debug /Users
 #############################################
 # Link the executable test3
 
-build test3: C_EXECUTABLE_LINKER__test3_Debug CMakeFiles/test3.dir/test3.c.o CMakeFiles/test3.dir/kolejka.c.o
+build test3: C_EXECUTABLE_LINKER__test3_Debug CMakeFiles/test3.dir/kolejka.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
   OBJECT_DIR = CMakeFiles/test3.dir
   POST_BUILD = :

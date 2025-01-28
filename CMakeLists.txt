@@ -30,16 +30,13 @@ add_executable(lekarz
         czas.c
 )
 add_executable(test1
-        test1.c
         kolejka.c
 )
 add_executable(tes2
-        test2.c
         kolejka.c
 
 )
 add_executable(test3
-        test3.c
         kolejka.c
 )
 # Dodanie biblioteki pthread do plików
