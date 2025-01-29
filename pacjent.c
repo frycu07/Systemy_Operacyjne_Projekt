@@ -27,11 +27,11 @@ void pacjent_zarzadzanie(Pacjent pacjent) {
         perror("Błąd wysyłania pacjenta do kolejki zewnętrznej");
         exit(1);
     }else {
-        // printf("KROK 2 Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
-        //        pacjent.id,
-        //        pacjent.priorytet ? " (VIP)" : "",
-        //        pacjent.rodzic_obecny ? " (z rodzicem)" : "",
-        //        pacjent.wiek);
+        printf("KROK 2 Pacjent ID: %d%s%s %d dołączył do kolejki zewnętrznej.\n",
+               pacjent.id,
+               pacjent.priorytet ? " (VIP)" : "",
+               pacjent.rodzic_obecny ? " (z rodzicem)" : "",
+               pacjent.wiek);
     }
 
     // Czekanie na wejście do rejestracji
@@ -73,8 +73,8 @@ int main(int argc, char *argv[]) {
     pacjent.pid = atoi(argv[6]);
 
     // Debug: Wyświetlenie danych pacjenta
-    printf("KROK 1 [PACJENT] ID: %d, Wiek: %d, Priorytet: %d, Rodzic: %d, Lekarz: %d PID: %d\n",
-           pacjent.id, pacjent.wiek, pacjent.priorytet, pacjent.rodzic_obecny, pacjent.lekarz, getpid());
+     printf("KROK 1 [PACJENT] ID: %d, Wiek: %d, Priorytet: %d, Rodzic: %d, Lekarz: %d PID: %d\n",
+            pacjent.id, pacjent.wiek, pacjent.priorytet, pacjent.rodzic_obecny, pacjent.lekarz, getpid());
 
 
     Komunikat komunikat;

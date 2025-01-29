@@ -31,8 +31,8 @@ void zmien_liczba_osob(int zmiana) {
 
     int semafor_liczba_osob = uzyskaj_dostep_do_semafora(klucz_liczba_osob);
     //printf("[ZMIEN LICZBE OSOB]WARTOSC SEMAFORA LICZBA OSOB: %d\n", pobierz_wartosc_semafora(semafor_liczba_osob));
-    printf("[Monitorowanie] CALKOWITA Liczba osób w przychodni przed zmiana: %d, ZMIANA: %d\n", *liczba_osob, zmiana);
     zmniejsz_semafor(semafor_liczba_osob);
+    printf("[Monitorowanie] CALKOWITA Liczba osób w przychodni przed zmiana: %d, ZMIANA: %d\n", *liczba_osob, zmiana);
     *liczba_osob += zmiana;
     printf("[Monitorowanie] CALKOWITA Liczba osób w przychodni po zmianie: %d, ZMIANA: %d\n", *liczba_osob, zmiana);
     zwieksz_semafor(semafor_liczba_osob);

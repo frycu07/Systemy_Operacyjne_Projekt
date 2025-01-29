@@ -26,6 +26,132 @@ int pacjenci_w_kolejce_OKULISTA = 0;
 int pacjenci_w_kolejce_PEDIATRA = 0;
 int pacjenci_w_kolejce_MEDYCYNA_PRACY = 0;
 int *suma_kolejek;
+int shm_id;       // ID pamięci współdzielonej
+int *liczba_osob; // Wskaźnik do pamięci współdzielonej
+int shm_id2;
+
+int id_sm_kolejki_lekarzy[5];
+int *sm_kolejki_lekarzy[5];
+int semafor_kolejki_lekarzy[5];
+void create_osoby_do_przyjecia_lekarz(int id)
+{
+    key_t shm_key_base = 4321;  // Bazowy klucz dla pamięci współdzielonej
+    key_t sem_key_base = 4322;  // Bazowy klucz dla semaforów
+
+    for (int i = 0; i < 5; i++) {
+        // Tworzenie klucza pamięci współdzielonej dla każdego lekarza
+        key_t shm_keyx = shm_key_base + i;
+        id_sm_kolejki_lekarzy[i] = shmget(shm_keyx, sizeof(int), IPC_CREAT | 0666);
+        if (id_sm_kolejki_lekarzy[i] == -1) {
+            perror("Błąd tworzenia pamięci współdzielonej");
+            exit(1);
+        }
+
+        // Podłączamy pamięć współdzieloną i ZOSTAWIAMY ją podłączoną:
+        sm_kolejki_lekarzy[i] = (int *)shmat(id_sm_kolejki_lekarzy[i], NULL, 0);
+        if (sm_kolejki_lekarzy[i] == (void *)-1) {
+            perror("Błąd dołączania pamięci współdzielonej");
+            exit(1);
+        }
+
+        // Inicjalizacja licznika TYLKO w pierwszym okienku (jeśli tak zakładasz):
+        if (id == 0) {
+            *sm_kolejki_lekarzy[i] = 0;
+        }
+
+        // Tworzenie semafora dla każdego lekarza
+        key_t sem_keyx = sem_key_base + i;
+        semafor_kolejki_lekarzy[i] = semget(sem_keyx, 1, IPC_CREAT | 0666);
+        if (semafor_kolejki_lekarzy[i] == -1) {
+            perror("Błąd tworzenia semafora");
+            exit(1);
+        }
+
+        // Inicjalizacja semafora tylko w pierwszym okienku, by nie nadpisać istniejącej wartości
+        if (id == 0) {
+            if (semctl(semafor_kolejki_lekarzy[i], 0, SETVAL, 1) == -1) {
+                perror("Błąd inicjalizacji semafora");
+                exit(1);
+            }
+        }
+
+        printf("Utworzono pamięć współdzieloną i semafor dla lekarza %d\n", i);
+    }
+}
+// void create_osoby_do_przyjecia_lekarz(int id) {
+//     key_t shm_key_base = 4321;  // Bazowy klucz dla pamięci współdzielonej
+//     key_t sem_key_base = 4322; // Bazowy klucz dla semaforów
+//
+//     for (int i = 0; i < 5; i++) {
+//         // Tworzenie klucza pamięci współdzielonej dla każdego lekarza
+//         key_t shm_keyx = shm_key_base + i;
+//         id_sm_kolejki_lekarzy[i] = shmget(shm_keyx, sizeof(int), IPC_CREAT | 0666);
+//         if (id_sm_kolejki_lekarzy[i] == -1) {
+//             perror("Błąd tworzenia pamięci współdzielonej");
+//             exit(1);
+//         }
+//
+//         // Inicjalizacja pamięci współdzielonej
+//         int *shared_mem = (int *)shmat(id_sm_kolejki_lekarzy[i], NULL, 0);
+//         if (shared_mem == (void *)-1) {
+//             perror("Błąd dołączania pamięci współdzielonej");
+//             exit(1);
+//         }
+//         if(id==0) *shared_mem = 0; // Inicjalizacja liczby pacjentów na 0
+//         shmdt(shared_mem); // Odłączanie pamięci współdzielonej
+//
+//         sm_kolejki_lekarzy[i] = shared_mem;
+//         // Tworzenie semaforów dla każdego lekarza
+//         key_t sem_keyx = sem_key_base + i;
+//         semafor_kolejki_lekarzy[i] = semget(sem_keyx, 1, IPC_CREAT | 0666);
+//         if (semafor_kolejki_lekarzy[i] == -1) {
+//             perror("Błąd tworzenia semafora");
+//             exit(1);
+//         }
+//
+//         if (id ==0) {
+//             // Inicjalizacja semafora
+//             if (semctl(semafor_kolejki_lekarzy[i], 0, SETVAL, 1) == -1) {
+//                 perror("Błąd inicjalizacji semafora");
+//                 exit(1);
+//             }
+//         }
+//
+//         printf("Utworzono pamięć współdzieloną i semafor dla lekarza %d\n", i);
+//     }
+// }
+void remove_osoby_do_przyjecia_lekarz() {
+    for (int i = 0; i < 5; i++) {
+        // Usuwanie pamięci współdzielonej
+        if (shmctl(id_sm_kolejki_lekarzy[i], IPC_RMID, NULL) == -1) {
+            perror("Błąd usuwania pamięci współdzielonej");
+        } else {
+            printf("Usunięto pamięć współdzieloną dla lekarza %d\n", i);
+        }
+
+        // Usuwanie semafora
+        if (semctl(semafor_kolejki_lekarzy[i], 0, IPC_RMID) == -1) {
+            perror("Błąd usuwania semafora");
+        } else {
+            printf("Usunięto semafor dla lekarza %d\n", i);
+        }
+    }
+}
+
+void blokuj_osoby_do_przyjecia_lekarz(int typ_lekarza) {
+    printf("Zablokowany semafor dla %d\n", typ_lekarza);
+    zmniejsz_semafor(semafor_kolejki_lekarzy[typ_lekarza]);
+}
+void odblokuj_osoby_do_przyjecia_lekarz(int typ_lekarza) {
+    printf("Odblokowany semafor dla %d\n", typ_lekarza);
+    zwieksz_semafor(semafor_kolejki_lekarzy[typ_lekarza]);
+}
+void dodaj_pacjenta_do_kolejki(int typ_lekarza) {
+    (*sm_kolejki_lekarzy[typ_lekarza])++;
+}
+int ilosc_pacjentow_w_kolejce(int typ_lekarza) {
+    return *sm_kolejki_lekarzy[typ_lekarza];
+}
 
 void* uruchom_zarzadzanie_kolejka(void* arg) {
         zarzadz_kolejka_zewnetrzna();
@@ -38,9 +164,7 @@ void zakonczenie_procesow() {
         printf("Proces o PID %d został zakończony.\n", pid);
     }
 }
-int shm_id;       // ID pamięci współdzielonej
-int *liczba_osob; // Wskaźnik do pamięci współdzielonej
-int shm_id2;
+
 void uzyskaj_pamiec_wspoldzielona() {
     shm_id = shmget(PAMIEC_WSPOLDZIELONA_KLUCZ, sizeof(int), 0); // Odczyt istniejącej pamięci
     if (shm_id == -1) {
@@ -75,7 +199,12 @@ void rejestracja_end() {
 }
 
 void rejestracja(int id) {
+    if (id == 0) {
+        signal(SIGINT,remove_osoby_do_przyjecia_lekarz);
+        signal(SIGTERM,remove_osoby_do_przyjecia_lekarz);
+    }
     signal(SIGUSR1,rejestracja_end);
+    create_osoby_do_przyjecia_lekarz(id);
     //log_process("START", "Rejestracja", id);  // Logowanie rozpoczęcia rejestracji
     printf("Uruchomiono kolejke rejestracja %d\n", id);
 
@@ -165,14 +294,14 @@ if (kolejka_vip_medycyna_pracy == -1) {
 
     while (1) {
         if (end_rejestracja) break;
-        Komunikat komunikat;
+        Komunikat komunikat2;
 
 
         zmniejsz_semafor(semafor_rejestracja);
 
         // Odbiór pacjenta z kolejki rejestracji
-        if (msgrcv(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0, 0) != -1) {
-            printf("KROK 5 [R] Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat.pacjent.id);
+        if (msgrcv(kolejka_rejestracja, &komunikat2, sizeof(Pacjent), 0, 0) != -1) {
+            printf("KROK 5 [R] Rejestracja %d: Odebrano pacjenta ID: %d\n", id, komunikat2.pacjent.id);
         }
         else {
             perror("Błąd odbierania pacjenta z kolejki rejestracji");
@@ -182,9 +311,9 @@ if (kolejka_vip_medycyna_pracy == -1) {
         zwieksz_semafor(semafor_rejestracja);
 
         if (!czy_przychodnia_otwarta() && sprawdz_kolejke(kolejka_rejestracja)  == 0) {
-            int lek_num = komunikat.pacjent.lekarz;
+            int lek_num = komunikat2.pacjent.lekarz;
             char lek_nazw[20];
-            switch (komunikat.pacjent.lekarz) {
+            switch (komunikat2.pacjent.lekarz) {
                 case 0: // POZ
                     strcpy(lek_nazw, "POZ");
                 break;
@@ -204,133 +333,139 @@ if (kolejka_vip_medycyna_pracy == -1) {
                     strcpy(lek_nazw, "NIEZNANY");
                 break;
             }
-                RaportPacjenta raport = {komunikat.pacjent.id, lek_nazw, "REJESTRACJA"};
+                RaportPacjenta raport = {komunikat2.pacjent.id, lek_nazw, "REJESTRACJA"};
                 zapisz_do_raportu(raport);
-                zakoncz_wizyte(komunikat.pacjent);
+                zakoncz_wizyte(komunikat2.pacjent);
                 break;
             }
 
             sleep(2);
             printf("KROK 6 ");
-
+            blokuj_osoby_do_przyjecia_lekarz(komunikat2.pacjent.lekarz);
+            printf ("ILOSC PACJENTOW W KOLEJCE: %d, lekarz: %d\n", ilosc_pacjentow_w_kolejce(komunikat2.pacjent.lekarz), komunikat2.pacjent.lekarz);
             // Skierowanie pacjenta do odpowiedniej kolejki
-            switch (komunikat.pacjent.lekarz) {
+            switch (komunikat2.pacjent.lekarz) {
                 case 0: // POZ
                 {
-                    if (pacjenci_w_kolejce_POZ < X1+X1) {
-                        pacjenci_w_kolejce_POZ++;
+                    if (ilosc_pacjentow_w_kolejce(komunikat2.pacjent.lekarz)< X1+X1) {
+                        dodaj_pacjenta_do_kolejki(komunikat2.pacjent.lekarz);
                         dodaj_suma_kolejek();
-                        int kolejka_docelowa = komunikat.pacjent.priorytet ? kolejka_vip_poz : kolejka_poz;
+                        int kolejka_docelowa = komunikat2.pacjent.priorytet ? kolejka_vip_poz : kolejka_poz;
                         printf("[DEBUG] Kolejka docelowa (POZ): %d, Pacjenci przeszli przez kolejke: %d\n", kolejka_docelowa, pacjenci_w_kolejce_POZ);
                         printf("[DEBUG] Wysyłam wiadomość do kolejki: msqid=%d, msgsz=%lu, mtype=%ld\n",
-                         kolejka_docelowa, sizeof(Pacjent), komunikat.typ);
-                        if (msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0) == -1) {
+                         kolejka_docelowa, sizeof(Pacjent), komunikat2.typ);
+                        if (msgsnd(kolejka_docelowa, &komunikat2, sizeof(Pacjent), 0) == -1) {
                             perror("[ERROR] Nie udało się wysłać wiadomości do kolejki POZ");
                         } else {
-                            printf("[DEBUG] Pacjent ID: %d pomyślnie dodany do kolejki POZ.\n", komunikat.pacjent.id);
+                            printf("[DEBUG] Pacjent ID: %d pomyślnie dodany do kolejki POZ.\n", komunikat2.pacjent.id);
                         }
                     } else {
-                        printf("Rejestracja %d: Limit pacjentów POZ osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-                        RaportPacjenta raport = {komunikat.pacjent.id, "POZ", "REJESTRACJA"};
+                        printf("Rejestracja %d: Limit pacjentów POZ osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat2.pacjent.id);
+                        RaportPacjenta raport = {komunikat2.pacjent.id, "POZ", "REJESTRACJA"};
                         zapisz_do_raportu(raport);
-                        zakoncz_wizyte(komunikat.pacjent);
+                        zakoncz_wizyte(komunikat2.pacjent);
                     }
                     break;
                 }
                 case 1: // Kardiolog
                 {
-                    if (pacjenci_w_kolejce_KARDIOLOG < X2) {
-                        pacjenci_w_kolejce_KARDIOLOG++;
+                    if (ilosc_pacjentow_w_kolejce(komunikat2.pacjent.lekarz) < X2) {
+                        dodaj_pacjenta_do_kolejki(komunikat2.pacjent.lekarz);
                         dodaj_suma_kolejek();
-                        int kolejka_docelowa = komunikat.pacjent.priorytet ? kolejka_vip_kardiolog : kolejka_kardiolog;
+                        int kolejka_docelowa = komunikat2.pacjent.priorytet ? kolejka_vip_kardiolog : kolejka_kardiolog;
                         printf("pacjenci_w_kolejce_KARDIOLOG: %d\n", pacjenci_w_kolejce_KARDIOLOG);
                         printf("[DEBUG] Wysyłam wiadomość do kolejki: msqid=%d, msgsz=%lu, mtype=%ld\n",
-                         kolejka_docelowa, sizeof(Pacjent), komunikat.typ);
-                        if (msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0) == -1) {
+                         kolejka_docelowa, sizeof(Pacjent), komunikat2.typ);
+                        if (msgsnd(kolejka_docelowa, &komunikat2, sizeof(Pacjent), 0) == -1) {
                             perror("[ERROR] Nie udało się wysłać wiadomości do kolejki KARDIOLOG");
                         } else {
-                            printf("[DEBUG] Pacjent ID: %d pomyślnie dodany do kolejki KARDIOLOG.\n", komunikat.pacjent.id);
+                            printf("[DEBUG] Pacjent ID: %d pomyślnie dodany do kolejki KARDIOLOG.\n", komunikat2.pacjent.id);
                         }
                     } else {
-                        printf("Rejestracja %d: Limit pacjentów KARDIOLOG osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-                       // log_process("ODMOWA", "Kardiolog", komunikat.pacjent.id);
-                        RaportPacjenta raport = {komunikat.pacjent.id, "KARDIOLOG", "REJESTRACJA"};
+                        printf("Rejestracja %d: Limit pacjentów KARDIOLOG osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat2.pacjent.id);
+                       // log_process("ODMOWA", "Kardiolog", komunikat2.pacjent.id);
+                        RaportPacjenta raport = {komunikat2.pacjent.id, "KARDIOLOG", "REJESTRACJA"};
                         zapisz_do_raportu(raport);
-                        zakoncz_wizyte(komunikat.pacjent);
+                        zakoncz_wizyte(komunikat2.pacjent);
                     }
                     break;
                 }
                 case 2: // Okulista
                 {
-                    if (pacjenci_w_kolejce_OKULISTA < X3) {
-                        pacjenci_w_kolejce_OKULISTA++;
+                    if (ilosc_pacjentow_w_kolejce(komunikat2.pacjent.lekarz) < X3) {
+                        dodaj_pacjenta_do_kolejki(komunikat2.pacjent.lekarz);
                         dodaj_suma_kolejek();
-                        int kolejka_docelowa = komunikat.pacjent.priorytet ? kolejka_vip_okulista : kolejka_okulista;
+                        int kolejka_docelowa = komunikat2.pacjent.priorytet ? kolejka_vip_okulista : kolejka_okulista;
                         printf("pacjenci_w_kolejce_OKULISTA: %d\n", pacjenci_w_kolejce_OKULISTA);
                         printf("[DEBUG] Wysyłam wiadomość do kolejki: msqid=%d, msgsz=%lu, mtype=%ld\n",
-                         kolejka_docelowa, sizeof(Pacjent), komunikat.typ);
-                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
-                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki OKULISTA.\n", id, komunikat.pacjent.id);
-                       // log_process("SKIEROWANO", "Okulista", komunikat.pacjent.id);
+                         kolejka_docelowa, sizeof(Pacjent), komunikat2.typ);
+                        msgsnd(kolejka_docelowa, &komunikat2, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki OKULISTA.\n", id, komunikat2.pacjent.id);
+                       // log_process("SKIEROWANO", "Okulista", komunikat2.pacjent.id);
                     } else {
-                        printf("Rejestracja %d: Limit pacjentów OKULISTA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-                        //log_process("ODMOWA", "Okulista", komunikat.pacjent.id);
-                        RaportPacjenta raport = {komunikat.pacjent.id, "OKULISTA", "REJESTRACJA"};
+                        printf("Rejestracja %d: Limit pacjentów OKULISTA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat2.pacjent.id);
+                        //log_process("ODMOWA", "Okulista", komunikat2.pacjent.id);
+                        RaportPacjenta raport = {komunikat2.pacjent.id, "OKULISTA", "REJESTRACJA"};
                         zapisz_do_raportu(raport);
-                        zakoncz_wizyte(komunikat.pacjent);
+                        zakoncz_wizyte(komunikat2.pacjent);
                     }
                     break;
                 }
                 case 3: // Pediatra
                 {
-                    if (pacjenci_w_kolejce_PEDIATRA < X4) {
-                        pacjenci_w_kolejce_PEDIATRA++;
+                    if (ilosc_pacjentow_w_kolejce(komunikat2.pacjent.lekarz) < X4) {
+                        dodaj_pacjenta_do_kolejki(komunikat2.pacjent.lekarz);
                         dodaj_suma_kolejek();
-                        int kolejka_docelowa = komunikat.pacjent.priorytet ? kolejka_vip_pediatra : kolejka_pediatra;
+                        int kolejka_docelowa = komunikat2.pacjent.priorytet ? kolejka_vip_pediatra : kolejka_pediatra;
                         printf("pacjenci_w_kolejce_PEDIATRA: %d\n", pacjenci_w_kolejce_PEDIATRA);
                         printf("[DEBUG] Wysyłam wiadomość do kolejki: msqid=%d, msgsz=%lu, mtype=%ld\n",
-                         kolejka_docelowa, sizeof(Pacjent), komunikat.typ);
-                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
-                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki PEDIATRA.\n", id, komunikat.pacjent.id);
-                       // log_process("SKIEROWANO", "Pediatra", komunikat.pacjent.id);
+                         kolejka_docelowa, sizeof(Pacjent), komunikat2.typ);
+                        msgsnd(kolejka_docelowa, &komunikat2, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki PEDIATRA.\n", id, komunikat2.pacjent.id);
+                       // log_process("SKIEROWANO", "Pediatra", komunikat2.pacjent.id);
                     } else {
-                        printf("Rejestracja %d: Limit pacjentów PEDIATRA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-                       // log_process("ODMOWA", "Pediatra", komunikat.pacjent.id);
-                        RaportPacjenta raport = {komunikat.pacjent.id, "PEDIATRA", "REJESTRACJA"};
+                        printf("Rejestracja %d: Limit pacjentów PEDIATRA osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat2.pacjent.id);
+                       // log_process("ODMOWA", "Pediatra", komunikat2.pacjent.id);
+                        RaportPacjenta raport = {komunikat2.pacjent.id, "PEDIATRA", "REJESTRACJA"};
                         zapisz_do_raportu(raport);
-                        zakoncz_wizyte(komunikat.pacjent);
+                        zakoncz_wizyte(komunikat2.pacjent);
                     }
                     break;
                 }
                 case 4: // Medycyna pracy
                 {
-                    if (pacjenci_w_kolejce_MEDYCYNA_PRACY < X5) {
-                        pacjenci_w_kolejce_MEDYCYNA_PRACY++;
+                    if (ilosc_pacjentow_w_kolejce(komunikat2.pacjent.lekarz) < X5) {
+                        dodaj_pacjenta_do_kolejki(komunikat2.pacjent.lekarz);
                         dodaj_suma_kolejek();
-                        int kolejka_docelowa = komunikat.pacjent.priorytet ? kolejka_vip_medycyna_pracy : kolejka_medycyna_pracy;
+                        int kolejka_docelowa = komunikat2.pacjent.priorytet ? kolejka_vip_medycyna_pracy : kolejka_medycyna_pracy;
                         printf("Pacjenci_w_kolejce_MEDYCYNA_PRACY: %d\n", pacjenci_w_kolejce_MEDYCYNA_PRACY);
                         printf("[DEBUG] Wysyłam wiadomość do kolejki: msqid=%d, msgsz=%lu, mtype=%ld\n",
-                         kolejka_docelowa, sizeof(Pacjent), komunikat.typ);
-                        msgsnd(kolejka_docelowa, &komunikat, sizeof(Pacjent), 0);
-                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki MEDYCYNA PRACY.\n", id, komunikat.pacjent.id);
-                       // log_process("SKIEROWANO", "Medycyna_Pracy", komunikat.pacjent.id);
+                         kolejka_docelowa, sizeof(Pacjent), komunikat2.typ);
+                        msgsnd(kolejka_docelowa, &komunikat2, sizeof(Pacjent), 0);
+                        printf("Rejestracja %d: Pacjent ID: %d skierowany do kolejki MEDYCYNA PRACY.\n", id, komunikat2.pacjent.id);
+                       // log_process("SKIEROWANO", "Medycyna_Pracy", komunikat2.pacjent.id);
                     } else {
-                        printf("Rejestracja %d: Limit pacjentów MEDYCYNA PRACY osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat.pacjent.id);
-                        //log_process("ODMOWA", "Medycyna_Pracy", komunikat.pacjent.id);
-                        RaportPacjenta raport = {komunikat.pacjent.id, "MEDYCYNA PRACY", "REJESTRACJA"};
+                        printf("Rejestracja %d: Limit pacjentów MEDYCYNA PRACY osiągnięty. Pacjent ID: %d nie może zostać skierowany.\n", id, komunikat2.pacjent.id);
+                        //log_process("ODMOWA", "Medycyna_Pracy", komunikat2.pacjent.id);
+                        RaportPacjenta raport = {komunikat2.pacjent.id, "MEDYCYNA PRACY", "REJESTRACJA"};
                         zapisz_do_raportu(raport);
-                        zakoncz_wizyte(komunikat.pacjent);
+                        zakoncz_wizyte(komunikat2.pacjent);
                     }
                     break;
                 }
             }
+        odblokuj_osoby_do_przyjecia_lekarz(komunikat2.pacjent.lekarz);
+    }
+
+    if(id == 0) {
+        remove_osoby_do_przyjecia_lekarz();
     }
 }
 
 
 
 void zarzadz_kolejka_zewnetrzna() {
-    Komunikat komunikat;
+    Komunikat komunikat2;
     int kolejka_zewnetrzna = msgget(KOLEJKA_ZEWNETRZNA, IPC_CREAT | 0666);
     int kolejka_rejestracja = msgget(KOLEJKA_REJESTRACJA, IPC_CREAT | 0666);
     //printf("uruchomiono kolejke zewnetrzna\n");
@@ -345,10 +480,10 @@ void zarzadz_kolejka_zewnetrzna() {
     int liczba_osob_zarejestrowanych = 0;
     int suma = X1+X1+X2+X3+X4+X5;
     while (czy_dziala) {
-        komunikat.typ = 1;
+        komunikat2.typ = 1;
 
-        if (msgrcv(kolejka_zewnetrzna, &komunikat, sizeof(Komunikat) - sizeof(long), 1, 0) != -1) {
-            printf("KROK 3 Odebrano wiadomość w kolejce zewnetrznej. Pacjent ID: %d\n", komunikat.pacjent.id);
+        if (msgrcv(kolejka_zewnetrzna, &komunikat2, sizeof(Komunikat) - sizeof(long), 1, 0) != -1) {
+            printf("KROK 3 Odebrano wiadomość w kolejce zewnetrznej. Pacjent ID: %d\n", komunikat2.pacjent.id);
         } else {
             printf("[DEBUG] msgrcv zwrócił błąd\n");
             if (errno == ENOMSG) {
@@ -359,19 +494,19 @@ void zarzadz_kolejka_zewnetrzna() {
             }
         }
 
-         if ((suma <= *suma_kolejek) && (liczba_osob_zarejestrowanych != 0)) {
-            printf("KROK 3' ZKZ Przychodnia zamknięta. Pacjent ID: %d nie może wejść. Wszyscy lekarze maja pelne kolejki\n", komunikat.pacjent.id);
+         if ((suma < *suma_kolejek) && (liczba_osob_zarejestrowanych != 0)) {
+            printf("Lekarze maja pelne kolejki suma: %d MAX:%d KROK 3' ZKZ Przychodnia zamknięta. Pacjent ID: %d nie może wejść. Wszyscy lekarze maja pelne kolejki\n", suma, *suma_kolejek, komunikat2.pacjent.id);
             czy_dziala = 0;
              continue;
          }
-     int wymagane_miejsce = komunikat.pacjent.rodzic_obecny ? 2 : 1;
-     printf("[DEBUG] liczba_osob:%d , wymagane_miejsce: %d, MAX_OSOB_W_PRZYCHODNI: %d\n",
-     *liczba_osob, wymagane_miejsce, MAX_OSOB_W_PRZYCHODNI);
+     int wymagane_miejsce = komunikat2.pacjent.rodzic_obecny ? 2 : 1;
+     //printf("[DEBUG] liczba_osob:%d , wymagane_miejsce: %d, MAX_OSOB_W_PRZYCHODNI: %d\n",
+     //*liczba_osob, wymagane_miejsce, MAX_OSOB_W_PRZYCHODNI);
      if (*liczba_osob + wymagane_miejsce <= MAX_OSOB_W_PRZYCHODNI) {
          // Tworzenie procesu rodzica, jeśli obecny
-         if (komunikat.pacjent.rodzic_obecny) {
+         if (komunikat2.pacjent.rodzic_obecny) {
              if (fork() == 0) {
-                 printf("Stworzono Rodzic dla pacjenta %d, PID: %d\n", komunikat.pacjent.id, getpid());
+                 //printf("Stworzono Rodzic dla pacjenta %d, PID: %d\n", komunikat2.pacjent.id, getpid());
                  pause(); // Rodzic czeka z dzieckiem
                  exit(0);
              }
@@ -379,27 +514,27 @@ void zarzadz_kolejka_zewnetrzna() {
 
          // Wysyłanie pacjenta do kolejki rejestracyjnej
 
-         komunikat.typ = 1;
+         komunikat2.typ = 1;
 
-         if (msgsnd(kolejka_rejestracja, &komunikat, sizeof(Pacjent), 0 == -1)) {
+         if (msgsnd(kolejka_rejestracja, &komunikat2, sizeof(Pacjent), 0 == -1)) {
              printf("Błąd wysyłania wiadomości\n");
          }
 
          printf("KROK 4 Pacjent ID: %d%s%s został wpuszczony do przychodni z kolejki zewnętrznej.\n",
-                komunikat.pacjent.id,
-                komunikat.pacjent.priorytet ? " (VIP)" : "",
-                komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
+                komunikat2.pacjent.id,
+                komunikat2.pacjent.priorytet ? " (VIP)" : "",
+                komunikat2.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
                 printf("Wymagane miejsca: %d\n", wymagane_miejsce);
             zmien_liczba_osob(wymagane_miejsce); // Zmiana liczby osób w przychodni
             liczba_osob_zarejestrowanych++;
 
              } else {
                  // Kolejka zewnętrzna czeka, jeśli brak miejsca w przychodni
-                 msgsnd(kolejka_zewnetrzna, &komunikat, sizeof(Pacjent), 0);
+                 msgsnd(kolejka_zewnetrzna, &komunikat2, sizeof(Pacjent), 0);
                  printf("KROK 4' Pacjent ID: %d%s%s musi poczekać na wejście do przychodni.\n",
-                         komunikat.pacjent.id,
-                         komunikat.pacjent.priorytet ? " (VIP)" : "",
-                         komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
+                         komunikat2.pacjent.id,
+                         komunikat2.pacjent.priorytet ? " (VIP)" : "",
+                         komunikat2.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
                  sleep(2);
              }
          }
@@ -503,6 +638,8 @@ void zapisz_do_raportu(RaportPacjenta pacjent) {
 }
 
 int main() {
+
+
     printf("[REJESTRACJA][START] PROGRAM rejestracja uruchomiony. PID: %d\n", getpid());
 
     int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);

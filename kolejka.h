@@ -10,27 +10,12 @@
 #include "pacjent.h"
 // Maksymalna liczba osób w przychodni
 #define MAX_OSOB_W_PRZYCHODNI 20
-#define KOLEJKA_ZEWNETRZNA 1230 // Kolejka zewnętrzna
+
 #define PAMIEC_WSPOLDZIELONA_KLUCZ 6789
 #define PAMIEC_WSPOLDZIELONA_KLUCZ2 6790
-// Klucze do kolejek
+
+#define KOLEJKA_ZEWNETRZNA 1230 // Kolejka zewnętrzna
 #define KOLEJKA_REJESTRACJA 1240
-
-
-key_t klucz_liczba_osob = 3000;
-key_t klucz_semafora_rejestracja = 3233;// Unikalny klucz semafora
-key_t klucz_semafor_poz = 3232;
-key_t klucz_semafor_poz_vip = 3231;
-key_t klucz_semafor_zamkniecie = 3230;
-key_t klucz_semafor_suma_kolejek = 3235;
-
-// // Limity pacjentów dla lekarzy
-#define X1 15  // Limit dla każdego lekarza POZ
-#define X2 5  // Limit dla kardiologa
-#define X3 5  // Limit dla okulisty
-#define X4 5  // Limit dla pediatry
-#define X5 5  // Limit dla lekarza medycyny pracy
-
 
 #define KOLEJKA_POZ 1235           // Kolejka dla lekarzy POZ
 #define KOLEJKA_KARDIOLOG 1236     // Kolejka dla kardiologa
@@ -51,6 +36,19 @@ key_t klucz_semafor_suma_kolejek = 3235;
 #define KOLEJKA_BADANIA_PEDIATRA (KOLEJKA_PEDIATRA + KOLEJKA_BADANIA_BASE)   // Kolejka badań dla pediatry
 #define KOLEJKA_BADANIA_MEDYCYNA (KOLEJKA_MEDYCYNA_PRACY + KOLEJKA_BADANIA_BASE) // Kolejka dla medycyny pracy
 
+key_t klucz_liczba_osob = 3001;
+key_t klucz_semafora_rejestracja = 3233;// Unikalny klucz semafora
+key_t klucz_semafor_suma_kolejek = 3235;
+
+// // Limity pacjentów dla lekarzy
+#define X1 10  // Limit dla każdego lekarza POZ
+#define X2 5  // Limit dla kardiologa
+#define X3 5  // Limit dla okulisty
+#define X4 5  // Limit dla pediatry
+#define X5 5  // Limit dla lekarza medycyny pracy
+
+
+
 
 void wyczysc_kolejki();
 
@@ -59,11 +57,13 @@ void zakoncz_wizyte(Pacjent pacjent);
 // // Globalna zmienna liczby osób
 extern int *suma_kolejek;
 extern int *liczba_osob;
+
+
 extern int semafor_rejestracja;
 extern int semafor_liczba_osob;
-extern int semafor_POZ;
-extern int semafor_POZ_VIP;
 extern int semafor_suma_kolejek;
+
+
 // // Funkcje związane z semaforami
 //
 

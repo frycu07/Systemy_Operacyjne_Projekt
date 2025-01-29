@@ -211,97 +211,41 @@ build lekarz: C_EXECUTABLE_LINKER__lekarz_Debug CMakeFiles/lekarz.dir/lekarz.c.o
   TARGET_PDB = lekarz.dbg
 
 # =============================================================================
-# Object build statements for EXECUTABLE target test1
+# Object build statements for EXECUTABLE target dyrektor
 
 
 #############################################
-# Order-only phony target for test1
+# Order-only phony target for dyrektor
 
-build cmake_object_order_depends_target_test1: phony || .
+build cmake_object_order_depends_target_dyrektor: phony || .
 
-build CMakeFiles/test1.dir/kolejka.c.o: C_COMPILER__test1_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_test1
-  DEP_FILE = CMakeFiles/test1.dir/kolejka.c.o.d
+build CMakeFiles/dyrektor.dir/dyrektor.c.o: C_COMPILER__dyrektor_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/dyrektor.c || cmake_object_order_depends_target_dyrektor
+  DEP_FILE = CMakeFiles/dyrektor.dir/dyrektor.c.o.d
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/test1.dir
-  OBJECT_FILE_DIR = CMakeFiles/test1.dir
+  OBJECT_DIR = CMakeFiles/dyrektor.dir
+  OBJECT_FILE_DIR = CMakeFiles/dyrektor.dir
+
+build CMakeFiles/dyrektor.dir/kolejka.c.o: C_COMPILER__dyrektor_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_dyrektor
+  DEP_FILE = CMakeFiles/dyrektor.dir/kolejka.c.o.d
+  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/dyrektor.dir
+  OBJECT_FILE_DIR = CMakeFiles/dyrektor.dir
 
 
 # =============================================================================
-# Link build statements for EXECUTABLE target test1
+# Link build statements for EXECUTABLE target dyrektor
 
 
 #############################################
-# Link the executable test1
+# Link the executable dyrektor
 
-build test1: C_EXECUTABLE_LINKER__test1_Debug CMakeFiles/test1.dir/kolejka.c.o
+build dyrektor: C_EXECUTABLE_LINKER__dyrektor_Debug CMakeFiles/dyrektor.dir/dyrektor.c.o CMakeFiles/dyrektor.dir/kolejka.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
-  OBJECT_DIR = CMakeFiles/test1.dir
+  OBJECT_DIR = CMakeFiles/dyrektor.dir
   POST_BUILD = :
   PRE_LINK = :
-  TARGET_FILE = test1
-  TARGET_PDB = test1.dbg
-
-# =============================================================================
-# Object build statements for EXECUTABLE target tes2
-
-
-#############################################
-# Order-only phony target for tes2
-
-build cmake_object_order_depends_target_tes2: phony || .
-
-build CMakeFiles/tes2.dir/kolejka.c.o: C_COMPILER__tes2_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_tes2
-  DEP_FILE = CMakeFiles/tes2.dir/kolejka.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/tes2.dir
-  OBJECT_FILE_DIR = CMakeFiles/tes2.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target tes2
-
-
-#############################################
-# Link the executable tes2
-
-build tes2: C_EXECUTABLE_LINKER__tes2_Debug CMakeFiles/tes2.dir/kolejka.c.o
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
-  OBJECT_DIR = CMakeFiles/tes2.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = tes2
-  TARGET_PDB = tes2.dbg
-
-# =============================================================================
-# Object build statements for EXECUTABLE target test3
-
-
-#############################################
-# Order-only phony target for test3
-
-build cmake_object_order_depends_target_test3: phony || .
-
-build CMakeFiles/test3.dir/kolejka.c.o: C_COMPILER__test3_unscanned_Debug /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/kolejka.c || cmake_object_order_depends_target_test3
-  DEP_FILE = CMakeFiles/test3.dir/kolejka.c.o.d
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1 -fcolor-diagnostics
-  OBJECT_DIR = CMakeFiles/test3.dir
-  OBJECT_FILE_DIR = CMakeFiles/test3.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target test3
-
-
-#############################################
-# Link the executable test3
-
-build test3: C_EXECUTABLE_LINKER__test3_Debug CMakeFiles/test3.dir/kolejka.c.o
-  FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX15.2.sdk -mmacosx-version-min=15.1
-  OBJECT_DIR = CMakeFiles/test3.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = test3
-  TARGET_PDB = test3.dbg
+  TARGET_FILE = dyrektor
+  TARGET_PDB = dyrektor.dbg
 
 
 #############################################
@@ -337,7 +281,7 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 #############################################
 # Folder: /Users/bartlomiejfryc/CLionProjects/Uczelnia/Projekt_SO/cmake-build-debug
 
-build all: phony main rejestracja pacjent lekarz test1 tes2 test3
+build all: phony main rejestracja pacjent lekarz dyrektor
 
 # =============================================================================
 # Built-in targets

@@ -26,9 +26,6 @@ int shm_id2;
 int *liczba_osob;
 int semafor_rejestracja;
 int semafor_liczba_osob;
-int semafor_POZ;
-int semafor_POZ_VIP;;
-int semafor_zamkniecie;
 int semafor_suma_kolejek;
 int *suma_kolejek;
 pid_t my_pid;
@@ -87,9 +84,6 @@ void cleanup_on_exit() {
     wyczysc_kolejki();
     usun_semafor(semafor_liczba_osob);
     usun_semafor(semafor_rejestracja);
-    usun_semafor(semafor_POZ);
-    usun_semafor(semafor_POZ_VIP);
-    usun_semafor(semafor_zamkniecie);
     usun_semafor(semafor_suma_kolejek);
     while (wait(NULL) > 0);
 
@@ -172,7 +166,7 @@ void pamiec_wspoldzielona2() {
     // Tworzenie segmentu pamięci współdzielonej
     shm_id2 = shmget(PAMIEC_WSPOLDZIELONA_KLUCZ2, sizeof(int), IPC_CREAT | 0666);
     if(a) printf("[PAMIEC_WSPOLDZIELONA][DEBUG] shm_id2 = %d\n", shm_id2);
-    if (shm_id == -1) {
+    if (shm_id2 == -1) {
         perror("Błąd tworzenia pamięci współdzielonej");
         exit(1);
     }
@@ -213,18 +207,6 @@ int main() {
         zwieksz_semafor(semafor_rejestracja); // Odblokowanie semafora
         printf("WARTOSC SEMAFORA REJESTRACJA: %d\n", pobierz_wartosc_semafora(semafor_rejestracja));
 
-        semafor_POZ = stworz_semafor(klucz_semafor_poz);
-        zwieksz_semafor(semafor_POZ);
-        printf("WARTOSC SEMAFORA POZ: %d\n", pobierz_wartosc_semafora(semafor_POZ));
-
-        semafor_POZ_VIP = stworz_semafor(klucz_semafor_poz_vip);
-        zwieksz_semafor(semafor_POZ_VIP);
-        printf("WARTOSC SEMAFORA VIP POZ: %d\n", pobierz_wartosc_semafora(semafor_POZ_VIP));
-
-        semafor_zamkniecie = stworz_semafor(klucz_semafor_zamkniecie);
-        zwieksz_semafor(semafor_zamkniecie);
-        printf("WARTOSC SEMAFORA ZAMKNIECIE: %d\n", pobierz_wartosc_semafora(semafor_zamkniecie));
-
         semafor_suma_kolejek = stworz_semafor(klucz_semafor_suma_kolejek);
         zwieksz_semafor(semafor_suma_kolejek);
         printf("WARTOSC SEMAFORA suma kolejek: %d\n", pobierz_wartosc_semafora(semafor_suma_kolejek));
@@ -264,6 +246,15 @@ int main() {
     }
     if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ POZ2\n", pid_poz2);
 
+    pid_t pid_dyr;
+
+    if ((pid_dyr = fork()) == 0) {
+        execl("./dyrektor", NULL);
+        perror("[MAIN][ERROR] Nie udało się uruchomić Dyrektor");
+        exit(1);
+    }
+    if (b) printf("[MAIN][DEBUG] Uruchomiono proces dyrektor: PID = %d\n", pid_dyr);
+
     // Tworzenie lekarzy specjalistów
      for (int i = 0; i < 4; i++) {
          if ((pid_spec[i] = fork()) == 0) {
@@ -281,16 +272,8 @@ int main() {
          if (b) printf("[MAIN][DEBUG] Uruchomiono proces: PID = %d, typ = LEKARZ SPECJALISTA (%d)\n", pid_spec[i], i+1);
     }
 
-             // Inicjalizacja procesu dyrektora
-             // if (fork() == 0) {
-             //     dyrektor();
-             //     exit(0);
-             // }
-             // zarejestruj_pid_lekarzy(pid_poz1, pid_poz2, pid_spec);
-             // Tworzenie wątku do oczyszczania zakończonych procesów
-
     //Tworzenie procesów pacjentów
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 30; i++) {
         pid_t pid = fork();
         if (pid == 0) {
             // Proces potomny - pacjent

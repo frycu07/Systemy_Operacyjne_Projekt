@@ -29,16 +29,11 @@ add_executable(lekarz
         kolejka.c
         czas.c
 )
-add_executable(test1
+add_executable(dyrektor
+        dyrektor.c
         kolejka.c
 )
-add_executable(tes2
-        kolejka.c
 
-)
-add_executable(test3
-        kolejka.c
-)
 # Dodanie biblioteki pthread do plików
 target_link_libraries(main pthread)
 target_link_libraries(rejestracja pthread)

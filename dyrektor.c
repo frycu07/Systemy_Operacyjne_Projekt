@@ -1,5 +1,7 @@
 #include "dyrektor.h"
+#include "procesy.h"
 #include "kolejka.h"
+#include "procesy.c"
 #include "rejestracja.h"
 #include <signal.h>
 #include <stdio.h>
@@ -12,77 +14,79 @@ pid_t pid_lekarzy[6]; // 2 lekarzy POZ + 4 specjaliści
 int liczba_lekarzy = 6;
 
 // Funkcja obsługi sygnałów dyrektora
-void obsluga_sygnalu_dyrektora(int sig) {
-    printf("[DYREKTOR][SYGNAL] Otrzymano sygnał: %d\n", sig);
 
-    if (sig == SIGUSR1) {
-        printf("[DYREKTOR] Polecenie: Losowe zakończenie pracy przez lekarza.\n");
-        int indeks = rand() % liczba_lekarzy; // Losowy lekarz z tablicy
-        pid_t pid_lekarza = pid_lekarzy[indeks];
-        if (pid_lekarza > 0) {
-            printf("[DYREKTOR] Wysyłam SIGTERM do lekarza o PID: %d\n", pid_lekarza);
-            kill(pid_lekarza, SIGTERM);
-        } else {
-            printf("[DYREKTOR] PID lekarza jest nieprawidłowy.\n");
-        }
-    } else if (sig == SIGUSR2) {
-        printf("[DYREKTOR] Polecenie: Ewakuacja pacjentów.\n");
-        ewakuacja_pacjentow();
+
+
+void wyczysc_procesy_pacjentow() {
+    const char *procesy[] = {"pacjent"};
+    int liczba_procesow = sizeof(procesy) / sizeof(procesy[0]);
+
+    printf("[CZYSZCZENIE][INFO] Rozpoczynam czyszczenie procesów.\n");
+
+    for (int i = 0; i < liczba_procesow; i++) {
+        printf("[CZYSZCZENIE][INFO] Szukam i kończę procesy o nazwie: %s\n", procesy[i]);
+        znajdz_i_zakoncz_procesy(procesy[i]);
     }
-}
 
+    printf("[CZYSZCZENIE][INFO] Zakończono czyszczenie procesów.\n");
+}
 // Funkcja przeprowadzająca ewakuację pacjentów
 void ewakuacja_pacjentow() {
     printf("[DYREKTOR] Rozpoczęcie ewakuacji pacjentów...\n");
-
-    int kolejki[] = {KOLEJKA_REJESTRACJA, KOLEJKA_POZ, KOLEJKA_KARDIOLOG, KOLEJKA_OKULISTA, KOLEJKA_PEDIATRA, KOLEJKA_MEDYCYNA_PRACY};
-    const char *nazwy_lekarzy[] = {"Rejestracja", "POZ", "Kardiolog", "Okulista", "Pediatra", "Medycyna Pracy"};
-
-    for (int i = 0; i < 6; i++) {
-        int kolejka_id = msgget(kolejki[i], IPC_CREAT | 0666);
-        if (kolejka_id == -1) {
-            perror("[DYREKTOR][EWAKUACJA] Nie udało się otworzyć kolejki");
-            continue;
-        }
-
-        Komunikat komunikat;
-        while (msgrcv(kolejka_id, &komunikat, sizeof(Pacjent), 0, IPC_NOWAIT) != -1) {
-            RaportPacjenta raport;
-            raport.id = komunikat.pacjent.id;
-            snprintf(raport.skierowanie_do, sizeof(raport.skierowanie_do), "%s", nazwy_lekarzy[i]);
-            snprintf(raport.wystawil, sizeof(raport.wystawil), "Dyrektor");
-
-            zapisz_do_raportu(raport); // Zapisz pacjenta do raportu dziennego
-            printf("[DYREKTOR][EWAKUACJA] Pacjent ID: %d został zapisany do raportu.\n", raport.id);
-        }
-    }
-
+    wyczysc_procesy_pacjentow();
     printf("[DYREKTOR] Ewakuacja zakończona.\n");
 }
+void zamknij_lekarza(int lek, int numer) {
+    char komenda[256];
+    snprintf(komenda, sizeof(komenda), "pgrep -f 'lekarz %d %d'", lek, numer);
 
-// Funkcja główna dyrektora
-void dyrektor() {
-    printf("[DYREKTOR] Rozpoczęcie pracy. PID: %d\n", getpid());
-
-    // Inicjalizacja generatora losowego
-    srand(time(NULL));
-
-    // Rejestracja obsługi sygnałów
-    signal(SIGUSR1, obsluga_sygnalu_dyrektora);
-    signal(SIGUSR2, obsluga_sygnalu_dyrektora);
-
-    // Pętla główna dyrektora
-    while (1) {
-        printf("[DYREKTOR] Oczekiwanie na sygnały...\n");
-        sleep(100); // Symulacja pracy dyrektora
+    FILE *fp = popen(komenda, "r");
+    if (!fp) {
+        perror("[CZYSZCZENIE][ERROR] Nie udało się znaleźć procesu lekarza");
+        return;
     }
+
+    char linia[128];
+    while (fgets(linia, sizeof(linia), fp) != NULL) {
+        pid_t pid = atoi(linia);
+        if (pid > 0) {
+            printf("[CZYSZCZENIE][INFO] Wysyłam SIGTERM do procesu PID: %d (lekarz %d %d)\n", pid, lek, numer);
+            kill(pid, SIGTERM);
+        }
+    }
+    pclose(fp);
 }
 
-// Funkcja inicjalizująca PID lekarzy
-void zarejestruj_pid_lekarzy(pid_t pid_poz1, pid_t pid_poz2, pid_t pid_spec[]) {
-    pid_lekarzy[0] = pid_poz1;       // Lekarz POZ 1
-    pid_lekarzy[1] = pid_poz2;       // Lekarz POZ 2
-    for (int i = 0; i < 4; i++) {
-        pid_lekarzy[2 + i] = pid_spec[i]; // Specjaliści
+void handle_signal(int signal){
+    if (signal == SIGUSR2) {ewakuacja_pacjentow();}
+    else if (signal == SIGALRM) {
+        int typ;
+        int los_lekarz = rand() % 100;
+        if (los_lekarz < 20) {
+            los_lekarz = 0;
+            int x = rand() % 100;
+            typ = (x < 50) ? 1 : 2;
+        } else if (los_lekarz < 40) {
+            los_lekarz = 1;
+            typ = 0;
+        } else if (los_lekarz < 60) {
+            los_lekarz = 2;
+            typ = 0;
+        } else if (los_lekarz < 80) {
+            los_lekarz = 3;
+            typ = 0;
+        } else {
+            los_lekarz = 4;
+            typ = 0;
+        }   zamknij_lekarza(los_lekarz, typ);
     }
+    else  printf("Unknown signal");
+}
+
+int main() {
+    while (1){
+    signal(SIGALRM, handle_signal);
+    signal(SIGUSR2, handle_signal);
+        sleep(1);
+}
 }
