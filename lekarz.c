@@ -160,7 +160,6 @@ void lekarz_poz(int id, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka)
     int pacjenci_obsluzeni = 0;
 
     while (pacjenci_obsluzeni < limit_pacjentow) {
-
         if (zakoncz_prace_POZ[id] && !zajety_POZ[id]) {
             printf("[LEKARZ POZ %d] Zakończono pracę. Liczba obsłużonych pacjentów: %d/%d\n",
                    id, pacjenci_obsluzeni, limit_pacjentow);
@@ -224,12 +223,12 @@ void lekarz_poz(int id, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka)
         pacjenci_obsluzeni++;
         zajety_POZ[id] = 0;
 
-    printf("KROK 8 Lekarz POZ %d: Zakończono obsługę pacjenta ID: %d%s (obsłużono: %d/%d)\n",
-           id, komunikat.pacjent.id,
-           komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "",
-           pacjenci_obsluzeni, limit_pacjentow);
+        printf("KROK 8 Lekarz POZ %d: Zakończono obsługę pacjenta ID: %d%s (obsłużono: %d/%d)\n",
+               id, komunikat.pacjent.id,
+               komunikat.pacjent.rodzic_obecny ? " (z rodzicem)" : "",
+               pacjenci_obsluzeni, limit_pacjentow);
         if (losowa_liczba >= 0.2) {
-    zakoncz_wizyte(komunikat.pacjent); // Zakończenie wizyty dla pacjenta (uwzględnia rodzica)rodzica
+            zakoncz_wizyte(komunikat.pacjent); // Zakończenie wizyty dla pacjenta (uwzględnia rodzica)rodzica
             int status;
             if (kill(komunikat.pacjent.pid, SIGTERM) == -1) {
                 printf("Nie udało się zakończyć procesu pacjenta: %d\n", komunikat.pacjent.pid);
@@ -242,9 +241,9 @@ void lekarz_poz(int id, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka)
                 } else {
                     printf("[DEBUG] Proces pacjenta ID: %d zakończony poprawnie.\n", komunikat.pacjent.id);
                 }
-}
+            }
+        }
     }
-
     printf("Lekarz POZ %d: Osiągnięto limit pacjentów (%d/%d). Kończę pracę.\n",
            id, pacjenci_obsluzeni, limit_pacjentow);
 
