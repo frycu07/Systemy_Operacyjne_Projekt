@@ -10,6 +10,7 @@ typedef struct {
     int rodzic_obecny; // 1 - rodzic obecny, 0 - brak rodzica
     int lekarz;      // 0 - POZ, 1 - Kardiolog, itd.
     pid_t pid;
+    int koniec;
 } Pacjent;
 
 void pacjent_zarzadzanie(Pacjent pacjent);

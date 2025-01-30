@@ -335,6 +335,19 @@ void lekarz_specjalista(int typ_lekarz, int limit_pacjentow, int id_kolejka_VIP,
             limit_pacjentow);
         if (losowa_liczba >= 0.1) {
             zakoncz_wizyte(komunikat.pacjent);
+            int status;
+            if (kill(komunikat.pacjent.pid, SIGTERM) == -1) {
+                printf("Nie udało się zakończyć procesu pacjenta: %d\n", komunikat.pacjent.pid);
+                perror("[REJESTRACJA][ERROR] Nie udało się zakończyć procesu pacjenta");
+            } else {
+                // Czekamy na zakończenie procesu, aby uniknąć zombie
+                int status;
+                if (waitpid(komunikat.pacjent.pid, &status, 0) == -1) {
+                    perror("[REJESTRACJA][ERROR] waitpid nie powiódł się");
+                } else {
+                    printf("[DEBUG] Proces pacjenta ID: %d zakończony poprawnie.\n", komunikat.pacjent.id);
+                }
+            }
         }
     }
     printf("Lekarz Specjalista %d: Osiągnięto limit pacjentów (%d/%d). Kończę pracę.\n",

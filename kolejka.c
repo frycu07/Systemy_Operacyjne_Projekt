@@ -51,7 +51,6 @@ int sprawdz_kolejke(int kolejka_id) {
 }
 
 void zakoncz_wizyte(Pacjent pacjent) {
-
     // Zmniejsz `liczba_osob` w zależności od obecności rodzica.
     if (pacjent.rodzic_obecny) {
         zmien_liczba_osob(-2);
@@ -63,12 +62,10 @@ void zakoncz_wizyte(Pacjent pacjent) {
                pacjent.id, *liczba_osob);
     }
     printf("[DEBUG] Proces pacjenta ID: %d kończy się.\n", pacjent.id);
-    sleep(1);
-    if (kill(pacjent.pid, SIGTERM) == -1) {
-        printf("Nie udało się zakończyć procesu pacjenta: %d\n", pacjent.pid);
-        perror("[REJESTRACJA][ERROR] Nie udało się zakończyć procesu pacjenta");
+
+
+
     }
-}
 
 void dodaj_suma_kolejek() {
     int semafor_suma_kolejek = uzyskaj_dostep_do_semafora(klucz_semafor_suma_kolejek);

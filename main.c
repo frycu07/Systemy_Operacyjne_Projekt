@@ -32,6 +32,20 @@ pid_t my_pid;
 bool zasoby_wyczyszczone = false;
 static bool pamiec_usunieta = false;
 static bool pamiec_usunieta2 = false;
+#define MAX_PATIENTS 30
+pid_t patient_pids[MAX_PATIENTS];
+
+void check_process_limit() {
+    struct rlimit rl;
+    if (getrlimit(RLIMIT_NPROC, &rl) == 0) {
+        printf("[PACJENT][INFO] Limit procesów: %ld / %ld\n", (long)rl.rlim_cur, (long)rl.rlim_max);
+    } else {
+        perror("[PACJENT][ERROR] Nie udało się pobrać limitu procesów");
+    }
+}
+
+
+
 Pacjent losuj_pacjenta(int id) {
     Pacjent pacjent;
 
@@ -64,6 +78,7 @@ Pacjent losuj_pacjenta(int id) {
     }
 
     pacjent.pid = getpid();
+    pacjent.koniec = 0;
     return pacjent;
 }
 void zakonczenie_procesow() {
@@ -181,7 +196,51 @@ void pamiec_wspoldzielona2() {
     *suma_kolejek = 0;
     if(a) printf("[DEBUG]suma kolejek Pamięć współdzielona utworzona i zainicjalizowana. Wartość początkowa: %d\n", *suma_kolejek);
 }
+void create_patient(int id) {
+    check_process_limit();
+    pid_t pid = fork();
+    if (pid == -1) { // Błąd fork()
+        perror("[ERROR] Fork dla pacjenta nie powiódł się");
 
+        // Sprzątanie procesów, które już powstały
+        for (int j = 0; j < id; j++) {
+            if (patient_pids[j] > 0) {
+                printf("[CLEANUP] Czekam na pacjenta PID: %d\n", patient_pids[j]);
+                waitpid(patient_pids[j], NULL, 0);
+            }
+        }
+        fprintf(stderr, "[ERROR] Osiągnięto limit procesów lub brak zasobów. Kończę program.\n");
+        exit(EXIT_FAILURE);
+    }
+    if (pid == 0) { // Proces potomny
+        Pacjent pacjent = losuj_pacjenta(id);
+        char id_str[10], wiek_str[10], priorytet_str[10], rodzic_str[10], lekarz_str[10], pid_str[10],koniec_str[10];
+
+        sprintf(id_str, "%d", pacjent.id);
+        sprintf(wiek_str, "%d", pacjent.wiek);
+        sprintf(priorytet_str, "%d", pacjent.priorytet);
+        sprintf(rodzic_str, "%d", pacjent.rodzic_obecny);
+        sprintf(lekarz_str, "%d", pacjent.lekarz);
+        sprintf(pid_str, "%d", pacjent.pid);
+        sprintf(koniec_str, "%d", pacjent.koniec);
+
+        char *args[] = {"./pacjent", id_str, wiek_str, priorytet_str, rodzic_str, lekarz_str, pid_str,koniec_str, NULL};
+        execv(args[0], args);
+
+        perror("[ERROR] execv dla pacjenta nie powiodło się");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("[MAIN][DEBUG] Utworzono proces pacjenta z PID: %d\n", pid);
+}
+void sigchld_handler(int sig) {
+    int status;
+    pid_t pid;
+
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+        printf("[SIGCHLD_HANDLER] Proces pacjenta o PID %d zakończony, usunięty z systemu.\n", pid);
+    }
+}
 
 int main() {
         int a = 1;
@@ -212,18 +271,35 @@ int main() {
         printf("WARTOSC SEMAFORA suma kolejek: %d\n", pobierz_wartosc_semafora(semafor_suma_kolejek));
     // Inicjalizacja semafora rejestracji na wartość 1 (odblokowany)
     pid_t pid_rejestracja = fork();
+
+    if (pid_rejestracja < 0) {
+        // Błąd fork()
+        perror("[MAIN][ERROR] Fork dla rejestracji nie powiódł się");
+        fprintf(stderr, "[MAIN][ERROR] Możliwe przyczyny: brak zasobów, limit procesów, brak pamięci.\n");
+
+        // Sprawdź liczbę aktywnych procesów
+        system("ps aux | wc -l");
+
+        // Sprawdź limit procesów
+        system("ulimit -u");
+
+        // Opcjonalnie: czekaj i spróbuj ponownie
+        sleep(1);
+        pid_rejestracja = fork();
+        if (pid_rejestracja == -1) {
+            fprintf(stderr, "[MAIN][FATAL] Druga próba fork() również nie powiodła się. Kończę program.\n");
+            exit(1);
+        }
+    }
     if (pid_rejestracja == 0) {
         // Proces potomny - rejestracja
         if (execl("./rejestracja", "rejestracja", NULL) == -1) {
             perror("[MAIN][ERROR] Nie udało się uruchomić procesu rejestracja");
-            exit(1);
+            exit(1); // Ważne, żeby proces się nie kontynuował!
         }
-    } else if (pid_rejestracja > 0) {
-        // Proces rodzica - nie czeka na zakończenie rejestracji
-        printf("[MAIN][DEBUG] Utworzono proces rejestracji z PID: %d\n", pid_rejestracja);
     } else {
-        perror("[MAIN][ERROR] Fork dla rejestracji nie powiódł się");
-        exit(1);
+        // Proces rodzica
+        printf("[MAIN][DEBUG] Utworzono proces rejestracji z PID: %d\n", pid_rejestracja);
     }
 
 
@@ -273,40 +349,18 @@ int main() {
     }
 
     //Tworzenie procesów pacjentów
-    for (int i = 0; i < 30; i++) {
-        pid_t pid = fork();
-        if (pid == 0) {
-            // Proces potomny - pacjent
-            Pacjent pacjent = losuj_pacjenta(i);
-            // Konwersja pól struktury na ciągi znaków
-            char id_str[10], wiek_str[10], priorytet_str[10], rodzic_str[10], lekarz_str[10], pid_str[10];
-            sprintf(id_str, "%d", pacjent.id);
-            sprintf(wiek_str, "%d", pacjent.wiek);
-            sprintf(priorytet_str, "%d", pacjent.priorytet);
-            sprintf(rodzic_str, "%d", pacjent.rodzic_obecny);
-            sprintf(lekarz_str, "%d", pacjent.lekarz);
-            sprintf(pid_str , "%d", pacjent.pid);
-
-            // Uruchomienie procesu pacjent
-            if (execl("./pacjent", "pacjent", id_str, wiek_str, priorytet_str, rodzic_str, lekarz_str, pid_str, NULL) == -1) {
-                perror("[MAIN][ERROR] Nie udało się uruchomić procesu pacjent");
-                exit(1);
-            }
-        } else if (pid < 0) {
-            perror("[MAIN][ERROR] Fork dla pacjenta nie powiódł się");
-            exit(1);
-        }
-        // Proces rodzica - kontynuuje tworzenie kolejnych pacjentów
-        printf("[MAIN][DEBUG] Utworzono proces pacjenta z PID: %d\n", pid);
-        sleep(1);// Symulacja przybywania pacjentów
+    for (int i = 0; i < MAX_PATIENTS; i++) {
+        create_patient(i);
+        sleep(1);
     }
+    while (waitpid(-1, NULL, WNOHANG) > 0)
+
         if (pthread_create(&cleaner_thread, NULL, process_cleaner, NULL) != 0) {
             perror("Błąd tworzenia wątku czyszczącego");
             exit(1);
         }
 
-
-        // Oczekiwanie na zakończenie wątków
+        // Oczekiwanie na zakończenie wątkw
         pthread_join(monitor_thread, NULL);
         pthread_join(cleaner_thread, NULL);
 
@@ -315,3 +369,4 @@ int main() {
         cleanup_on_exit();
         return 0;
     }
+

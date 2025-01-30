@@ -482,7 +482,7 @@ void zarzadz_kolejka_zewnetrzna() {
     while (czy_dziala) {
         komunikat2.typ = 1;
 
-        if (msgrcv(kolejka_zewnetrzna, &komunikat2, sizeof(Komunikat) - sizeof(long), 1, 0) != -1) {
+        if (msgrcv(kolejka_zewnetrzna, &komunikat2, sizeof(Pacjent), 1, 0) != -1) {
             printf("KROK 3 Odebrano wiadomość w kolejce zewnetrznej. Pacjent ID: %d\n", komunikat2.pacjent.id);
         } else {
             printf("[DEBUG] msgrcv zwrócił błąd\n");
@@ -493,51 +493,58 @@ void zarzadz_kolejka_zewnetrzna() {
                 printf("[DEBUG] Wartość errno: %d\n", errno);
             }
         }
+        if (czy_przychodnia_otwarta() == 1) {
+            if ((suma < *suma_kolejek) && (liczba_osob_zarejestrowanych != 0)) {
+                printf("Lekarze maja pelne kolejki suma: %d MAX:%d KROK 3' ZKZ Przychodnia zamknięta. Pacjent ID: %d nie może wejść. Wszyscy lekarze maja pelne kolejki\n", suma, *suma_kolejek, komunikat2.pacjent.id);
+                czy_dziala = 0;
+                continue;
+            }
+            int wymagane_miejsce = komunikat2.pacjent.rodzic_obecny ? 2 : 1;
+            //printf("[DEBUG] liczba_osob:%d , wymagane_miejsce: %d, MAX_OSOB_W_PRZYCHODNI: %d\n",
+            //*liczba_osob, wymagane_miejsce, MAX_OSOB_W_PRZYCHODNI);
+            if (*liczba_osob + wymagane_miejsce <= MAX_OSOB_W_PRZYCHODNI) {
+                // Tworzenie procesu rodzica, jeśli obecny
+                if (komunikat2.pacjent.rodzic_obecny) {
+                    if (fork() == 0) {
+                        printf("Stworzono Rodzic dla pacjenta %d, PID: %d\n", komunikat2.pacjent.id, getpid());
+                        pause(); // Rodzic czeka z dzieckiem. Proces tworzony jako rejestracja
+                    }
+                }
 
-         if ((suma < *suma_kolejek) && (liczba_osob_zarejestrowanych != 0)) {
-            printf("Lekarze maja pelne kolejki suma: %d MAX:%d KROK 3' ZKZ Przychodnia zamknięta. Pacjent ID: %d nie może wejść. Wszyscy lekarze maja pelne kolejki\n", suma, *suma_kolejek, komunikat2.pacjent.id);
-            czy_dziala = 0;
-             continue;
-         }
-     int wymagane_miejsce = komunikat2.pacjent.rodzic_obecny ? 2 : 1;
-     //printf("[DEBUG] liczba_osob:%d , wymagane_miejsce: %d, MAX_OSOB_W_PRZYCHODNI: %d\n",
-     //*liczba_osob, wymagane_miejsce, MAX_OSOB_W_PRZYCHODNI);
-     if (*liczba_osob + wymagane_miejsce <= MAX_OSOB_W_PRZYCHODNI) {
-         // Tworzenie procesu rodzica, jeśli obecny
-         if (komunikat2.pacjent.rodzic_obecny) {
-             if (fork() == 0) {
-                 //printf("Stworzono Rodzic dla pacjenta %d, PID: %d\n", komunikat2.pacjent.id, getpid());
-                 pause(); // Rodzic czeka z dzieckiem
-                 exit(0);
-             }
-         }
+                // Wysyłanie pacjenta do kolejki rejestracyjnej
 
-         // Wysyłanie pacjenta do kolejki rejestracyjnej
+                komunikat2.typ = 1;
 
-         komunikat2.typ = 1;
+                if (msgsnd(kolejka_rejestracja, &komunikat2, sizeof(Pacjent), 0 == -1)) {
+                    printf("Błąd wysyłania wiadomości\n");
+                }
 
-         if (msgsnd(kolejka_rejestracja, &komunikat2, sizeof(Pacjent), 0 == -1)) {
-             printf("Błąd wysyłania wiadomości\n");
-         }
-
-         printf("KROK 4 Pacjent ID: %d%s%s został wpuszczony do przychodni z kolejki zewnętrznej.\n",
-                komunikat2.pacjent.id,
-                komunikat2.pacjent.priorytet ? " (VIP)" : "",
-                komunikat2.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
+                printf("KROK 4 Pacjent ID: %d%s%s został wpuszczony do przychodni z kolejki zewnętrznej.\n",
+                       komunikat2.pacjent.id,
+                       komunikat2.pacjent.priorytet ? " (VIP)" : "",
+                       komunikat2.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
                 printf("Wymagane miejsca: %d\n", wymagane_miejsce);
-            zmien_liczba_osob(wymagane_miejsce); // Zmiana liczby osób w przychodni
-            liczba_osob_zarejestrowanych++;
+                zmien_liczba_osob(wymagane_miejsce); // Zmiana liczby osób w przychodni
+                liczba_osob_zarejestrowanych++;
 
-             } else {
-                 // Kolejka zewnętrzna czeka, jeśli brak miejsca w przychodni
-                 msgsnd(kolejka_zewnetrzna, &komunikat2, sizeof(Pacjent), 0);
-                 printf("KROK 4' Pacjent ID: %d%s%s musi poczekać na wejście do przychodni.\n",
-                         komunikat2.pacjent.id,
-                         komunikat2.pacjent.priorytet ? " (VIP)" : "",
-                         komunikat2.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
-                 sleep(2);
-             }
-         }
+            } else {
+                // Kolejka zewnętrzna czeka, jeśli brak miejsca w przychodni
+                msgsnd(kolejka_zewnetrzna, &komunikat2, sizeof(Pacjent), 0);
+                printf("KROK 4' Pacjent ID: %d%s%s musi poczekać na wejście do przychodni.\n",
+                        komunikat2.pacjent.id,
+                        komunikat2.pacjent.priorytet ? " (VIP)" : "",
+                        komunikat2.pacjent.rodzic_obecny ? " (z rodzicem)" : "");
+                sleep(2);
+            }
+        }
+        else {
+            printf("[DEBUG] Wszedłem do bloku: przychodnia zamknięta.\n");
+            printf("KROK 3' Pacjent ID: %d nie może wejść - przychodnia zamknięta.\n", komunikat2.pacjent.id );
+            sleep(2); // Oczekiwanie przed ponowną próbą
+    }
+
+
+    }
          // Krótka przerwa przed następną iteracją
          sleep(1);
         }
@@ -549,7 +556,7 @@ void zarzadz_i_monitoruj_rejestracje() {
     //printf("[DEBUG] Proces główny PID: %d\n", getpid());
     sleep(1);
     pid_t pid = fork();
-    if (pid < 0) {
+    if (pid == -1) {
         perror("[ERROR] Nie udało się stworzyć procesu dziecka dla rejestracja(0)");
     } else if (pid == 0) {
         printf("[DEBUG] Proces dziecka uruchomiony, PID: %d\n", getpid());
@@ -571,6 +578,10 @@ void zarzadz_i_monitoruj_rejestracje() {
             perror("[Monitorowanie] Błąd dostępu do kolejki rejestracji");
             exit(1);
         }
+    if (msgctl(kolejka_rejestracja, IPC_STAT, &statystyki) == -1) {
+        perror("[Monitorowanie] Błąd pobierania statystyk kolejki");
+        exit(0); // Pomijaj iterację, jeśli nie można pobrać statystyk
+    }
         while (1) {
             // Pobierz aktualne statystyki kolejki rejestracji
             if (msgctl(kolejka_rejestracja, IPC_STAT, &statystyki) == -1) {
@@ -645,17 +656,17 @@ int main() {
     int semafor_rejestracja = uzyskaj_dostep_do_semafora(klucz_semafora_rejestracja);
     int semafor_liczba_osob; uzyskaj_dostep_do_semafora(klucz_liczba_osob);
 
-    // Utworzenie wątku dla zarzadz_kolejka_zewnetrzna
+    //Utworzenie wątku dla zarzadz_kolejka_zewnetrzna
     if (pthread_create(&kolejka_thread, NULL, uruchom_zarzadzanie_kolejka, NULL) != 0) {
         perror("[REJESTRACJA][ERROR] Nie udało się utworzyć wątku dla zarzadz_kolejka_zewnetrzna");
         exit(1);
     }
 
-    // Uruchomienie rejestracja() w głównym wątku
+    //Uruchomienie rejestracja() w głównym wątku
     zarzadz_i_monitoruj_rejestracje();
 
     //Oczekiwanie na zakończenie wątku zarzadz_kolejka_zewnetrzna
-    //pthread_cancel(kolejka_thread);
+    pthread_cancel(kolejka_thread);
     pthread_join(kolejka_thread, NULL);
 
     return 0;
