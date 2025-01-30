@@ -14,7 +14,14 @@ volatile sig_atomic_t zakoncz_prace_POZ[2] = {0};
 
 volatile sig_atomic_t zajety_SPEC [5] = {0};
 volatile sig_atomic_t zakoncz_prace_SPEC[5] = {0};
+void sigchld_handler_lekarz(int sig) {
+    int status;
+    pid_t pid;
 
+    while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+        printf("[LEKARZ][SIGCHLD] Pacjent PID %d zakończył się i został usunięty.\n", pid);
+    }
+}
 void signal_handler_lekarz_POZ(int signal, int id) {
     if (signal == SIGTERM) {
         if (zajety_POZ[id]) {
@@ -138,6 +145,7 @@ void badania() {
 
 void lekarz_poz(int id, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka) {
     signal(SIGTERM, (void (*)(int))signal_handler_lekarz_POZ);
+    signal(SIGCHLD, sigchld_handler_lekarz);
     //log_process("START", "Lekarz_POZ", id); // Logowanie rozpoczęcia pracy lekarza POZ
     printf("Lekarz POZ %d: Rozpoczęto pracę. Limit pacjentów: %d, PID: %d\n", id, limit_pacjentow, getpid());
     uzyskaj_pamiec_wspoldzielona();
@@ -233,15 +241,8 @@ void lekarz_poz(int id, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka)
             if (kill(komunikat.pacjent.pid, SIGTERM) == -1) {
                 printf("Nie udało się zakończyć procesu pacjenta: %d\n", komunikat.pacjent.pid);
                 perror("[REJESTRACJA][ERROR] Nie udało się zakończyć procesu pacjenta");
-            } else {
-                // Czekamy na zakończenie procesu, aby uniknąć zombie
-                int status;
-                if (waitpid(komunikat.pacjent.pid, &status, 0) == -1) {
-                    perror("[REJESTRACJA][ERROR] waitpid nie powiódł się");
-                } else {
-                    printf("[DEBUG] Proces pacjenta ID: %d zakończony poprawnie.\n", komunikat.pacjent.id);
-                }
             }
+
         }
     }
     printf("Lekarz POZ %d: Osiągnięto limit pacjentów (%d/%d). Kończę pracę.\n",
@@ -253,6 +254,7 @@ void lekarz_poz(int id, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka)
 void lekarz_specjalista(int typ_lekarz, int limit_pacjentow, int id_kolejka_VIP, int id_kolejka, int id_kolejka_badania) {
     //log_process("START", "Lekarz_Specjalista", typ_kolejki);
     signal(SIGTERM, (void (*)(int))signal_handler_lekarz_SPEC);
+    signal(SIGCHLD, sigchld_handler_lekarz);
     printf("Lekarz Specjalista  %d: Rozpoczęto pracę. Limit pacjentów: %d, PID: %d\n", typ_lekarz, limit_pacjentow,
            getpid());
     int kolejka = msgget(id_kolejka, IPC_CREAT | 0666);
@@ -350,15 +352,8 @@ void lekarz_specjalista(int typ_lekarz, int limit_pacjentow, int id_kolejka_VIP,
             if (kill(komunikat.pacjent.pid, SIGTERM) == -1) {
                 printf("Nie udało się zakończyć procesu pacjenta: %d\n", komunikat.pacjent.pid);
                 perror("[REJESTRACJA][ERROR] Nie udało się zakończyć procesu pacjenta");
-            } else {
-                // Czekamy na zakończenie procesu, aby uniknąć zombie
-                int status;
-                if (waitpid(komunikat.pacjent.pid, &status, 0) == -1) {
-                    perror("[REJESTRACJA][ERROR] waitpid nie powiódł się");
-                } else {
-                    printf("[DEBUG] Proces pacjenta ID: %d zakończony poprawnie.\n", komunikat.pacjent.id);
-                }
             }
+
         }
     }
     printf("Lekarz Specjalista %d: Osiągnięto limit pacjentów (%d/%d). Kończę pracę.\n",

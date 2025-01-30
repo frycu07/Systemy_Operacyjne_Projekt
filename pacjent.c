@@ -53,9 +53,7 @@ void pacjent_zarzadzanie(Pacjent pacjent) {
     //        // printf("[DEBUG] Pacjent %d wszedl do rejestracji\n", id);
     //     }
     // }
-    while (1) {
-        sleep(1);
-    }
+    while(1) { sleep(1); }
 
 }
 void signal_handler_pacjent(int sig) {

@@ -251,7 +251,7 @@ int main() {
         // zakonczenie_poprzednich_procesow();
         signal(SIGINT, signal_handler);
         signal(SIGTERM, signal_handler);
-
+    signal(SIGCHLD,sigchld_handler);
         srand(time(NULL));  // Inicjalizacja generatora liczb losowych
 
         // Utworzenie segmentu pamięci współdzielonej
